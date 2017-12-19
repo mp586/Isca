@@ -526,9 +526,11 @@ subroutine surface_flux_1d (                                           &
   if (bucket) then
 	  where (avail)
 	      ! begin LJJ addition
-! no difference between land and ocean evaporation
-	        flux_q    =  rho_drag * (q_surf0 - q_atm) ! flux of water vapor  (Kg/(m**2 s))
+  		where(land)
+			flux_q    =  rho_drag * (q_surf0 - q_atm) ! flux of water vapor  (Kg/(m**2 s)) no evaporative resistance compared to ocean 
+		end where
 		
+! max evaporation over land is still limited by the amount of water available from the bucket 
 	    depth_change_lh_1d  = flux_q * dt/dens_h2o 
 	    where (flux_q > 0.0 .and. bucket_depth < depth_change_lh_1d) ! where more evaporation than what's in bucket, empty bucket
 	        flux_q = bucket_depth * dens_h2o / dt
@@ -542,9 +544,7 @@ subroutine surface_flux_1d (                                           &
 	    elsewhere
 	      dedq_surf = 0.
 	      dedq_atm = -rho_drag ! d(latent heat flux)/d(atmospheric mixing ratio)
- !no difference between land and ocean for dedt either
- 	    
-	    dedt_surf =  rho_drag * (q_sat1 - q_sat) *del_temp_inv
+		  dedt_surf =  rho_drag * (q_sat1 - q_sat) *del_temp_inv
 		  
 	    end where
 	  end where    

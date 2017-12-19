@@ -23,7 +23,12 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
-exp = Experiment('full_continents_newbucket_fixedSSTs', codebase=cb)
+exp = Experiment('full_continents_simple_bucket_fixedSSTs', codebase=cb)
+
+# default max land bucket depth is 0.15 m 
+# src/atmos_spectral/driver/solo/idealized_moist_phys.F90
+
+
 
 #Add any input files that are necessary for a particular experiment.
 exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/sst_clim_amip.nc')]
