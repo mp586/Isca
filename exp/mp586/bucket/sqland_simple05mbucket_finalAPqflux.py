@@ -97,8 +97,8 @@ exp.namelist = namelist = Namelist({
         'land_option':'input', #Use land mask from input file
         'land_file_name': 'INPUT/land.nc', #Tell model where to find input file
         'bucket':True, #Run with the bucket model
-        'init_bucket_depth_land':0.15, #Set initial bucket depth over land, default = 20, bucket is initially full 
- #       'max_bucket_depth_land':2., #Set max bucket depth over land default = 0.15 
+        'init_bucket_depth_land':0.5, #Set initial bucket depth over land, default = 20, bucket is initially full 
+        'max_bucket_depth_land':0.5, #Set max bucket depth over land default = 0.15 
         # src/atmos_spectral/driver/solo/idealized_moist_phys.F90
     },
 

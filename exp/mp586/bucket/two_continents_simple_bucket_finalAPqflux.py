@@ -23,7 +23,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
-exp = Experiment('two_continents_simple05mbucket_finalAPqflux', codebase=cb)
+exp = Experiment('two_continents_simple_bucket_finalAPqflux', codebase=cb)
 
 
 
