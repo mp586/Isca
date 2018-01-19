@@ -23,7 +23,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
-exp = Experiment('full_continents_simple_bucket_fixedSSTs', codebase=cb)
+exp = Experiment('flat_continents_simple_bucket_fixedSSTs', codebase=cb)
 
 # default max land bucket depth is 0.15 m 
 # src/atmos_spectral/driver/solo/idealized_moist_phys.F90

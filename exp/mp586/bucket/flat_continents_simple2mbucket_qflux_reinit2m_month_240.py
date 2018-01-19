@@ -23,12 +23,12 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
-exp = Experiment('full_continents_simple2mbucket_qflux_reinit2m_month240', codebase=cb)
+exp = Experiment('flat_continents_simple2mbucket_qflux_reinit2m_month240', codebase=cb)
 
 
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'exp/mp586/bucket/input/full_continents_newbucket/ocean_qflux.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'exp/mp586/bucket/input/flat_continents_newbucket/ocean_qflux.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -97,7 +97,7 @@ exp.namelist = namelist = Namelist({
         'land_option':'input', #Use land mask from input file
         'land_file_name': 'INPUT/land.nc', #Tell model where to find input file
         'bucket':True, #Run with the bucket model
-        'init_bucket_depth_land':2., #Set initial bucket depth over land, default = 20, bucket is initially full 
+        'init_bucket_depth_land':2., #Set initial bucket depth over land, default = 20, bucket is initially full
         'max_bucket_depth_land':2., #Set max bucket depth over land default = 0.15 
         # src/atmos_spectral/driver/solo/idealized_moist_phys.F90
     },
@@ -201,6 +201,6 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(1, restart_file='/scratch/mp586/Isca_DATA/full_continents_simple2mbucket_qflux/restarts/restart_with_2mbucket_month_240.tar.gz', num_cores=NCORES)
+exp.run(1, restart_file='/scratch/mp586/Isca_DATA/flat_continents_simple2mbucket_qflux/restarts/restart_with_2mbucket_month_240.tar.gz', num_cores=NCORES)
 for i in range(2,481):
     exp.run(i, num_cores=NCORES)
