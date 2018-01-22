@@ -23,7 +23,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
-exp = Experiment('flat_continents_simple2mbucket_qflux_reinit2m_month240_test2', codebase=cb)
+exp = Experiment('flat_continents_simple2mbucket_qflux_reinit2m_month241', codebase=cb)
 
 
 
@@ -201,6 +201,7 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(1, restart_file='/scratch/mp586/Isca_DATA/flat_continents_simple2mbucket_qflux/restarts/restart_with_2mbucket_month_240_test.tar.gz', num_cores=NCORES)
+exp.run(1, restart_file='/scratch/mp586/Isca_DATA/flat_continents_simple2mbucket_qflux/restarts/restart_with_2mbucket_month_241.tar.gz', num_cores=NCORES)
+# the restart_file replaces the first month of the run, i.e. the run begins in february, so the restart file must be at the end of january 
 for i in range(2,481):
     exp.run(i, num_cores=NCORES)
