@@ -23,12 +23,10 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
-exp = Experiment('two_continents_simple05mbucket_finalAPqflux', codebase=cb)
-
-
+exp = Experiment('full_continents_simple05mbucket_fixedSSTs', codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/two_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/aquaplanet/ocean_qflux.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/sst_clim_amip.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -60,8 +58,6 @@ diag.add_field('rrtm_radiation', 'flux_sw', time_avg=True) # net SW surface flux
 diag.add_field('rrtm_radiation', 'flux_lw', time_avg=True) # net LW surface flux
 diag.add_field('mixed_layer', 'flux_lhe', time_avg=True) # latent heat flux (up) at surface
 diag.add_field('mixed_layer', 'flux_t', time_avg=True) # sensible heat flux (up) at surface
-diag.add_field('mixed_layer', 'flux_oceanq', time_avg=True)
-
 
 #MP added on 11 october 2017
 exp.diag_table = diag
@@ -97,9 +93,8 @@ exp.namelist = namelist = Namelist({
         'land_option':'input', #Use land mask from input file
         'land_file_name': 'INPUT/land.nc', #Tell model where to find input file
         'bucket':True, #Run with the bucket model
-        'init_bucket_depth_land':0.5, #Set initial bucket depth over land, default = 20, bucket is initially full 
-        'max_bucket_depth_land':0.5, #Set max bucket depth over land default = 0.15 
-        # src/atmos_spectral/driver/solo/idealized_moist_phys.F90
+        'init_bucket_depth_land':0.5, #Set initial bucket depth over land, default = 20
+        'max_bucket_depth_land':0.5, #Set max bucket depth over land default = 0.15
     },
 
     'vert_turb_driver_nml': {
@@ -136,10 +131,10 @@ exp.namelist = namelist = Namelist({
         'albedo_value': 0.25, #Ocean albedo value
         'land_albedo_prefactor' : 1.3, #What factor to multiply ocean albedo by over land
         'do_qflux' : False, #Do not use prescribed qflux formula
-        'load_qflux': True,
-        'qflux_file_name':'ocean_qflux',
-        'time_varying_qflux': True # shouldn't this be false? what is 
-        # a non time varying qflux?
+        'do_read_sst' : True, #Read in sst values from input file
+        'do_sc_sst' : True, #Do specified ssts (need both to be true)
+        'sst_file' : 'sst_clim_amip', #Set name of sst input file
+        'specify_sst_over_ocean_only' : True, #Make sure sst only specified in regions of ocean.
     },
 
     'qe_moist_convection_nml': {
@@ -197,10 +192,15 @@ exp.namelist = namelist = Namelist({
         'scale_heights' : 11.0,
         'exponent':7.0,
         'robert_coeff':0.03
-    }
+    }, 
+
+    'spectral_init_cond_nml': {
+        'topog_file_name': 'land.nc', #Name of land input file, which will also contain topography if generated using Isca's `land_file_generator_fn.py' routine.
+        'topography_option':'input' #Tell model to get topography from input file
+        }
 })
 
 #Lets do a run!
 exp.run(1, use_restart=False, num_cores=NCORES)
-for i in range(2,481):
+for i in range(2,721):
     exp.run(i, num_cores=NCORES)
