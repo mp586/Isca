@@ -210,7 +210,7 @@ def read_land( base_dir,exp_name,land_present, use_interpolated_pressure_level_d
     
     if land_file is not None:
         if(land_present or use_interpolated_pressure_level_data):
-            nc_file = base_dir+'exp/'+exp_name+land_file
+            nc_file = base_dir+'/'+land_file
             print(nc_file)
             try:
                 fh = Dataset(nc_file, mode='r')
