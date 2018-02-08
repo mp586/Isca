@@ -94,7 +94,7 @@ exp.namelist = namelist = Namelist({
         'land_file_name': 'INPUT/land.nc', #Tell model where to find input file
         'bucket':True, #Run with the bucket model
         'init_bucket_depth_land':0.15, #Set initial bucket depth over land, default = 20
- #       'max_bucket_depth_land':2., #Set max bucket depth over land default = 0.15
+#        'max_bucket_depth_land':0.5, #Set max bucket depth over land default = 0.15
     },
 
     'vert_turb_driver_nml': {
@@ -192,10 +192,15 @@ exp.namelist = namelist = Namelist({
         'scale_heights' : 11.0,
         'exponent':7.0,
         'robert_coeff':0.03
-    }
+    }, 
+
+    'spectral_init_cond_nml': {
+        'topog_file_name': 'land.nc', #Name of land input file, which will also contain topography if generated using Isca's `land_file_generator_fn.py' routine.
+        'topography_option':'input' #Tell model to get topography from input file
+        }
 })
 
 #Lets do a run!
 exp.run(1, use_restart=False, num_cores=NCORES)
-for i in range(2,721):
+for i in range(2,720):
     exp.run(i, num_cores=NCORES)
