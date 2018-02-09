@@ -20,7 +20,7 @@ def qflux_calc(dataset, model_params, output_file_name, ice_file_name=None, grou
         time_varying_ice = ice_mask_calculation(dataset, dataset.land, ice_file_name)
         upper_ocean_heat_content(dataset, model_params, time_varying_ice)
         net_surf_energy_flux(dataset, model_params)
-        deep_ocean_heat_content(dataset, model_params)
+       deep_ocean_heat_content(dataset, model_params)
         ocean_transport(dataset, model_params)
 
         output_dict={'manual_grid_option':False, 'is_thd':False, 'num_years':1., 'time_spacing_days':12, 'file_name':output_file_name+'.nc', 'var_name':'ocean_qflux'}
@@ -248,12 +248,12 @@ if __name__ == "__main__":
 
     input_dir=GFDL_BASE
     base_dir=GFDL_DATA
-    land_file='input/all_continents/land.nc'
-    base_exp_name='full_continents_simple05mbucket_fixedSSTs' # work directory
-    exp_name='full_continents_simple05mbucket_fixedSSTs' # data directory 
+    land_file='input/aquaplanet/land.nc'
+    base_exp_name='aquaplanet_fixedSSTs' # work directory
+    exp_name='aquaplanet_fixedSSTs' # data directory 
     #ice_file_name=base_dir+'annual_mean_ice_albedo_change_test_mk2_4320_dt_rad_4/'+'run360/'+'atmos_monthly.nc'
     ice_file_name=None
-    output_file_name=GFDL_BASE+'/input/all_continents/ocean_qflux_full_simple05mbucket'
+    output_file_name=GFDL_BASE+'/exp/mp586/aquaplanet/input/ocean_qflux_finalAPqflux_isca'
 
     start_file=241 # needs to be January month
     end_file=480 # needs to be December month 
