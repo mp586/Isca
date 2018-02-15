@@ -4,11 +4,12 @@ import numpy as np
 
 from isca import IscaCodeBase, DiagTable, Experiment, Namelist, GFDL_BASE
 
-NCORES = 8
+NCORES = 16
 base_dir = os.getcwd()
 # a CodeBase can be a directory on the computer,
 # useful for iterative development
 cb = IscaCodeBase.from_directory(GFDL_BASE)
+
 # or it can point to a specific git repo and commit id.
 # This method should ensure future, independent, reproducibility of results.
 # cb = DryCodeBase.from_repo(repo='https://github.com/isca/isca', commit='isca1.1')
@@ -22,12 +23,12 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
-exp = Experiment('full_continents_simple05mbucket_full05mbucketqflux', codebase=cb)
+exp = Experiment('full_continents_land_evap_pref07_fulllepref07qflux', codebase=cb)
 
 
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'exp/mp586/bucket/input/full_continents_simple05mbucket/ocean_qflux.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'exp/mp586/constant_evaporative_resistance/input/full_land_evap07/ocean_qflux.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -37,10 +38,6 @@ diag.add_field('dynamics', 'ps', time_avg=True)
 diag.add_field('dynamics', 'bk')
 diag.add_field('dynamics', 'pk')
 diag.add_field('atmosphere', 'precipitation', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_cond', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_conv', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_lh', time_avg=True)
 diag.add_field('mixed_layer', 't_surf', time_avg=True)
 diag.add_field('dynamics', 'sphum', time_avg=True)
 diag.add_field('dynamics', 'ucomp', time_avg=True)
@@ -95,10 +92,7 @@ exp.namelist = namelist = Namelist({
         'convection_scheme':'SIMPLE_BETTS_MILLER', #Use the simple betts-miller convection scheme
         'land_option':'input', #Use land mask from input file
         'land_file_name': 'INPUT/land.nc', #Tell model where to find input file
-        'bucket':True, #Run with the bucket model
-        'init_bucket_depth_land':.5, #Set initial bucket depth over land, default = 20, bucket is initially full 
-        'max_bucket_depth_land':.5, #Set max bucket depth over land default = 0.15 
-        # src/atmos_spectral/driver/solo/idealized_moist_phys.F90
+        'bucket':False
     },
 
     'vert_turb_driver_nml': {
@@ -117,7 +111,9 @@ exp.namelist = namelist = Namelist({
     'surface_flux_nml': {
         'use_virtual_temp': False,
         'do_simple': True,
-        'old_dtaudv': True    
+        'old_dtaudv': True,
+        'land_humidity_prefactor': 1., # no pre-factor inside brackets
+        'land_evap_prefactor': 0.7 # land evap = potential evap*0.7
     },
 
     'atmosphere_nml': {
@@ -133,12 +129,11 @@ exp.namelist = namelist = Namelist({
         'land_option':'input',    #Tell mixed layer to get land mask from input file
         'land_h_capacity_prefactor': 0.1, #What factor to multiply mixed-layer depth by over land. 
         'albedo_value': 0.25, #Ocean albedo value
-        'land_albedo_prefactor' : 1.3, #What factor to multiply ocean albedo by over land
+        'land_albedo_prefactor' : 1.3, #What factor to multiply ocean albedo by over land     
         'do_qflux' : False, #Do not use prescribed qflux formula
         'load_qflux': True,
         'qflux_file_name':'ocean_qflux',
-        'time_varying_qflux': True # shouldn't this be false? what is 
-        # a non time varying qflux?
+        'time_varying_qflux': True #
     },
 
     'qe_moist_convection_nml': {
@@ -202,7 +197,6 @@ exp.namelist = namelist = Namelist({
         'topog_file_name': 'land.nc', #Name of land input file, which will also contain topography if generated using Isca's `land_file_generator_fn.py' routine.
         'topography_option':'input' #Tell model to get topography from input file
         }
-
 })
 
 #Lets do a run!
@@ -211,20 +205,19 @@ for i in range(2,361):
     exp.run(i, num_cores=NCORES)
 
 
+#####################################################################################
+# ADD A CO2 FORCED RUN ##
+####################################################################################
 
 
-#################################################################################################
-##############################################################################################
-##################################################################################################
 cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 # Add a co2 forced run 
-exp = Experiment('full_continents_simple05mbucket_full05mbucketqflux_2xCO2_spinup_349', codebase=cb)
 
+exp = Experiment('full_continents_land_evap_pref07_fulllepref07qflux_4xCO2_spinup_361', codebase=cb)
 
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'exp/mp586/constant_evaporative_resistance/input/full_land_evap07/ocean_qflux.nc'),os.path.join(GFDL_BASE,'input/co2_quadrupling.nc')]
 
-#Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc'), os.path.join(GFDL_BASE,'exp/mp586/bucket/input/full_continents_simple05mbucket/ocean_qflux.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -234,10 +227,6 @@ diag.add_field('dynamics', 'ps', time_avg=True)
 diag.add_field('dynamics', 'bk')
 diag.add_field('dynamics', 'pk')
 diag.add_field('atmosphere', 'precipitation', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_cond', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_conv', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_lh', time_avg=True)
 diag.add_field('mixed_layer', 't_surf', time_avg=True)
 diag.add_field('dynamics', 'sphum', time_avg=True)
 diag.add_field('dynamics', 'ucomp', time_avg=True)
@@ -293,10 +282,7 @@ exp.namelist = namelist = Namelist({
         'convection_scheme':'SIMPLE_BETTS_MILLER', #Use the simple betts-miller convection scheme
         'land_option':'input', #Use land mask from input file
         'land_file_name': 'INPUT/land.nc', #Tell model where to find input file
-        'bucket':True, #Run with the bucket model
-        'init_bucket_depth_land':0.5, #Set initial bucket depth over land, default = 20, bucket is initially full 
-        'max_bucket_depth_land':0.5, #Set max bucket depth over land default = 0.15 
-        # src/atmos_spectral/driver/solo/idealized_moist_phys.F90
+        'bucket':False
     },
 
     'vert_turb_driver_nml': {
@@ -315,7 +301,9 @@ exp.namelist = namelist = Namelist({
     'surface_flux_nml': {
         'use_virtual_temp': False,
         'do_simple': True,
-        'old_dtaudv': True    
+        'old_dtaudv': True,
+        'land_humidity_prefactor': 1., # no pre-factor inside brackets
+        'land_evap_prefactor': 0.7 # land evap = potential evap*0.7
     },
 
     'atmosphere_nml': {
@@ -331,12 +319,11 @@ exp.namelist = namelist = Namelist({
         'land_option':'input',    #Tell mixed layer to get land mask from input file
         'land_h_capacity_prefactor': 0.1, #What factor to multiply mixed-layer depth by over land. 
         'albedo_value': 0.25, #Ocean albedo value
-        'land_albedo_prefactor' : 1.3, #What factor to multiply ocean albedo by over land
+        'land_albedo_prefactor' : 1.3, #What factor to multiply ocean albedo by over land     
         'do_qflux' : False, #Do not use prescribed qflux formula
         'load_qflux': True,
         'qflux_file_name':'ocean_qflux',
-        'time_varying_qflux': True # shouldn't this be false? what is 
-        # a non time varying qflux?
+        'time_varying_qflux': True #
     },
 
     'qe_moist_convection_nml': {
@@ -364,8 +351,9 @@ exp.namelist = namelist = Namelist({
     'rrtm_radiation_nml': {
         'do_read_ozone':True,
         'ozone_file':'ozone_1990',
+        'solr_cnst' : 1360., #s set solar constant to 1360, rather than default of 1368.22
         'do_read_co2': True,
-        'co2_file': 'co2_doubling',
+        'co2_file': 'co2_quadrupling',
         'solr_cnst' : 1360., #s set solar constant to 1360, rather than default of 1368.22
         'dt_rad': 3600, #Set RRTM radiation timestep to 3600 seconds, meaning it runs every 5 atmospheric timesteps        
     },
@@ -396,14 +384,15 @@ exp.namelist = namelist = Namelist({
         'scale_heights' : 11.0,
         'exponent':7.0,
         'robert_coeff':0.03
-    }
+    }, 
 
-
-# Didn't specify topography here, but took the settings from before, see T_avg for the co2 run --> still has signature from mountain ranges
-
+    'spectral_init_cond_nml': {
+        'topog_file_name': 'land.nc', #Name of land input file, which will also contain topography if generated using Isca's `land_file_generator_fn.py' routine.
+        'topography_option':'input' #Tell model to get topography from input file
+        }
 })
 
 #Lets do a run!
-exp.run(1, restart_file='/scratch/mp586/Isca_DATA/full_continents_simple05mbucket_full05mbucketqflux/restarts/res0349.tar.gz', num_cores=NCORES)
-for i in range(2,481):
+exp.run(1, use_restart=False, num_cores=NCORES)
+for i in range(2,361):
     exp.run(i, num_cores=NCORES)

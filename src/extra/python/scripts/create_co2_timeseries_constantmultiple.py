@@ -17,14 +17,14 @@ time_spacing=num_years
 time_arr,day_number,ntime,time_units, time_bounds=cts.create_time_arr(num_years,is_climatology, time_spacing)
 
 co2 = np.ones((ntime, npfull, nlat, nlon))
-#co2 = co2*300.*4 # quadruple co2
-co2 = co2*300.*2 # double co2
+co2 = co2*300.*4 # quadruple co2
+# co2 = co2*300.*2 # double co2
 # co2 = co2*300./2. # half co2
 #Some scenario in dimensionless units. 1.e-6 is to convert from ppmv. 
 
 
 #Output it to a netcdf file. 
-file_name='co2_doubling.nc'
+file_name='co2_quadrupling.nc'
 variable_name='co2'
 
 number_dict={}
