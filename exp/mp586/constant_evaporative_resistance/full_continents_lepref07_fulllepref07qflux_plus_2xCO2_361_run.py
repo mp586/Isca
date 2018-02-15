@@ -214,9 +214,9 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 # Add a co2 forced run 
 
-exp = Experiment('full_continents_land_evap_pref07_fulllepref07qflux_4xCO2_spinup_361', codebase=cb)
+exp = Experiment('full_continents_land_evap_pref07_fulllepref07qflux_2xCO2_spinup_361', codebase=cb)
 
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'exp/mp586/constant_evaporative_resistance/input/land_evap_pref07/ocean_qflux.nc'),os.path.join(GFDL_BASE,'input/co2_quadrupling.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'exp/mp586/constant_evaporative_resistance/input/land_evap_pref07/ocean_qflux.nc'),os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
 
 #Tell model how to write diagnostics
 diag = DiagTable()
@@ -353,7 +353,7 @@ exp.namelist = namelist = Namelist({
         'ozone_file':'ozone_1990',
         'solr_cnst' : 1360., #s set solar constant to 1360, rather than default of 1368.22
         'do_read_co2': True,
-        'co2_file': 'co2_quadrupling',
+        'co2_file': 'co2_doubling',
         'solr_cnst' : 1360., #s set solar constant to 1360, rather than default of 1368.22
         'dt_rad': 3600, #Set RRTM radiation timestep to 3600 seconds, meaning it runs every 5 atmospheric timesteps        
     },
