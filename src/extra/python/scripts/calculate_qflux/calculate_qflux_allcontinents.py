@@ -249,11 +249,11 @@ if __name__ == "__main__":
     input_dir=GFDL_BASE
     base_dir=GFDL_DATA
     land_file='input/all_continents/land.nc'
-    base_exp_name='full_continents_simple05mbucket_fixedSSTs' # work directory
-    exp_name='full_continents_simple05mbucket_fixedSSTs' # data directory 
+    base_exp_name='full_continents_land_evap_pref07_fixedSSTs' # work directory
+    exp_name='full_continents_land_evap_pref07_fixedSSTs' # data directory 
     #ice_file_name=base_dir+'annual_mean_ice_albedo_change_test_mk2_4320_dt_rad_4/'+'run360/'+'atmos_monthly.nc'
     ice_file_name=None
-    output_file_name=GFDL_BASE+'/input/all_continents/ocean_qflux_full_simple05mbucket'
+    output_file_name=GFDL_BASE+'/exp/mp586/constant_evaporative_resistance/input/land_evap_pref07/ocean_qflux'
 
     start_file=241 # needs to be January month
     end_file=480 # needs to be December month 
