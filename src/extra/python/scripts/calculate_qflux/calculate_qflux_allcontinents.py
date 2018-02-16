@@ -253,7 +253,7 @@ if __name__ == "__main__":
     exp_name='full_continents_newbucket_fixedSSTs' # data directory 
     #ice_file_name=base_dir+'annual_mean_ice_albedo_change_test_mk2_4320_dt_rad_4/'+'run360/'+'atmos_monthly.nc'
     ice_file_name=None
-    output_file_name=GFDL_BASE+'exp/mp586/bucket/input/full_continents_newbucket/ocean_qflux'
+    output_file_name=GFDL_BASE+'/exp/mp586/bucket/input/full_continents_newbucket/ocean_qflux'
 
     start_file=241 # needs to be January month
     end_file=480 # needs to be December month 
