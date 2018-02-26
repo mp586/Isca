@@ -60,7 +60,7 @@ diag.add_field('rrtm_radiation', 'flux_lw', time_avg=True) # net LW surface flux
 diag.add_field('mixed_layer', 'flux_lhe', time_avg=True) # latent heat flux (up) at surface
 diag.add_field('mixed_layer', 'flux_t', time_avg=True) # sensible heat flux (up) at surface
 diag.add_field('mixed_layer', 'flux_oceanq', time_avg=True)
-diag.add_filed('rrtm_radiation', 'co2', time_avg=True)
+diag.add_field('rrtm_radiation', 'co2', time_avg=True)
 
 #MP added on 11 october 2017
 exp.diag_table = diag
