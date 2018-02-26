@@ -354,7 +354,6 @@ exp.namelist = namelist = Namelist({
         'solr_cnst' : 1360., #s set solar constant to 1360, rather than default of 1368.22
         'do_read_co2': True,
         'co2_file': 'co2_doubling',
-        'solr_cnst' : 1360., #s set solar constant to 1360, rather than default of 1368.22
         'dt_rad': 3600, #Set RRTM radiation timestep to 3600 seconds, meaning it runs every 5 atmospheric timesteps        
     },
 
@@ -393,6 +392,6 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(1, use_restart=False, num_cores=NCORES)
+exp.run(1, restart_file='/scratch/mp586/Isca_DATA/full_continents_land_evap_pref07_fulllepref07qflux/restarts/res0361.tar.gz', num_cores=NCORES)
 for i in range(2,361):
     exp.run(i, num_cores=NCORES)
