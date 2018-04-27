@@ -119,7 +119,6 @@ exp.namelist = namelist = Namelist({
         'use_virtual_temp': False,
         'do_simple': True,
         'old_dtaudv': True,  
-        'land_humidity_prefactor': 1., # no pre-factor inside brackets
         'land_evap_prefactor': 0.8 # reduces evaporation from bucket 
     },
 
@@ -321,7 +320,6 @@ exp.namelist = namelist = Namelist({
         'use_virtual_temp': False,
         'do_simple': True,
         'old_dtaudv': True,
-        'land_humidity_prefactor': 1., # no pre-factor inside brackets
         'land_evap_prefactor': 0.8 # reduces evaporation from bucket
     },
 
