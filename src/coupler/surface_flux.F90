@@ -528,9 +528,9 @@ subroutine surface_flux_1d (                                           &
 	      ! begin LJJ addition
   		where(land)
 			where (bucket_depth >= max_bucket_depth_land*0.75)
-				flux_q    =  rho_drag * (q_surf0 - q_atm)
+				flux_q    =  land_evap_prefactor * rho_drag * (q_surf0 - q_atm) !mp: so that full bucket over land is not like the ocean, still has an evaporative resistance 
 			elsewhere	
-                flux_q    =  bucket_depth/(max_bucket_depth_land*0.75) * rho_drag * (q_surf0 - q_atm) ! flux of water vapor  (Kg/(m**2 s))
+                flux_q    =  land_evap_prefactor * bucket_depth/(max_bucket_depth_land*0.75) * rho_drag * (q_surf0 - q_atm) ! flux of water vapor  (Kg/(m**2 s)) !mp: otherwise not continuous evap resistance, need to include prefactor here as well 
 			end where
 		elsewhere
 	        flux_q    =  rho_drag * (q_surf0 - q_atm) ! flux of water vapor  (Kg/(m**2 s))
@@ -551,9 +551,9 @@ subroutine surface_flux_1d (                                           &
 	      dedq_atm = -rho_drag ! d(latent heat flux)/d(atmospheric mixing ratio)
 		  where(land)
 			  where (bucket_depth >= max_bucket_depth_land*0.75)
-				  dedt_surf =  rho_drag * (q_sat1 - q_sat) *del_temp_inv
+				  dedt_surf =  rho_drag * land_evap_prefactor * (q_sat1 - q_sat) *del_temp_inv
 			  elsewhere
-      	          dedt_surf =  bucket_depth/(max_bucket_depth_land*0.75) * rho_drag * (q_sat1 - q_sat) *del_temp_inv
+      	          dedt_surf = land_evap_prefactor * bucket_depth/(max_bucket_depth_land*0.75) * rho_drag * (q_sat1 - q_sat) *del_temp_inv
 			  end where
 		  elsewhere
  	          dedt_surf =  rho_drag * (q_sat1 - q_sat) *del_temp_inv
