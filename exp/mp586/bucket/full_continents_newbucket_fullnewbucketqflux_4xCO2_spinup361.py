@@ -371,7 +371,7 @@ exp.namelist = namelist = Namelist({
         'ozone_file':'ozone_1990',
         'solr_cnst' : 1360., #s set solar constant to 1360, rather than default of 1368.22
         'do_read_co2': True,
-        'co2_file': 'co2_doubling',
+        'co2_file': 'co2_quadrupling',
         'dt_rad': 3600, #Set RRTM radiation timestep to 3600 seconds, meaning it runs every 5 atmospheric timesteps        
     },
 
