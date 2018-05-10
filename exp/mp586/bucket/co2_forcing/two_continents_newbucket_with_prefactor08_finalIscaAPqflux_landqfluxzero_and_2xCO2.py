@@ -118,7 +118,9 @@ exp.namelist = namelist = Namelist({
     'surface_flux_nml': {
         'use_virtual_temp': False,
         'do_simple': True,
-        'old_dtaudv': True    
+        'old_dtaudv': True,
+        'land_evap_prefactor': 0.8 # reduces evaporation from bucket 
+
     },
 
     'atmosphere_nml': {
@@ -306,7 +308,9 @@ exp.namelist = namelist = Namelist({
     'surface_flux_nml': {
         'use_virtual_temp': False,
         'do_simple': True,
-        'old_dtaudv': True    
+        'old_dtaudv': True,
+        'land_evap_prefactor': 0.8 # reduces evaporation from bucket 
+
     },
 
     'atmosphere_nml': {
