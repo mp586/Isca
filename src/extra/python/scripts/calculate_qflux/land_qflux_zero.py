@@ -13,10 +13,11 @@ GFDL_BASE = os.environ['GFDL_BASE']
 
 
 # landfile=Dataset(os.path.join(GFDL_BASE,'input/two_continents/land.nc'),mode='r')
-landfile=Dataset(os.path.join(GFDL_BASE,'input/squareland/land.nc'),mode='r')
+# landfile=Dataset(os.path.join(GFDL_BASE,'input/squareland/land.nc'),mode='r')
 # landfile=Dataset(os.path.join(GFDL_BASE,'input/sqland_plus_antarctica/land.nc'),mode='r')
 # landfile=Dataset(os.path.join(GFDL_BASE,'input/aquaplanet/land.nc'),mode='r')
 # landfile=Dataset(os.path.join(GFDL_BASE,'input/square_South_America/land.nc'))
+landfile=Dataset(os.path.join(GFDL_BASE,'input/square_Africa/land.nc'))
 # landfile=Dataset(os.path.join(GFDL_BASE,'input/all_continents/land.nc'))
 
 landmask=landfile.variables['land_mask'][:]
@@ -25,7 +26,7 @@ landmask=landfile.variables['land_mask'][:]
 dsin = Dataset(os.path.join(GFDL_BASE,'input/aquaplanet/isca_qflux/ocean_qflux.nc'))
 
 #output file
-dsout = Dataset(os.path.join(GFDL_BASE,'input/squareland/isca_qflux/ocean_qflux.nc'), "w", format="NETCDF3_CLASSIC")
+dsout = Dataset(os.path.join(GFDL_BASE,'input/square_Africa/isca_qflux/ocean_qflux.nc'), "w", format="NETCDF3_CLASSIC")
 
 #Copy dimensions
 for dname, the_dim in dsin.dimensions.iteritems():
