@@ -2,9 +2,9 @@ import os
 
 import numpy as np
 
-from isca import IscaCodeBase, DiagTable, Experiment, Namelist, GFDL_BASE
+from isca import IscaCodeBase, DiagTable, Experiment, Namelist, GFDL_BASE, GFDL_DATA
 
-NCORES = 8
+NCORES = 16
 base_dir = os.getcwd()
 # a CodeBase can be a directory on the computer,
 # useful for iterative development
@@ -79,7 +79,7 @@ exp.namelist = namelist = Namelist({
         'minutes': 0,
         'seconds': 0,
         'dt_atmos':720,
-        'current_date' : [0001,1,1,0,0,0],
+        'current_date' : [1,1,1,0,0,0],
         'calendar' : 'thirty_day'
     },
 
@@ -267,7 +267,7 @@ exp.namelist = namelist = Namelist({
         'minutes': 0,
         'seconds': 0,
         'dt_atmos':720,
-        'current_date' : [0001,1,1,0,0,0],
+        'current_date' : [1,1,1,0,0,0],
         'calendar' : 'thirty_day'
     },
 
@@ -392,6 +392,6 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(1, restart_file='/scratch/mp586/Isca_DATA/square_Africa_newbucket_finalIscaAPqflux_landqfluxzero/restarts/res0361.tar.gz', num_cores=NCORES)
+exp.run(1, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_finalIscaAPqflux_landqfluxzero/restarts/res0361.tar.gz'), num_cores=NCORES)
 for i in range(2,481):
     exp.run(i, num_cores=NCORES)
