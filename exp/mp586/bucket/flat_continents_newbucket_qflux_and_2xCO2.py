@@ -211,7 +211,7 @@ for i in range(2,481):
 
 ####### co2 forcing ########
 
-exp = Experiment('flat_continents_newbucket_qflux', codebase=cb)
+exp = Experiment('flat_continents_newbucket_qflux_2xCO2_spinup_361', codebase=cb)
 
 
 
