@@ -29,7 +29,7 @@ exp = Experiment('full_continents_newbucket_2xCO2qflux_2xCO2_spinup361_from_full
 
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/full_continents_newbucket/ssts_from_co2_run/ocean_qflux.nc'),os.path.join(GFDL_BASE,'input/co2_doubling.nc') ]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/all_continents/full_continents_newbucket/ssts_from_co2_run/ocean_qflux.nc'),os.path.join(GFDL_BASE,'input/co2_doubling.nc') ]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
