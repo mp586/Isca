@@ -4,11 +4,13 @@ import numpy as np
 
 from isca import IscaCodeBase, DiagTable, Experiment, Namelist, GFDL_BASE
 
-NCORES = 16
+NCORES = 8 # was 16 in original run, changed to 8 to calcualte the last 10 years of data (run 361 - 481 for both)
 base_dir = os.getcwd()
 # a CodeBase can be a directory on the computer,
 # useful for iterative development
-cb = IscaCodeBase.from_directory(GFDL_BASE)
+# cb = IscaCodeBase.from_directory(GFDL_BASE)
+
+cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='6c0a053') # added before running the last 10 years, checked out the commit in Isca_DATA/full_continents_land_evap_pref07_fulllepref07qflux/run0001/git_hash_used.txt
 
 # or it can point to a specific git repo and commit id.
 # This method should ensure future, independent, reproducibility of results.
@@ -201,7 +203,7 @@ exp.namelist = namelist = Namelist({
 
 #Lets do a run!
 exp.run(1, use_restart=False, num_cores=NCORES)
-for i in range(2,362):
+for i in range(2,481):
     exp.run(i, num_cores=NCORES)
 
 
@@ -393,5 +395,5 @@ exp.namelist = namelist = Namelist({
 
 #Lets do a run!
 exp.run(1, restart_file='/scratch/mp586/Isca_DATA/full_continents_land_evap_pref07_fulllepref07qflux/restarts/res0361.tar.gz', num_cores=NCORES)
-for i in range(2,361):
+for i in range(2,481):
     exp.run(i, num_cores=NCORES)
