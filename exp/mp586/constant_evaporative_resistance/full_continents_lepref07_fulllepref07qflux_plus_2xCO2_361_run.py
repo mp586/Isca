@@ -30,7 +30,7 @@ exp = Experiment('full_continents_land_evap_pref07_fulllepref07qflux', codebase=
 
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'exp/mp586/constant_evaporative_resistance/input/land_evap_pref07/ocean_qflux.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/all_continents/constant_evaporative_resistance/land_evap_pref07/ocean_qflux.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -218,7 +218,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 exp = Experiment('full_continents_land_evap_pref07_fulllepref07qflux_2xCO2_spinup_361', codebase=cb)
 
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'exp/mp586/constant_evaporative_resistance/input/land_evap_pref07/ocean_qflux.nc'),os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/co2_doubling.nc'),os.path.join(GFDL_BASE,'input/all_continents/constant_evaporative_resistance/land_evap_pref07/ocean_qflux.nc')]
 
 #Tell model how to write diagnostics
 diag = DiagTable()
