@@ -23,7 +23,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
-exp = Experiment('two_continents_lepref07_finalIscaAPqflux', codebase=cb)
+exp = Experiment('two_continents_lepref07_finalIscaAPqflux_landqfluxzero', codebase=cb)
 
 
 
@@ -202,7 +202,7 @@ for i in range(2,481):
     exp.run(i, num_cores=NCORES)
 
 ####### co2 experiment #######
-exp = Experiment('two_continents_lepref07_finalIscaAPqflux_2xCO2_spinup_361', codebase=cb)
+exp = Experiment('two_continents_lepref07_finalIscaAPqflux_landqfluxzero_2xCO2_spinup_361', codebase=cb)
 
 
 
@@ -374,6 +374,6 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(1, restart_file=os.path.join(GFDL_DATA,'two_continents_lepref07_finalIscaAPqflux/restarts/res0361.tar.gz'), num_cores=NCORES)
+exp.run(1, restart_file=os.path.join(GFDL_DATA,'two_continents_lepref07_finalIscaAPqflux_landqfluxzero/restarts/res0361.tar.gz'), num_cores=NCORES)
 for i in range(2,481):
     exp.run(i, num_cores=NCORES)
