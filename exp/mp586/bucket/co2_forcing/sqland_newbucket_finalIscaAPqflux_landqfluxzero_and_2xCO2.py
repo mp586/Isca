@@ -10,7 +10,7 @@ base_dir = os.getcwd()
 # useful for iterative development
 # cb = IscaCodeBase.from_directory(GFDL_BASE)
 
-cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='fccc668') #looked up commit which was used for original 2xCO2 experiment
+cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='fccc668') 
 
 # or it can point to a specific git repo and commit id.
 # This method should ensure future, independent, reproducibility of results.
