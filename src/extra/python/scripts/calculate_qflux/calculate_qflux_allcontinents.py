@@ -55,7 +55,7 @@ def time_gradient(data_in, delta_t):
 def ice_mask_calculation(dataset, land_array, ice_file_name, dayofyear_or_months='months'):
 
     try:
-        ice_climatology=dataset['ice_conc'].groupby(dayofyear_or_months).mean('time').load()
+        ice_climatology=dataset['ice_conc'].groupby(dayofyear_or_months).mean('time').load() # .groupby(dayofyear_or_months).mean('time') groups data by day_of_year and then averages over that group --> climatology. if day_of_year is month then it groups the data into months and calculates the climatology for jan, feb, march, .... 
         ice_array=ice_climatology.values
         ice_idx=ice_array !=0.
         ice_array[ice_idx]=1.0
@@ -201,7 +201,7 @@ def deep_ocean_heat_content(dataset, model_params, dayofyear_or_months='months')
 
     print('doing deep ocean heat content')
     aav.area_average(dataset, 'd_weighted_sst_data_dt', model_params, land_ocean_all='ocean_non_ice', axis_in=dayofyear_or_months+'_ax')
-    d_deep_ocean_dt=(dataset['net_surf_energy_fl_area_av_ocean_non_ice']-dataset['d_weighted_sst_data_dt_area_av_ocean_non_ice']).mean()
+    d_deep_ocean_dt=(dataset['net_surf_energy_fl_area_av_ocean_non_ice']-dataset['d_weighted_sst_data_dt_area_av_ocean_non_ice']).mean() # only one value
 
     dataset['d_deep_ocean_dt']=(d_deep_ocean_dt)    
 

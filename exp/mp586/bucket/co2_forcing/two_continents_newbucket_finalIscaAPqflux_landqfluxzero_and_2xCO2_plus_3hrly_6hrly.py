@@ -404,7 +404,7 @@ exp.namelist = namelist = Namelist({
 
 #Lets do a run!
 exp.run(1, use_restart=False, num_cores=NCORES)
-for i in range(2,601):
+for i in range(2,853):
     exp.run(i, num_cores=NCORES)
 
 
@@ -798,5 +798,5 @@ exp.namelist = namelist = Namelist({
 
 
 exp.run(1, restart_file='/scratch/mp586/Isca_DATA/two_continents_newbucket_finalIscaAPqflux_landqfluxzero/restarts/res0361.tar.gz', num_cores=NCORES)
-for i in range(2,601):
+for i in range(2,853):
     exp.run(i, num_cores=NCORES)
