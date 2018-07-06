@@ -19,14 +19,8 @@ sys.path.insert(0, os.path.join(GFDL_BASE,'src/extra/python/scripts'))
 import cell_area as ca
 
 
-landfile=Dataset(os.path.join(GFDL_BASE,'input/two_continents/land.nc'),mode='r')
-# landfile=Dataset(os.path.join(GFDL_BASE,'input/squareland/land.nc'),mode='r')
-# landfile=Dataset(os.path.join(GFDL_BASE,'input/sqland_plus_antarctica/land.nc'),mode='r')
-# landfile=Dataset(os.path.join(GFDL_BASE,'input/aquaplanet/land.nc'),mode='r')
-# landfile=Dataset(os.path.join(GFDL_BASE,'input/square_South_America/land.nc'))
-# landfile=Dataset(os.path.join(GFDL_BASE,'input/square_Africa/land.nc'))
-# landfile=Dataset(os.path.join(GFDL_BASE,'input/all_continents/land.nc'))
-
+lmask = input('Which landmask? ')
+landfile=Dataset(os.path.join(GFDL_BASE,'input/'+lmask+'/land.nc'),mode='r')
 landmask=landfile.variables['land_mask'][:]
 
 area_array = ca.cell_area(t_res=42,base_dir='/scratch/mp586/Isca/')
@@ -36,7 +30,7 @@ area_array = xr.DataArray(area_array)
 dsin = Dataset(os.path.join(GFDL_BASE,'input/aquaplanet/isca_qflux/ocean_qflux.nc'))
 
 #output file
-dsout = Dataset(os.path.join(GFDL_BASE,'input/two_continents/isca_qflux/zero_integral/ocean_qflux.nc'), "w", format="NETCDF3_CLASSIC")
+dsout = Dataset(os.path.join(GFDL_BASE,'input/'+lmask+'/isca_qflux/zero_integral/ocean_qflux.nc'), "w", format="NETCDF3_CLASSIC")
 
 #Copy dimensions
 for dname, the_dim in dsin.dimensions.iteritems():
@@ -75,7 +69,22 @@ for v_name, varin in dsin.variables.iteritems():
         
         meanq_int = area_integral(meanq,area_array,landmask,'all_sfcs')# doesn't matter whether I put option all sfcs or ocean, because qflux is zero over ocean anyway
 
-        q_int_invweight_landzero = (meanq_int * 1./(area_array.where(landmask==0.)))/num_oceancells
+        q_int_invweight_landzero = np.round(((meanq_int * 1./(area_array.where(landmask==0.)))/num_oceancells),100000)
+
+# for some reason, I have to round the correction matrix, so that the resulting corrected qflux is actually zero when integrated over the whole globe. If I don't do that, then 
+
+# print(area_integral(Cqflux.mean('time'),area_array,landmask,'all_sfcs') - area_integral(correction_matrix.mean('time'),area_array,landmask,'all_sfcs'))
+
+# will be zero, but 
+# #
+# qflux_out = Cqflux - correction_matrix
+
+# print(area_integral(qflux_out.mean('time'),area_array,landmask,'all_sfcs'))
+# will not, and I really need the second one to be zero (the first one is just a check but they should actually be the same. I think the difference is due to some machine precision stuff that I don't udnerstand!
+
+
+
+
         q_int_invweight_landzero = xr.DataArray(q_int_invweight_landzero, coords = [lats,lons], dims = ['lat','lon'])
 
         correction_matrix = np.expand_dims(q_int_invweight_landzero,axis=0)
