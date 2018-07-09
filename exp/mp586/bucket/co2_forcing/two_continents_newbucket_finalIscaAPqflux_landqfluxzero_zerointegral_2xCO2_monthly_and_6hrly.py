@@ -11,7 +11,7 @@ base_dir = os.getcwd()
 # cb = IscaCodeBase.from_directory(GFDL_BASE)
 
 
-cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='adfd9ba') #looked up commit which was used for original 2xCO2 experiment
+cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='77a619d')
 
 # or it can point to a specific git repo and commit id.
 # This method should ensure future, independent, reproducibility of results.
@@ -26,16 +26,16 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
-exp = Experiment('two_continents_newbucket_finalIscaAPqflux_landqfluxzero', codebase=cb)
+exp = Experiment('two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral', codebase=cb)
 
 
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/two_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/two_continents/isca_qflux/ocean_qflux.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/two_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/two_continents/isca_qflux/zero_integral/ocean_qflux.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days') # to output data in two different time resolutions
-diag.add_file('atmos_6_hourly', 6, 'hours', time_units='hours') 
+# diag.add_file('atmos_6_hourly', 6, 'hours', time_units='hours') 
 
 #Tell model which diagnostics to write
 diag.add_field('dynamics', 'ps', time_avg=True) # don't specify files, then it writes to both
@@ -82,7 +82,7 @@ exp.namelist = namelist = Namelist({
         'minutes': 0,
         'seconds': 0,
         'dt_atmos':720,
-        'current_date' : [0001,1,1,0,0,0],
+        'current_date' : [1,1,1,0,0,0],
         'calendar' : 'thirty_day'
     },
 
@@ -206,7 +206,7 @@ exp.namelist = namelist = Namelist({
 
 #Lets do a run!
 exp.run(1, use_restart=False, num_cores=NCORES)
-for i in range(2,613):
+for i in range(2,481):
     exp.run(i, num_cores=NCORES)
 
 
@@ -217,16 +217,16 @@ for i in range(2,613):
 
 
 ####### co2 experiment #######
-exp = Experiment('two_continents_newbucket_finalIscaAPqflux_landqfluxzero_2xCO2_spinup_361', codebase=cb)
+exp = Experiment('two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_2xCO2_spinup_361', codebase=cb)
 
 
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/two_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/two_continents/isca_qflux/ocean_qflux.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/two_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/two_continents/isca_qflux/zero_integral/ocean_qflux.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
-diag.add_file('atmos_6_hourly', 6, 'hours', time_units='hours') 
+# diag.add_file('atmos_6_hourly', 6, 'hours', time_units='hours') 
 
 #Tell model which diagnostics to write
 diag.add_field('dynamics', 'ps', time_avg=True)
@@ -274,7 +274,7 @@ exp.namelist = namelist = Namelist({
         'minutes': 0,
         'seconds': 0,
         'dt_atmos':720,
-        'current_date' : [0001,1,1,0,0,0],
+        'current_date' : [1,1,1,0,0,0],
         'calendar' : 'thirty_day'
     },
 
@@ -399,8 +399,8 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(1, restart_file='/scratch/mp586/Isca_DATA/two_continents_newbucket_finalIscaAPqflux_landqfluxzero/restarts/res0361.tar.gz', num_cores=NCORES)
-for i in range(2,613):
+exp.run(1, restart_file=os.path.join(GFDL_DATA,'two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral/restarts/res0361.tar.gz', num_cores=NCORES)
+for i in range(2,481):
     exp.run(i, num_cores=NCORES)
 
 

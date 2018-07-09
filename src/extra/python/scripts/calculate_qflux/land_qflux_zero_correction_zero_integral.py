@@ -57,51 +57,65 @@ for v_name, varin in dsin.variables.iteritems():
 	area_array = xr.DataArray(area_array, coords=[lats,lons], dims = ['lat','lon'])
         num_oceancells = (np.size(landmask) - np.count_nonzero(landmask))
 
+
+        Cqflux = np.empty_like(qflux_out)
+
         for i in range(0,12):
             qflux_i_init = qflux_in[i,:,:]
             qflux_i_init[landmask == 1.] = 0. # 2.0
             qflux_i_init = xr.DataArray(qflux_i_init, coords = [lats,lons], dims = ['lat','lon'])
-            qflux_out[i,:,:] = qflux_i_init
+            Cqflux[i,:,:] = qflux_i_init
 
 
-        qflux_out = xr.DataArray(qflux_out,coords=[time,lats,lons],dims=['time','lat','lon'])
-        meanq = qflux_out.mean('time')
+        Cqflux = xr.DataArray(Cqflux,coords=[time,lats,lons],dims=['time','lat','lon'])
+        meanq = Cqflux.mean('time')
         
         meanq_int = area_integral(meanq,area_array,landmask,'all_sfcs')# doesn't matter whether I put option all sfcs or ocean, because qflux is zero over ocean anyway
 
-        q_int_invweight_landzero = np.round(((meanq_int * 1./(area_array.where(landmask==0.)))/num_oceancells),100000)
-
-# for some reason, I have to round the correction matrix, so that the resulting corrected qflux is actually zero when integrated over the whole globe. If I don't do that, then 
-
-# print(area_integral(Cqflux.mean('time'),area_array,landmask,'all_sfcs') - area_integral(correction_matrix.mean('time'),area_array,landmask,'all_sfcs'))
-
-# will be zero, but 
-# #
-# qflux_out = Cqflux - correction_matrix
-
-# print(area_integral(qflux_out.mean('time'),area_array,landmask,'all_sfcs'))
-# will not, and I really need the second one to be zero (the first one is just a check but they should actually be the same. I think the difference is due to some machine precision stuff that I don't udnerstand!
-
-
-
-
+        q_int_invweight_landzero = (meanq_int * 1./(area_array.where(landmask==0.)))/num_oceancells
         q_int_invweight_landzero = xr.DataArray(q_int_invweight_landzero, coords = [lats,lons], dims = ['lat','lon'])
+
+
 
         correction_matrix = np.expand_dims(q_int_invweight_landzero,axis=0)
         correction_matrix = np.repeat(correction_matrix,12,axis=0) 
         correction_matrix = xr.DataArray(correction_matrix,coords=[time,lats,lons],dims=['time','lat','lon'])
         # the correction matrix is the same in every month, since the annual mean of a 12xlatxlon matrix of ones is a latxlon matrix of ones, so similarly if the ones are replaces by q_int_invweight_landzero
 
-        print(area_integral(qflux_out.mean('time'),area_array,landmask,'all_sfcs') - area_integral(correction_matrix.mean('time'),area_array,landmask,'all_sfcs'))
+        print(area_integral(Cqflux.mean('time'),area_array,landmask,'all_sfcs') - area_integral(correction_matrix.mean('time'),area_array,landmask,'all_sfcs'))
 
-        qflux_out = qflux_out - correction_matrix
+        qflux_out = Cqflux - correction_matrix
+        qflux_out = xr.DataArray(qflux_out,coords=[time,lats,lons],dims=['time','lat','lon'])
 
         print(area_integral(qflux_out.mean('time'),area_array,landmask,'all_sfcs'))
 
-        outVar[:] = np.asarray(qflux_out)
+
 
 # NB: the two print statements above should show the same result in theory, but I think due to machine precision, they don't.... 
+# see Code/Graphics/qflux_nonzero_test.py for more tests...
+# therefore, in order to get a zero integrated qflux I cheat a bit with the stuff below:
+ 
+        qqflux_oout = np.empty_like(qflux_out)
+        # for some reason I can't just overwrite qflux_out.... why??
 
+        for i in range(0,12):
+            qqflux_oout[i,:,:] = qflux_out[i,:,:] - (qflux_out.mean('time') - (Cqflux.mean('time') - correction_matrix.mean('time')))
+            qqflux_oout[i,landmask == 1.] = 0. # can't have nans in array
+
+        
+# in theory, the stuff in the brackets should be equal to zero, but it's roughly 10^-6 in each grid cell, so I am subtracting that from the already corrected qflux')
+
+
+
+        outVar[:] = np.asarray(qqflux_oout)
+
+        
+        qqflux_oout = xr.DataArray(qqflux_oout,coords=[time,lats,lons],dims=['time','lat','lon'])
+
+        print(area_integral(qqflux_oout.mean('time'),area_array,landmask,'all_sfcs'))
+
+        
+        
 
 # make qflux_int zero in each month instead
 # include this in the loop for i in range(0,12)
