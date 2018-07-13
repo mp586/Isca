@@ -11,7 +11,7 @@ base_dir = os.getcwd()
 # cb = IscaCodeBase.from_directory(GFDL_BASE)
 
 
-cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='995905e')
+cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='3f93457')
 
 # or it can point to a specific git repo and commit id.
 # This method should ensure future, independent, reproducibility of results.
