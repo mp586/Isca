@@ -26,7 +26,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 exp = Experiment('two_continents_newbucket_fixedSSTs_from_experiment_two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly', codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/two_continents/prescribed_SSTs_from_two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/two_continents/prescribed_ssts_control.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -133,7 +133,7 @@ exp.namelist = namelist = Namelist({
         'do_qflux' : False, #Do not use prescribed qflux formula
         'do_read_sst' : True, #Read in sst values from input file
         'do_sc_sst' : True, #Do specified ssts (need both to be true)
-        'sst_file' : 'prescribed_SSTs_from_two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly', #Set name of sst input file
+        'sst_file' : 'prescribed_ssts_control', #Set name of sst input file
         'specify_sst_over_ocean_only' : True, #Make sure sst only specified in regions of ocean.
     },
 

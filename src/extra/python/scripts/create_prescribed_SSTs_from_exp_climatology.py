@@ -54,7 +54,7 @@ nc = Dataset(filename,mode='r')
 dsin = Dataset(os.path.join(GFDL_BASE,'input/sst_clim_amip.nc'))
 
 #output file
-dsout = Dataset(os.path.join(GFDL_BASE,'input/'+landmask_name+'/prescribed_SSTs_from_'+exp_name+'.nc'), "w", format="NETCDF3_CLASSIC")
+dsout = Dataset(os.path.join(GFDL_BASE,'input/'+landmask_name+'/prescribed_ssts_control.nc'), "w", format="NETCDF3_CLASSIC")
 
 #Copy dimensions
 for dname, the_dim in dsin.dimensions.iteritems():
@@ -70,8 +70,8 @@ for dname, the_dim in dsin.dimensions.iteritems():
 for v_name, varin in dsin.variables.iteritems():
     
     if v_name == 'sst_clim_amip':
-        outVar = dsout.createVariable('prescribed_SSTs_from_'+exp_name, varin.datatype, varin.dimensions)
-        print varin.datatype
+        outVar = dsout.createVariable('prescribed_ssts_control', varin.datatype, varin.dimensions)
+        print v_name, varin.datatype
     
         # Copy variable attributes
         outVar.setncatts({k: varin.getncattr(k) for k in varin.ncattrs()})
@@ -86,7 +86,7 @@ for v_name, varin in dsin.variables.iteritems():
     elif v_name in ['lat','lon','latb','lonb']:
 
         outVar = dsout.createVariable(v_name, varin.datatype, varin.dimensions)
-        print varin.datatype
+        print v_name, varin.datatype
     
         # Copy variable attributes
         outVar.setncatts({k: varin.getncattr(k) for k in varin.ncattrs()})
@@ -95,9 +95,10 @@ for v_name, varin in dsin.variables.iteritems():
 
     else:
         outVar = dsout.createVariable(v_name, varin.datatype, varin.dimensions)
-        print varin.datatype
+        print v_name, varin.datatype
     
         # Copy variable attributes
+        outVar.setncatts({k: varin.getncattr(k) for k in varin.ncattrs()})
         outVar[:] = varin[:]
 
 # close the output file
