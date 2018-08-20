@@ -2,7 +2,7 @@ import os
 
 import numpy as np
 
-from isca import IscaCodeBase, DiagTable, Experiment, Namelist, GFDL_BASE
+from isca import IscaCodeBase, DiagTable, Experiment, Namelist, GFDL_BASE, GFDL_DATA
 
 NCORES = 16
 base_dir = os.getcwd()
@@ -329,7 +329,7 @@ exp.namelist = namelist = Namelist({
         'do_qflux' : False, #Do not use prescribed qflux formula
         'do_read_sst' : True, #Read in sst values from input file
         'do_sc_sst' : True, #Do specified ssts (need both to be true)
-        'sst_file' : 'prescribed_ssts_control', #Set name of sst input file
+        'sst_file' : 'prescribed_ssts_perturbed', #Set name of sst input file
         'specify_sst_over_ocean_only' : True, #Make sure sst only specified in regions of ocean.
     },
 
@@ -395,6 +395,6 @@ exp.namelist = namelist = Namelist({
 
 
 #Lets do a run!
-exp.run(1, restart_file=os.path.join(GFDL_DATA,'two_continents_newbucket_fixedSSTs_from_experiment_two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly/restars/res0361.tar.gz'), num_cores=NCORES)
+exp.run(1, restart_file=os.path.join(GFDL_DATA,'two_continents_newbucket_fixedSSTs_from_experiment_two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly/restarts/res0361.tar.gz'), num_cores=NCORES)
 for i in range(2,481):
     exp.run(i, num_cores=NCORES)
