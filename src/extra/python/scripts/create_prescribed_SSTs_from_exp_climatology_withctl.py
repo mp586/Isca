@@ -1,3 +1,5 @@
+### This is similar to create_prescribed_SSTs_from_exp_climatology.py, but allows to input a control and a perturbed experiment, to calculate the uniform warming for a uniform + x K experiment ###############
+
 import numpy as np
 import xarray
 from xarray import ufuncs as xruf
@@ -71,11 +73,8 @@ nc = Dataset(filename,mode='r')
 dsin = Dataset(os.path.join(GFDL_BASE,'input/sst_clim_amip.nc'))
 
 #output file
-# dsout = Dataset(os.path.join(GFDL_BASE,'input/'+landmask_name+'/prescribed_ssts_control.nc'), "w", format="NETCDF3_CLASSIC")
 # for control, the input data directory was Isca/two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly run 121-481
 # for perturbed, the input data directory was Isca/two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly_2xCO2_spinup_361 run 120-480
-
-#dsout = Dataset(os.path.join(GFDL_BASE,'input/'+landmask_name+'/prescribed_ssts_perturbed.nc'), "w", format="NETCDF3_CLASSIC")
 
 dsout = Dataset(os.path.join(GFDL_BASE,'input/'+landmask_name+'/prescribed_ssts_uniform.nc'), "w", format="NETCDF3_CLASSIC")
 
@@ -95,8 +94,6 @@ for dname, the_dim in dsin.dimensions.iteritems():
 for v_name, varin in dsin.variables.iteritems():
     
     if v_name == 'sst_clim_amip':
-#        outVar = dsout.createVariable('prescribed_ssts_control', varin.datatype, varin.dimensions)
-#        outVar = dsout.createVariable('prescribed_ssts_perturbed', varin.datatype, varin.dimensions)
         outVar = dsout.createVariable('prescribed_ssts_uniform', varin.datatype, varin.dimensions)
 
         print v_name, varin.datatype
