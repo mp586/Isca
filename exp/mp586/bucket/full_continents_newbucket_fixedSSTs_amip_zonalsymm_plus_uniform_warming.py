@@ -333,7 +333,7 @@ exp.namelist = namelist = Namelist({
         'do_qflux' : False, #Do not use prescribed qflux formula
         'do_read_sst' : True, #Read in sst values from input file
         'do_sc_sst' : True, #Do specified ssts (need both to be true)
-        'sst_file' : 'sst_clim_amip_zonalsymm_plus_uniform_warming'
+        'sst_file' : 'sst_clim_amip_zonalsymm_plus_uniform_warming',
         'specify_sst_over_ocean_only' : True, #Make sure sst only specified in regions of ocean.
     },
 
