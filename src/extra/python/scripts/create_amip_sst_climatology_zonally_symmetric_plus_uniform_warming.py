@@ -31,7 +31,7 @@ def fill_nan(A):
 dsin = Dataset(os.path.join(GFDL_BASE,'input/sst_clim_amip.nc'))
 
 #output file
-dsout = Dataset(os.path.join(GFDL_BASE,"input/sst_clim_amip_zonalsymm_plus_uniform_warming.nc"), "w", format="NETCDF3_CLASSIC")
+dsout = Dataset(os.path.join(GFDL_BASE,"input/amip_zonsymm_uniform_warming.nc"), "w", format="NETCDF3_CLASSIC")
 #Copy dimensions
 for dname, the_dim in dsin.dimensions.iteritems():
     print dname, len(the_dim)
@@ -41,7 +41,7 @@ for dname, the_dim in dsin.dimensions.iteritems():
 # Copy variables
 for v_name, varin in dsin.variables.iteritems():
     if v_name == 'sst_clim_amip':
-        outVar = dsout.createVariable('sst_clim_amip_zonalsymm_plus_uniform_warming', varin.datatype, varin.dimensions)
+        outVar = dsout.createVariable('amip_zonsymm_uniform_warming', varin.datatype, varin.dimensions)
         print varin.datatype
     
         # Copy variable attributes

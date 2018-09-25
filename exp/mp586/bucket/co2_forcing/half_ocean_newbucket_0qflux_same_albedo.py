@@ -23,7 +23,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
-exp = Experiment('half_ocean_lepref07_0qflux', codebase=cb)
+exp = Experiment('half_ocean_newbucket_0qflux_same_albedo_control_witholr', codebase=cb)
 
 
 
@@ -51,6 +51,12 @@ diag.add_field('atmosphere', 'rh', time_avg=True)
 diag.add_field('dynamics', 'slp', time_avg=True) # sea level pressure
 diag.add_field('dynamics', 'zsurf', time_avg=True) # geopotential height at surface
 diag.add_field('rrtm_radiation', 'toa_sw',time_avg=True)
+diag.add_field('rrtm_radiation', 'olr',time_avg=True)
+diag.add_field('rrtm_radiation', 'toa_lw',time_avg=True)
+diag.add_field('atmosphere', 'bucket_depth', time_avg=True)
+diag.add_field('atmosphere', 'bucket_depth_cond', time_avg=True)
+diag.add_field('atmosphere', 'bucket_depth_conv', time_avg=True)
+diag.add_field('atmosphere', 'bucket_depth_lh', time_avg=True)
 
 diag.add_field('rrtm_radiation', 'flux_sw', time_avg=True) # net SW surface flux
 diag.add_field('rrtm_radiation', 'flux_lw', time_avg=True) # net LW surface flux
@@ -92,8 +98,8 @@ exp.namelist = namelist = Namelist({
         'convection_scheme':'SIMPLE_BETTS_MILLER', #Use the simple betts-miller convection scheme
         'land_option':'input', #Use land mask from input file
         'land_file_name': 'INPUT/land.nc', #Tell model where to find input file
-        'bucket':False, #Run with the bucket model
-        # 'init_bucket_depth_land':0.15, #Set initial bucket depth over land, default = 20, bucket is initially full 
+        'bucket':True, #Run with the bucket model
+        'init_bucket_depth_land':0.15, #Set initial bucket depth over land, default = 20, bucket is initially full 
 #        'max_bucket_depth_land':0.5, #Set max bucket depth over land default = 0.15 
         # src/atmos_spectral/driver/solo/idealized_moist_phys.F90
     },
@@ -115,8 +121,8 @@ exp.namelist = namelist = Namelist({
         'use_virtual_temp': False,
         'do_simple': True,
         'old_dtaudv': True,
-        'land_humidity_prefactor': 1., # no pre-factor inside brackets
-        'land_evap_prefactor': 0.7 # land evap = potential evap*0.7
+ #       'land_humidity_prefactor': 1., # no pre-factor inside brackets
+ #       'land_evap_prefactor': 0.7 # land evap = potential evap*0.7
     },
 
     'atmosphere_nml': {
@@ -132,7 +138,7 @@ exp.namelist = namelist = Namelist({
         'land_option':'input',    #Tell mixed layer to get land mask from input file
         'land_h_capacity_prefactor': 0.1, #What factor to multiply mixed-layer depth by over land. 
         'albedo_value': 0.25, #Ocean albedo value
-        'land_albedo_prefactor' : 1.3, #What factor to multiply ocean albedo by over land
+        'land_albedo_prefactor' : 1.0, #What factor to multiply ocean albedo by over land
         'do_qflux' : False, #Do not use prescribed qflux formula
         'qflux_amp' : 0.
     },
@@ -197,7 +203,7 @@ exp.namelist = namelist = Namelist({
 
 #Lets do a run!
 exp.run(1, use_restart=False, num_cores=NCORES)
-for i in range(2,481):
+for i in range(2,241):
     exp.run(i, num_cores=NCORES)
 
 
@@ -205,12 +211,12 @@ for i in range(2,481):
 
 
 ####### co2 experiment #######
-exp = Experiment('two_continents_newbucket_0qflux_2xCO2_spinup_361', codebase=cb)
+exp = Experiment('half_ocean_newbucket_0qflux_same_albedo_4xCO2', codebase=cb)
 
 
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/two_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/two_continents/isca_qflux/ocean_qflux.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/half_ocean/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'), os.path.join(GFDL_BASE,'input/co2_quadrupling.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -237,7 +243,7 @@ diag.add_field('atmosphere', 'rh', time_avg=True)
 diag.add_field('dynamics', 'slp', time_avg=True) # sea level pressure
 diag.add_field('dynamics', 'zsurf', time_avg=True) # geopotential height at surface
 diag.add_field('rrtm_radiation', 'toa_sw',time_avg=True)
-
+diag.add_field('rrtm_radiation', 'toa_lw',time_avg=True)
 diag.add_field('rrtm_radiation', 'flux_sw', time_avg=True) # net SW surface flux
 diag.add_field('rrtm_radiation', 'flux_lw', time_avg=True) # net LW surface flux
 diag.add_field('mixed_layer', 'flux_lhe', time_avg=True) # latent heat flux (up) at surface
@@ -349,7 +355,7 @@ exp.namelist = namelist = Namelist({
         'do_read_ozone':True,
         'ozone_file':'ozone_1990',
         'do_read_co2': True,
-        'co2_file': 'co2_doubling',
+        'co2_file': 'co2_quadrupling',
         'solr_cnst' : 1360., #s set solar constant to 1360, rather than default of 1368.22
         'dt_rad': 3600, #Set RRTM radiation timestep to 3600 seconds, meaning it runs every 5 atmospheric timesteps        
     },
@@ -384,6 +390,6 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-# exp.run(1, restart_file='/scratch/mp586/Isca_DATA/two_continents_newbucket_0qflux/restarts/res0361.tar.gz', num_cores=NCORES)
-# for i in range(2,481):
-#    exp.run(i, num_cores=NCORES)
+#exp.run(1, restart_file='/scratch/mp586/Isca_DATA/half_ocean_newbucket_0qflux_control/restarts/res0241.tar.gz', num_cores=NCORES)
+#for i in range(2,241):
+#   exp.run(i, num_cores=NCORES)
