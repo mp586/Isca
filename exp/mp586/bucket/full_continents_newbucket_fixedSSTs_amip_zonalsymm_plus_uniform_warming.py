@@ -224,7 +224,7 @@ exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_plus_2pt
 exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
-diag.add_file('atmos_monthly', 30, 'days', time_units='days')
+diag.add_file('atmos_monthly', 15, 'days', time_units='days')
 
 #Tell model which diagnostics to write
 diag.add_field('dynamics', 'ps', time_avg=True)
@@ -340,7 +340,7 @@ exp.namelist = namelist = Namelist({
     'qe_moist_convection_nml': {
         'rhbm':0.7,
         'Tmin':160.,
-        'Tmax':400.   # mp changed bec of crash, was 350. 
+        'Tmax':350.   
     },
     
     'lscale_cond_nml': {
@@ -387,7 +387,7 @@ exp.namelist = namelist = Namelist({
         'water_correction_limit': 200.e2,
         'reference_sea_level_press':1.0e5,
         'num_levels':40,
-        'valid_range_t':[100.,1000.], #mp chnaged bec of crash, was 800.
+        'valid_range_t':[100.,800.], 
         'initial_sphum':[2.e-6],
         'vert_coord_option':'uneven_sigma',
         'surf_res':0.2, #Parameter that sets the vertical distribution of sigma levels
