@@ -340,7 +340,7 @@ exp.namelist = namelist = Namelist({
     'qe_moist_convection_nml': {
         'rhbm':0.7,
         'Tmin':160.,
-        'Tmax':350.   
+        'Tmax':400.   # mp changed bec of crash, was 350. 
     },
     
     'lscale_cond_nml': {
@@ -387,7 +387,7 @@ exp.namelist = namelist = Namelist({
         'water_correction_limit': 200.e2,
         'reference_sea_level_press':1.0e5,
         'num_levels':40,
-        'valid_range_t':[100.,800.],
+        'valid_range_t':[100.,1000.], #mp chnaged bec of crash, was 800.
         'initial_sphum':[2.e-6],
         'vert_coord_option':'uneven_sigma',
         'surf_res':0.2, #Parameter that sets the vertical distribution of sigma levels
