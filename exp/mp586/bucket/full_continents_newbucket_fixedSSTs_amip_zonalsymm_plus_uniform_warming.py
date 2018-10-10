@@ -224,7 +224,8 @@ exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_plus_2pt
 exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
-diag.add_file('atmos_monthly', 30, 'days', time_units='days')
+diag.add_file('atmos_15days', 15, 'days', time_units='days')
+diag.add_field('atmos_daily', 1, 'days', time_units = 'days')
 
 #Tell model which diagnostics to write
 diag.add_field('dynamics', 'ps', time_avg=True)
