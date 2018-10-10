@@ -224,40 +224,40 @@ exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_plus_2pt
 exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
-diag.add_file('atmos_daily', 15, 'days', time_units='days')
+diag.add_file('atmos_monthly', 30, 'days', time_units='days')
 
 #Tell model which diagnostics to write
-diag.add_field('dynamics', 'ps', time_avg=False)
+diag.add_field('dynamics', 'ps', time_avg=True)
 diag.add_field('dynamics', 'bk')
 diag.add_field('dynamics', 'pk')
-diag.add_field('atmosphere', 'precipitation', time_avg=False)
-diag.add_field('atmosphere', 'bucket_depth', time_avg=False)
-diag.add_field('atmosphere', 'bucket_depth_cond', time_avg=False)
-diag.add_field('atmosphere', 'bucket_depth_conv', time_avg=False)
-diag.add_field('atmosphere', 'bucket_depth_lh', time_avg=False)
-diag.add_field('mixed_layer', 't_surf', time_avg=False)
-diag.add_field('dynamics', 'sphum', time_avg=False)
-diag.add_field('dynamics', 'ucomp', time_avg=False)
-diag.add_field('dynamics', 'vcomp', time_avg=False)
-diag.add_field('dynamics', 'temp', time_avg=False)
-diag.add_field('dynamics', 'vor', time_avg=False)
-diag.add_field('dynamics', 'div', time_avg=False)
-diag.add_field('dynamics', 'omega', time_avg=False) 
-diag.add_field('dynamics', 'height', time_avg=False) # geopotential height 
-diag.add_field('atmosphere', 'rh', time_avg=False) 
-diag.add_field('dynamics', 'slp', time_avg=False) # sea level pressure
-diag.add_field('dynamics', 'zsurf', time_avg=False) # geopotential height at surface
-diag.add_field('rrtm_radiation', 'toa_sw',time_avg=False)
+diag.add_field('atmosphere', 'precipitation', time_avg=True)
+diag.add_field('atmosphere', 'bucket_depth', time_avg=True)
+diag.add_field('atmosphere', 'bucket_depth_cond', time_avg=True)
+diag.add_field('atmosphere', 'bucket_depth_conv', time_avg=True)
+diag.add_field('atmosphere', 'bucket_depth_lh', time_avg=True)
+diag.add_field('mixed_layer', 't_surf', time_avg=True)
+diag.add_field('dynamics', 'sphum', time_avg=True)
+diag.add_field('dynamics', 'ucomp', time_avg=True)
+diag.add_field('dynamics', 'vcomp', time_avg=True)
+diag.add_field('dynamics', 'temp', time_avg=True)
+diag.add_field('dynamics', 'vor', time_avg=True)
+diag.add_field('dynamics', 'div', time_avg=True)
+diag.add_field('dynamics', 'omega', time_avg=True) 
+diag.add_field('dynamics', 'height', time_avg=True) # geopotential height 
+diag.add_field('atmosphere', 'rh', time_avg=True) 
+diag.add_field('dynamics', 'slp', time_avg=True) # sea level pressure
+diag.add_field('dynamics', 'zsurf', time_avg=True) # geopotential height at surface
+diag.add_field('rrtm_radiation', 'toa_sw',time_avg=True)
 
-diag.add_field('rrtm_radiation', 'flux_sw', time_avg=False) # net SW surface flux
-diag.add_field('rrtm_radiation', 'flux_lw', time_avg=False) # net LW surface flux
-diag.add_field('mixed_layer', 'flux_lhe', time_avg=False) # latent heat flux (up) at surface
-diag.add_field('mixed_layer', 'flux_t', time_avg=False) # sensible heat flux (up) at surface
-diag.add_field('rrtm_radiation', 'co2', time_avg=False)
+diag.add_field('rrtm_radiation', 'flux_sw', time_avg=True) # net SW surface flux
+diag.add_field('rrtm_radiation', 'flux_lw', time_avg=True) # net LW surface flux
+diag.add_field('mixed_layer', 'flux_lhe', time_avg=True) # latent heat flux (up) at surface
+diag.add_field('mixed_layer', 'flux_t', time_avg=True) # sensible heat flux (up) at surface
+diag.add_field('rrtm_radiation', 'co2', time_avg=True)
 
-diag.add_field('dynamics', 'sphum_u', time_avg=False)
-diag.add_field('dynamics', 'sphum_v', time_avg=False)
-diag.add_field('dynamics', 'sphum_w', time_avg=False)
+diag.add_field('dynamics', 'sphum_u', time_avg=True)
+diag.add_field('dynamics', 'sphum_v', time_avg=True)
+diag.add_field('dynamics', 'sphum_w', time_avg=True)
 
 #MP added on 11 october 2017
 exp.diag_table = diag
