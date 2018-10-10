@@ -225,7 +225,7 @@ exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_15days', 15, 'days', time_units='days')
-diag.add_field('atmos_daily', 1, 'days', time_units = 'days')
+diag.add_file('atmos_daily', 1, 'days', time_units='days')
 
 #Tell model which diagnostics to write
 diag.add_field('dynamics', 'ps', time_avg=True)
