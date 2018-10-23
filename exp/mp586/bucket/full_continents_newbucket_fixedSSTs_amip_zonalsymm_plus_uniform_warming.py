@@ -218,14 +218,15 @@ cb = IscaCodeBase.from_directory(GFDL_BASE)
 
 
 
-exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_plus_2pt52K_and_2xCO2_spinup_361', codebase=cb)
+exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_plus_2pt52K_and_2xCO2_spinup_361_dtatmos600', codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
 exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
-diag.add_file('atmos_15days', 15, 'days', time_units='days')
-diag.add_file('atmos_daily', 1, 'days', time_units='days')
+# diag.add_file('atmos_15days', 15, 'days', time_units='days')
+diag.add_file('atmos_monthly', 30, 'days', time_units='days')
+# diag.add_file('atmos_daily', 1, 'days', time_units='days')
 
 #Tell model which diagnostics to write
 diag.add_field('dynamics', 'ps', time_avg=True)
@@ -270,13 +271,13 @@ exp.clear_rundir()
 #Define values for the 'core' namelist
 exp.namelist = namelist = Namelist({
     'main_nml': {
-        'days'   : 15,
+        'days'   : 30,  ### set to 15 for saving 15-day months output
         'hours'  : 0,
         'minutes': 0,
         'seconds': 0,
-        'dt_atmos':720,
+        'dt_atmos':600,
         'current_date' : [1,1,1,0,0,0],
-        'calendar' : 'fifteen_day'
+        'calendar' : 'thirty_day' ### set to fifteen_day for 15 day months output
     },
 
     'idealized_moist_phys_nml': {
