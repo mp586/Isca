@@ -218,7 +218,7 @@ cb = IscaCodeBase.from_directory(GFDL_BASE)
 
 
 
-exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_plus_2pt52K_and_2xCO2_spinup_361_dtatmos600', codebase=cb)
+exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_plus_2pt52K_and_2xCO2_spinup_361_dtatmos300', codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
 exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
@@ -275,7 +275,7 @@ exp.namelist = namelist = Namelist({
         'hours'  : 0,
         'minutes': 0,
         'seconds': 0,
-        'dt_atmos':600,
+        'dt_atmos':300, # default = 720
         'current_date' : [1,1,1,0,0,0],
         'calendar' : 'thirty_day' ### set to fifteen_day for 15 day months output
     },
