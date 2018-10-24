@@ -4,7 +4,7 @@ import numpy as np
 
 from isca import IscaCodeBase, DiagTable, Experiment, Namelist, GFDL_BASE, GFDL_DATA
 
-NCORES = 16
+NCORES = 1
 base_dir = os.getcwd()
 # a CodeBase can be a directory on the computer,
 # useful for iterative development
@@ -218,15 +218,16 @@ cb = IscaCodeBase.from_directory(GFDL_BASE)
 
 
 
-exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_plus_2pt52K_and_2xCO2_spinup_361_dtatmos300', codebase=cb)
+exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_plus_2pt52K_and_2xCO2_spinup_361', codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
 exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 # diag.add_file('atmos_15days', 15, 'days', time_units='days')
-diag.add_file('atmos_monthly', 30, 'days', time_units='days')
+# diag.add_file('atmos_monthly', 30, 'days', time_units='days')
 # diag.add_file('atmos_daily', 1, 'days', time_units='days')
+diag.add_file('atmos_6_hourly', 6, 'hours', time_units = 'hours')
 
 #Tell model which diagnostics to write
 diag.add_field('dynamics', 'ps', time_avg=True)
@@ -271,13 +272,13 @@ exp.clear_rundir()
 #Define values for the 'core' namelist
 exp.namelist = namelist = Namelist({
     'main_nml': {
-        'days'   : 30,  ### set to 15 for saving 15-day months output
+        'days'   : 15,  ### set to 15 for saving 15-day months output
         'hours'  : 0,
         'minutes': 0,
         'seconds': 0,
-        'dt_atmos':300, # default = 720
+        'dt_atmos': 720, # default = 720
         'current_date' : [1,1,1,0,0,0],
-        'calendar' : 'thirty_day' ### set to fifteen_day for 15 day months output
+        'calendar' : 'fifteen_day' ### set to fifteen_day for 15 day months output
     },
 
     'idealized_moist_phys_nml': {
