@@ -218,49 +218,52 @@ cb = IscaCodeBase.from_directory(GFDL_BASE)
 
 
 
-exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_plus_2pt52K_and_2xCO2_spinup_361', codebase=cb)
+exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_plus_2pt52K_and_2xCO2_spinup_361_timestep360and1800', codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
 exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 # diag.add_file('atmos_15days', 15, 'days', time_units='days')
-# diag.add_file('atmos_monthly', 30, 'days', time_units='days')
+diag.add_file('atmos_monthly', 30, 'days', time_units='days')
 # diag.add_file('atmos_daily', 1, 'days', time_units='days')
-diag.add_file('atmos_6_hourly', 6, 'hours', time_units = 'hours')
+#diag.add_file('atmos_6_hourly', 6, 'hours', time_units = 'hours')
 
 #Tell model which diagnostics to write
 diag.add_field('dynamics', 'ps', time_avg=True)
 diag.add_field('dynamics', 'bk')
 diag.add_field('dynamics', 'pk')
-diag.add_field('atmosphere', 'precipitation', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_cond', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_conv', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_lh', time_avg=True)
-diag.add_field('mixed_layer', 't_surf', time_avg=True)
-diag.add_field('dynamics', 'sphum', time_avg=True)
+#diag.add_field('atmosphere', 'precipitation', time_avg=True)
+#diag.add_field('atmosphere', 'bucket_depth', time_avg=True)
+#diag.add_field('atmosphere', 'bucket_depth_cond', time_avg=True)
+#diag.add_field('atmosphere', 'bucket_depth_conv', time_avg=True)
+#diag.add_field('atmosphere', 'bucket_depth_lh', time_avg=True)
+#diag.add_field('mixed_layer', 't_surf', time_avg=True)
+#diag.add_field('dynamics', 'sphum', time_avg=True)
 diag.add_field('dynamics', 'ucomp', time_avg=True)
 diag.add_field('dynamics', 'vcomp', time_avg=True)
 diag.add_field('dynamics', 'temp', time_avg=True)
-diag.add_field('dynamics', 'vor', time_avg=True)
-diag.add_field('dynamics', 'div', time_avg=True)
-diag.add_field('dynamics', 'omega', time_avg=True) 
-diag.add_field('dynamics', 'height', time_avg=True) # geopotential height 
-diag.add_field('atmosphere', 'rh', time_avg=True) 
-diag.add_field('dynamics', 'slp', time_avg=True) # sea level pressure
-diag.add_field('dynamics', 'zsurf', time_avg=True) # geopotential height at surface
-diag.add_field('rrtm_radiation', 'toa_sw',time_avg=True)
+#diag.add_field('dynamics', 'vor', time_avg=True)
+#diag.add_field('dynamics', 'div', time_avg=True)
+#diag.add_field('dynamics', 'omega', time_avg=True) 
+#diag.add_field('dynamics', 'height', time_avg=True) # geopotential height 
+#diag.add_field('atmosphere', 'rh', time_avg=True) 
+#diag.add_field('dynamics', 'slp', time_avg=True) # sea level pressure
+#diag.add_field('dynamics', 'zsurf', time_avg=True) # geopotential height at surface
+#diag.add_field('rrtm_radiation', 'toa_sw',time_avg=True)
 
-diag.add_field('rrtm_radiation', 'flux_sw', time_avg=True) # net SW surface flux
-diag.add_field('rrtm_radiation', 'flux_lw', time_avg=True) # net LW surface flux
-diag.add_field('mixed_layer', 'flux_lhe', time_avg=True) # latent heat flux (up) at surface
-diag.add_field('mixed_layer', 'flux_t', time_avg=True) # sensible heat flux (up) at surface
-diag.add_field('rrtm_radiation', 'co2', time_avg=True)
+#diag.add_field('rrtm_radiation', 'flux_sw', time_avg=True) # net SW surface flux
+#diag.add_field('rrtm_radiation', 'flux_lw', time_avg=True) # net LW surface flux
+#diag.add_field('mixed_layer', 'flux_lhe', time_avg=True) # latent heat flux (up) at surface
+#diag.add_field('mixed_layer', 'flux_t', time_avg=True) # sensible heat flux (up) at surface
+#diag.add_field('rrtm_radiation', 'co2', time_avg=True)
 
-diag.add_field('dynamics', 'sphum_u', time_avg=True)
-diag.add_field('dynamics', 'sphum_v', time_avg=True)
-diag.add_field('dynamics', 'sphum_w', time_avg=True)
+#diag.add_field('dynamics', 'sphum_u', time_avg=True)
+#diag.add_field('dynamics', 'sphum_v', time_avg=True)
+#diag.add_field('dynamics', 'sphum_w', time_avg=True)
+
+#diag.add_file('atmos_6_hourly', 6, 'hours', time_units = 'hours')
+#diag.add_field('dynamics', 'temp', time_avg=False)
 
 #MP added on 11 october 2017
 exp.diag_table = diag
@@ -272,13 +275,13 @@ exp.clear_rundir()
 #Define values for the 'core' namelist
 exp.namelist = namelist = Namelist({
     'main_nml': {
-        'days'   : 15,  ### set to 15 for saving 15-day months output
+        'days'   : 30,  ### set to 15 for saving 15-day months output
         'hours'  : 0,
         'minutes': 0,
         'seconds': 0,
-        'dt_atmos': 720, # default = 720
+        'dt_atmos': 360, # default = 720
         'current_date' : [1,1,1,0,0,0],
-        'calendar' : 'fifteen_day' ### set to fifteen_day for 15 day months output
+        'calendar' : 'thirty_day' ### set to fifteen_day for 15 day months output
     },
 
     'idealized_moist_phys_nml': {
@@ -368,7 +371,7 @@ exp.namelist = namelist = Namelist({
         'do_read_co2': True,
         'co2_file': 'co2_doubling',
         'solr_cnst' : 1360., #s set solar constant to 1360, rather than default of 1368.22
-        'dt_rad': 3600, #Set RRTM radiation timestep to 3600 seconds, meaning it runs every 5 atmospheric timesteps        
+        'dt_rad': 1800, #Set RRTM radiation timestep to 3600 seconds, meaning it runs every 5 atmospheric timesteps        
     },
 
     # FMS Framework configuration
