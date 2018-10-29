@@ -263,8 +263,8 @@ diag.add_field('dynamics', 'temp', time_avg=True)
 #diag.add_field('dynamics', 'sphum_w', time_avg=True)
 
 diag.add_file('atmos_6_hourly', 6, 'hours', time_units = 'hours')
-diag.add_field('dynamics', 'temp', time_avg=False)
-diag.add_field('dynamics', 'ucomp', time_avg=False)
+diag.add_field('dynamics', 'temp', time_avg=True)
+diag.add_field('dynamics', 'ucomp', time_avg=True)
 
 #MP added on 11 october 2017
 exp.diag_table = diag
