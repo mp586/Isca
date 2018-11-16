@@ -72,7 +72,7 @@ exp.diag_table = diag
 
 #Empty the run directory ready to run
 exp.clear_rundir()
-
+exp.set_resolution(*RESOLUTION)
 #Define values for the 'core' namelist
 exp.namelist = namelist = Namelist({
     'main_nml': {
