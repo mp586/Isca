@@ -5,7 +5,6 @@ import numpy as np
 from isca import IscaCodeBase, DiagTable, Experiment, Namelist, GFDL_BASE, GFDL_DATA
 
 NCORES = 16
-RESOLUTION = 'T85', 40
 
 base_dir = os.getcwd()
 # a CodeBase can be a directory on the computer,
@@ -72,7 +71,6 @@ exp.diag_table = diag
 
 #Empty the run directory ready to run
 exp.clear_rundir()
-exp.set_resolution(*RESOLUTION)
 #Define values for the 'core' namelist
 exp.namelist = namelist = Namelist({
     'main_nml': {
@@ -209,6 +207,8 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
+
+exp.set_resolution('T85', 40)
 exp.run(1, use_restart=False, num_cores=NCORES)
 for i in range(2,481):
     exp.run(i, num_cores=NCORES)
@@ -408,6 +408,7 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
+exp.set_resolution('T85', 40)
 exp.run(1, restart_file=os.path.join(GFDL_DATA,'two_continents_T85res_topography_both_newbucket_finalIscaAPqflux_landqfluxzero/restarts/res0361.tar.gz'), num_cores=NCORES)
 for i in range(2,481):
     exp.run(i, num_cores=NCORES)
