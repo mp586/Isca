@@ -30,7 +30,7 @@ exp = Experiment('two_continents_T85res_topography_both_newbucket_finalIscaAPqfl
 
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/two_continents_T85_topo_both/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/two_continents/isca_qflux//zero_integral/ocean_qflux.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/two_continents_T85_topo_both/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/two_continents/isca_qflux/zero_integral/ocean_qflux.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -197,7 +197,9 @@ exp.namelist = namelist = Namelist({
         'surf_res':0.2, #Parameter that sets the vertical distribution of sigma levels
         'scale_heights' : 11.0,
         'exponent':7.0,
-        'robert_coeff':0.03
+        'robert_coeff':0.03,
+        'ocean_topog_smoothing':0.0 # default is .93, see /src/atmos_spectral/model/spectral_dynamics.F90
+
     }, 
 
     'spectral_init_cond_nml': {
@@ -398,7 +400,8 @@ exp.namelist = namelist = Namelist({
         'surf_res':0.2, #Parameter that sets the vertical distribution of sigma levels
         'scale_heights' : 11.0,
         'exponent':7.0,
-        'robert_coeff':0.03
+        'robert_coeff':0.03,
+        'ocean_topog_smoothing':0.0 # default is .93, see /src/atmos_spectral/model/spectral_dynamics.F90
     }, 
 
     'spectral_init_cond_nml': {
