@@ -30,7 +30,7 @@ exp = Experiment('two_continents_T85res_topography_both_newbucket_finalIscaAPqfl
 
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/two_continents_topo_both/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/two_continents/isca_qflux//zero_integral/ocean_qflux.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/two_continents_T85_topo_both/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/two_continents/isca_qflux//zero_integral/ocean_qflux.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -223,7 +223,7 @@ exp = Experiment('two_continents_T85res_topography_both_newbucket_finalIscaAPqfl
 
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/two_continents_topo_both/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/two_continents/isca_qflux/zerointegral/ocean_qflux.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/two_continents_T85_topo_both/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/two_continents/isca_qflux/zerointegral/ocean_qflux.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
