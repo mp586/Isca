@@ -37,7 +37,7 @@ def write_land(exp,land_mode='square',boundaries=[-30.,30.,0.,100.],continents=[
 
 # Common features of set-ups
     # specify resolution
-    t_res = 85
+    t_res = 42
     #read in grid from approriate file
     GFDL_BASE = os.environ['GFDL_BASE']
     resolution_file = Dataset(GFDL_BASE + '/src/extra/python/scripts/gfdl_grid_files/t'+str(t_res)+'.nc', 'r', format='NETCDF3_CLASSIC') # added slash before src
@@ -69,6 +69,17 @@ def write_land(exp,land_mode='square',boundaries=[-30.,30.,0.,100.],continents=[
     elif land_mode=='two_continents': 
         idx_c = np.zeros((2,nlat,nlon), dtype=bool) # MP added for two continents
         idx_c[0,:,:] = (boundaries[0] <= lat_array) & (lat_array <= boundaries[1]) & (0. <= lon_array) & (40. >= lon_array) # boolean with shape of lat array = (64,128) #MP May2017 added equal signs (<=, =>)
+        idx_c[1,:,:] = (boundaries[0] <= lat_array) & (lat_array <= boundaries[1]) & (80. <= lon_array) & (140. >= lon_array) # boolean with shape of lat array = (64,128) #MP May2017 added equal signs (<=, =>)
+        idx = idx_c[0,:,:] + idx_c[1,:,:]
+        land_array[idx] = 1.0 # outs ones everywhere where idx = true, so in between the defined boundaries.
+
+
+
+# MP added for two continents, short South America 
+
+    elif land_mode=='two_continents_short_South_America': 
+        idx_c = np.zeros((2,nlat,nlon), dtype=bool) # MP added for two continents
+        idx_c[0,:,:] = (boundaries[0] <= lat_array) & (lat_array <= 0.) & (0. <= lon_array) & (40. >= lon_array) # boolean with shape of lat array = (64,128) #MP May2017 added equal signs (<=, =>)
         idx_c[1,:,:] = (boundaries[0] <= lat_array) & (lat_array <= boundaries[1]) & (80. <= lon_array) & (140. >= lon_array) # boolean with shape of lat array = (64,128) #MP May2017 added equal signs (<=, =>)
         idx = idx_c[0,:,:] + idx_c[1,:,:]
         land_array[idx] = 1.0 # outs ones everywhere where idx = true, so in between the defined boundaries.
@@ -224,7 +235,7 @@ def write_land(exp,land_mode='square',boundaries=[-30.,30.,0.,100.],continents=[
 
 
     #Write land and topography arrays to file
-    topo_filename = GFDL_BASE + '/input/two_continents_T85_topo_both/land.nc' 
+    topo_filename = GFDL_BASE + '/input/two_continents_short_South_America_topo_both/land.nc' 
     print(topo_filename)
     topo_file = Dataset(topo_filename, 'w', format='NETCDF3_CLASSIC')
     lat = topo_file.createDimension('lat', nlat)
@@ -261,5 +272,5 @@ def write_land(exp,land_mode='square',boundaries=[-30.,30.,0.,100.],continents=[
 
 if __name__ == "__main__":
 
-    write_land('test',land_mode='two_continents')
+    write_land('test',land_mode='two_continents_short_South_America')
 
