@@ -206,7 +206,7 @@ exp.namelist = namelist = Namelist({
 
 #Lets do a run!
 exp.run(1, use_restart=False, num_cores=NCORES)
-for i in range(2,481):
+for i in range(2,362):
     exp.run(i, num_cores=NCORES)
 
 
@@ -214,7 +214,7 @@ for i in range(2,481):
 
 # Do CO2 run with prescribed SSTS from Isca/two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly_2xCO2_spinup_361 starting from spun-up state of the run above
 
-exp = Experiment('two_continents_newbucket_fixedSSTs_from_realworld_zonallysymm_plus_uniform_warming_and_2xCO2', codebase=cb)
+exp = Experiment('two_continents_newbucket_fixedSSTs_from_realworld_zonallysymm_plus_uniform_warming_and_2xCO2_spinup_361', codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
 exp.inputfiles = [os.path.join(GFDL_BASE,'input/two_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/sst_clim_amip_zonalsymm_plus_uniform_warming.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
@@ -396,5 +396,5 @@ exp.namelist = namelist = Namelist({
 
 #Lets do a run!
 exp.run(1, restart_file=os.path.join(GFDL_DATA,'two_continents_newbucket_fixedSSTs_from_realworld_zonallysymm/restarts/res0361.tar.gz'), num_cores=NCORES)
-for i in range(2,481):
+for i in range(2,361):
     exp.run(i, num_cores=NCORES)
