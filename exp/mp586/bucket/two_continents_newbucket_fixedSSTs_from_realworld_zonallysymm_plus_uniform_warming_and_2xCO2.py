@@ -205,12 +205,15 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(1, use_restart=False, num_cores=NCORES)
-for i in range(2,362):
+#exp.run(1, use_restart=False, num_cores=NCORES)
+#for i in range(2,362):
+#    exp.run(i, num_cores=NCORES)
+
+### restarting on ISCA_HPC after I've copied run 1 - 361 over to baikonur 
+
+exp.run(362, restart_file=os.path.join(GFDL_DATA,'two_continents_newbucket_fixedSSTs_from_realworld_zonallysymm/restarts/res0361.tar.gz'), num_cores=NCORES)
+for i in range(363,481):
     exp.run(i, num_cores=NCORES)
-
-
-
 
 # Do CO2 run with prescribed SSTS from Isca/two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly_2xCO2_spinup_361 starting from spun-up state of the run above
 
@@ -395,6 +398,12 @@ exp.namelist = namelist = Namelist({
 
 
 #Lets do a run!
-exp.run(1, restart_file=os.path.join(GFDL_DATA,'two_continents_newbucket_fixedSSTs_from_realworld_zonallysymm/restarts/res0361.tar.gz'), num_cores=NCORES)
-for i in range(2,361):
+# exp.run(1, restart_file=os.path.join(GFDL_DATA,'two_continents_newbucket_fixedSSTs_from_realworld_zonallysymm/restarts/res0361.tar.gz'), num_cores=NCORES)
+# for i in range(2,361):
+#     exp.run(i, num_cores=NCORES)
+
+
+# restarting on ISCA_HPC after I've copied data over to baikonur already
+exp.run(361, restart_file=os.path.join(GFDL_DATA,'two_continents_newbucket_fixedSSTs_from_realworld_zonallysymm_plus_uniform_warming_and_2xCO2_spinup_361/restarts/res0360.tar.gz'), num_cores=NCORES)
+for i in range(362,481):
     exp.run(i, num_cores=NCORES)
