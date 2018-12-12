@@ -9,7 +9,7 @@ base_dir = os.getcwd()
 # a CodeBase can be a directory on the computer,
 # useful for iterative development
 # cb = IscaCodeBase.from_directory(GFDL_BASE)
-cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='92d1c49') # using same commit as was used for the original exp (which was potentially without topo in the 2xCO2 exp."
+cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='5eaf327') # using same commit as was used for the original exp (which was potentially without topo in the 2xCO2 exp."
 
 # # or it can point to a specific git repo and commit id.
 # # This method should ensure future, independent, reproducibility of results.
