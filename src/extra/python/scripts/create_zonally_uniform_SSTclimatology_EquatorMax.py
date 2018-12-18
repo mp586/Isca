@@ -31,7 +31,7 @@ def fill_nan(A):
 dsin = Dataset(os.path.join(GFDL_BASE,'input/two_continents/ssts_from_twoCs_0qflux.nc'))
 
 #output file
-dsout = Dataset(os.path.join(GFDL_BASE,"input/ssts_zonalsymm_EquatorMax.nc"), "w", format="NETCDF3_CLASSIC")
+dsout = Dataset(os.path.join(GFDL_BASE,"input/ssts_zonsymm_eqmax.nc"), "w", format="NETCDF3_CLASSIC")
 #Copy dimensions
 for dname, the_dim in dsin.dimensions.iteritems():
     print dname, len(the_dim)
@@ -41,7 +41,7 @@ for dname, the_dim in dsin.dimensions.iteritems():
 # Copy variables
 for v_name, varin in dsin.variables.iteritems():
     if v_name == 'ssts_from_twoCs_0qflux':
-        outVar = dsout.createVariable('ssts_zonalsymm_EquatorMax', varin.datatype, varin.dimensions)
+        outVar = dsout.createVariable('ssts_zonsymm_eqmax', varin.datatype, varin.dimensions)
         print varin.datatype
     
         # Copy variable attributes
