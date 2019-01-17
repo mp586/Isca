@@ -6,36 +6,36 @@ from isca import IscaCodeBase, DiagTable, Experiment, Namelist, GFDL_BASE, GFDL_
 
 NCORES = 16
 base_dir = os.getcwd()
-a CodeBase can be a directory on the computer,
-useful for iterative development
-cb = IscaCodeBase.from_directory(GFDL_BASE)
+#a CodeBase can be a directory on the computer,
+#useful for iterative development
+#cb = IscaCodeBase.from_directory(GFDL_BASE)
 
 cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='1c8d951')
 
-or it can point to a specific git repo and commit id.
-This method should ensure future, independent, reproducibility of results.
-cb = DryCodeBase.from_repo(repo='https://github.com/isca/isca', commit='isca1.1')
+#or it can point to a specific git repo and commit id.
+#This method should ensure future, independent, reproducibility of results.
+#cb = DryCodeBase.from_repo(repo='https://github.com/isca/isca', commit='isca1.1')
 
-compilation depends on computer specific settings.  The $GFDL_ENV
-environment variable is used to determine which `$GFDL_BASE/src/extra/env` file
-is used to load the correct compilers.  The env file is always loaded from
-$GFDL_BASE and not the checked out git repo.
+#compilation depends on computer specific settings.  The $GFDL_ENV
+#environment variable is used to determine which `$GFDL_BASE/src/extra/env` file
+#is used to load the correct compilers.  The env file is always loaded from
+#$GFDL_BASE and not the checked out git repo.
 
 cb.compile()  compile the source code to working directory $GFDL_WORK/codebase
 
-create an Experiment object to handle the configuration of model parameters
-and output diagnostics
+#create an Experiment object to handle the configuration of model parameters
+#and output diagnostics
 
 
 exp = Experiment('square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm', codebase=cb)
 
-Add any input files that are necessary for a particular experiment.
+#Add any input files that are necessary for a particular experiment.
 exp.inputfiles = [os.path.join(GFDL_BASE,'input/square_Africa/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/sst_clim_amip_zonalsymm.nc')]
-Tell model how to write diagnostics
+#Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
 
-Tell model which diagnostics to write
+#Tell model which diagnostics to write
 diag.add_field('dynamics', 'ps', time_avg=True)
 diag.add_field('dynamics', 'bk')
 diag.add_field('dynamics', 'pk')
@@ -67,11 +67,11 @@ diag.add_field('dynamics', 'sphum_u', time_avg=True)
 diag.add_field('dynamics', 'sphum_v', time_avg=True)
 diag.add_field('dynamics', 'sphum_w', time_avg=True)
 
-MP added on 11 october 2017
+#MP added on 11 october 2017
 exp.diag_table = diag
 
 
-Empty the run directory ready to run
+#Empty the run directory ready to run
 exp.clear_rundir()
 
 Define values for the 'core' namelist
@@ -203,7 +203,7 @@ exp.namelist = namelist = Namelist({
    }
 })
 
-Lets do a run!
+#Lets do a run!
 exp.run(1, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm/restarts/res0361.tar.gz', num_cores=NCORES)
 for i in range(362,481):
    exp.run(i, num_cores=NCORES)
