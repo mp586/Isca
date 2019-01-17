@@ -21,7 +21,7 @@ cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='1c
 #is used to load the correct compilers.  The env file is always loaded from
 #$GFDL_BASE and not the checked out git repo.
 
-cb.compile()  compile the source code to working directory $GFDL_WORK/codebase
+cb.compile()  #compile the source code to working directory $GFDL_WORK/codebase
 
 #create an Experiment object to handle the configuration of model parameters
 #and output diagnostics
