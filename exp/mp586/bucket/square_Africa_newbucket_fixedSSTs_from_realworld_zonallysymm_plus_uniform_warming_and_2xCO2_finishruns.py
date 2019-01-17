@@ -74,7 +74,7 @@ exp.diag_table = diag
 #Empty the run directory ready to run
 exp.clear_rundir()
 
-Define values for the 'core' namelist
+#Define values for the 'core' namelist
 exp.namelist = namelist = Namelist({
    'main_nml': {
        'days'   : 30,
@@ -204,7 +204,7 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(1, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm/restarts/res0361.tar.gz', num_cores=NCORES)
+exp.run(1, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm/restarts/res0361.tar.gz'), num_cores=NCORES)
 for i in range(362,481):
    exp.run(i, num_cores=NCORES)
 
