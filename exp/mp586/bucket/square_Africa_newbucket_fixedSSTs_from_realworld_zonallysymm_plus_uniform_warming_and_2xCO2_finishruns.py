@@ -204,7 +204,7 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(1, use_restart = False), num_cores=NCORES) # accidentally deleted the restart files on ISCA_HPC -- need to rerun! 
+exp.run(1, use_restart = False, num_cores=NCORES) # accidentally deleted the restart files on ISCA_HPC -- need to rerun! 
 for i in range(2,481):
    exp.run(i, num_cores=NCORES)
 
