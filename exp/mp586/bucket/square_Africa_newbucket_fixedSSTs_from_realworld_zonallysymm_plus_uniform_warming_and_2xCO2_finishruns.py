@@ -204,8 +204,8 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(1, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm/restarts/res0361.tar.gz'), num_cores=NCORES)
-for i in range(362,481):
+exp.run(362, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm/restarts/res0361.tar.gz'), num_cores=NCORES)
+for i in range(363,481):
    exp.run(i, num_cores=NCORES)
 
 
@@ -392,6 +392,6 @@ exp.namelist = namelist = Namelist({
 
 
 #Lets do a run!
-exp.run(1, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_plus_uniform_warming_and_2xCO2_spinup_361/restarts/res0361.tar.gz'), num_cores=NCORES)
-for i in range(361,481):
+exp.run(361, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_plus_uniform_warming_and_2xCO2_spinup_361/restarts/res0360.tar.gz'), num_cores=NCORES)
+for i in range(362,481):
     exp.run(i, num_cores=NCORES)
