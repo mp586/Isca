@@ -392,6 +392,7 @@ exp.namelist = namelist = Namelist({
 
 
 #Lets do a run!
+#starting from rerun data
 exp.run(1, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_rerun/restarts/res0361.tar.gz'), num_cores=NCORES)
 for i in range(2,481):
     exp.run(i, num_cores=NCORES)
