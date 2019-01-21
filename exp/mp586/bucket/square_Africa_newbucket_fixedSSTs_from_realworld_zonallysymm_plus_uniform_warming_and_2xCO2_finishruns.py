@@ -211,7 +211,7 @@ cb.compile()  #compile the source code to working directory $GFDL_WORK/codebase
 
 
 
-exp = Experiment('square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_plus_uniform_warming_and_2xCO2_spinup_361', codebase=cb)
+exp = Experiment('square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_rerun_plus_uniform_warming_and_2xCO2_spinup_361', codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
 exp.inputfiles = [os.path.join(GFDL_BASE,'input/square_Africa/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
@@ -392,6 +392,6 @@ exp.namelist = namelist = Namelist({
 
 
 #Lets do a run!
-exp.run(361, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_plus_uniform_warming_and_2xCO2_spinup_361/restarts/res0360.tar.gz'), num_cores=NCORES)
-for i in range(362,481):
+exp.run(1, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_rerun/restarts/res0361.tar.gz'), num_cores=NCORES)
+for i in range(2,481):
     exp.run(i, num_cores=NCORES)
