@@ -10,7 +10,7 @@ base_dir = os.getcwd()
 # useful for iterative development
 # cb = IscaCodeBase.from_directory(GFDL_BASE)
 
-cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='')
+cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='7bb4387')
 
 # or it can point to a specific git repo and commit id.
 # This method should ensure future, independent, reproducibility of results.
