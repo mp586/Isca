@@ -204,20 +204,15 @@ exp.namelist = namelist = Namelist({
     }
 })
 
-#Lets do a run!
-#exp.run(1, use_restart=False, num_cores=NCORES)
-#for i in range(2,362):
-#    exp.run(i, num_cores=NCORES)
+# Lets do a run!
+exp.run(1, use_restart=False, num_cores=NCORES)
+for i in range(2,122):
+   exp.run(i, num_cores=NCORES)
 
-### restarting on ISCA_HPC after I've copied run 1 - 361 over to baikonur 
-
-exp.run(362, restart_file=os.path.join(GFDL_DATA,'two_continents_flipped_newbucket_fixedSSTs_from_realworld_zonallysymm/restarts/res0361.tar.gz'), num_cores=NCORES)
-for i in range(363,481):
-    exp.run(i, num_cores=NCORES)
 
 # Do CO2 run with prescribed SSTS from Isca/two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly_2xCO2_spinup_361 starting from spun-up state of the run above
 
-exp = Experiment('two_continents_flipped_newbucket_fixedSSTs_from_realworld_zonallysymm_plus_uniform_warming_and_2xCO2_spinup_361', codebase=cb)
+exp = Experiment('two_continents_flipped_newbucket_fixedSSTs_from_realworld_zonallysymm_plus_uniform_warming_and_2xCO2_spinup_121', codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
 exp.inputfiles = [os.path.join(GFDL_BASE,'input/two_continents_flipped/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
@@ -404,6 +399,6 @@ exp.namelist = namelist = Namelist({
 
 
 # restarting on ISCA_HPC after I've copied data over to baikonur already
-exp.run(361, restart_file=os.path.join(GFDL_DATA,'two_continents_flipped_newbucket_fixedSSTs_from_realworld_zonallysymm_plus_uniform_warming_and_2xCO2_spinup_361/restarts/res0360.tar.gz'), num_cores=NCORES)
-for i in range(362,481):
+exp.run(1, restart_file=os.path.join(GFDL_DATA,'two_continents_flipped_newbucket_fixedSSTs_from_realworld_zonallysymm/restarts/res0121.tar.gz'), num_cores=NCORES)
+for i in range(2,121):
     exp.run(i, num_cores=NCORES)
