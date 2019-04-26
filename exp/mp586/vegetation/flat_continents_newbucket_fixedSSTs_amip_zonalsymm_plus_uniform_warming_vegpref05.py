@@ -8,7 +8,7 @@ NCORES = 16
 base_dir = os.getcwd()
 # a CodeBase can be a directory on the computer,
 # useful for iterative development
-cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='1c8d951')
+cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='8b6871c')
 
 #cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='92d1c49') # using a commit doesn't work on ISCA, don't know why! This would be the original commit which was used in /scratch/mp586/Isca_DATA/ISCA_HPC/full_continents_newbucket_fixedSSTs_zonally_symmetric_plus_2pt52K_and_2xCO2_spinup_361/run0200/git_hash_used.txt"
 
