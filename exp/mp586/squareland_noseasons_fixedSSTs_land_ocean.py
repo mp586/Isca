@@ -9,7 +9,7 @@ base_dir = os.getcwd()
 # a CodeBase can be a directory on the computer,
 # useful for iterative development
 #cb = IscaCodeBase.from_directory(GFDL_BASE)
-cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='7bb4387')
+cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='612c7ea')
 # or it can point to a specific git repo and commit id.
 # This method should ensure future, independent, reproducibility of results.
 # cb = DryCodeBase.from_repo(repo='https://github.com/isca/isca', commit='isca1.1')
@@ -139,8 +139,8 @@ exp.namelist = namelist = Namelist({
         'do_qflux' : False, #Do not use prescribed qflux formula
         'do_read_sst' : True, #Read in sst values from input file
         'do_sc_sst' : True, #Do specified ssts (need both to be true)
-        'sst_file' : 'sst_clim_amip_zonalsymm', #Set name of sst input file
-        'specify_sst_over_ocean_only' : False, #Make sure sst only specified in regions of ocean.
+        'sst_file' : 'sst_amip_zonalsymm_perpeqnox', #Set name of sst input file
+        'specify_sst_over_ocean_only' : False, 
     },
 
     'qe_moist_convection_nml': {
