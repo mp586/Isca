@@ -23,7 +23,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
-exp = Experiment('squareland_noseasons_0qflux_landcp_equals_oceancp_samealbedo_lepref0', codebase=cb)
+exp = Experiment('squareland_noseasons_0qflux_landcp_equals_oceancp9000000_samealbedo_lepref0_very_darkland', codebase=cb)
 
 
 
@@ -55,7 +55,7 @@ diag.add_field('atmosphere', 'rh', time_avg=True)
 diag.add_field('dynamics', 'slp', time_avg=True) # sea level pressure
 diag.add_field('dynamics', 'zsurf', time_avg=True) # geopotential height at surface
 diag.add_field('rrtm_radiation', 'toa_sw',time_avg=True)
-
+diag.add_field('rrtm_radiation', 'olr',time_avg=True)
 diag.add_field('rrtm_radiation', 'flux_sw', time_avg=True) # net SW surface flux
 diag.add_field('rrtm_radiation', 'flux_lw', time_avg=True) # net LW surface flux
 diag.add_field('mixed_layer', 'flux_lhe', time_avg=True) # latent heat flux (up) at surface
@@ -131,11 +131,11 @@ exp.namelist = namelist = Namelist({
         'tconst' : 285.,
         'prescribe_initial_dist':True,
         'evaporation':True,    
-        'depth':50., #Mixed layer depth
+        'depth':9000000., #Mixed layer depth
         'land_option':'input',    #Tell mixed layer to get land mask from input file
         'land_h_capacity_prefactor': 1., #What factor to multiply mixed-layer depth by over land. 
-        'albedo_value': 0.25, #Ocean albedo value
-        'land_albedo_prefactor' : 1., #What factor to multiply ocean albedo by over land
+        'albedo_value': 0.5, #Ocean albedo value -- cloud covered ocean
+        'land_albedo_prefactor' : 0.1/0.5, #Land albedo = 0.1 (dark forest)
         'do_qflux' : False, #Do not use prescribed qflux formula
         'qflux_amp' : 0.
     },

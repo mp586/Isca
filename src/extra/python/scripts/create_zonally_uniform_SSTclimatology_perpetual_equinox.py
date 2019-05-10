@@ -31,7 +31,7 @@ def fill_nan(A):
 dsin = Dataset(os.path.join(GFDL_BASE,'input/sst_clim_amip.nc'))
 
 #output file
-dsout = Dataset(os.path.join(GFDL_BASE,"input/sst_amip_zonalsymm_perpeqnox.nc"), "w", format="NETCDF3_CLASSIC")
+dsout = Dataset(os.path.join(GFDL_BASE,"input/sst_amip_zonsymm_perpeqnoxfive.nc"), "w", format="NETCDF3_CLASSIC")
 #Copy dimensions
 for dname, the_dim in dsin.dimensions.iteritems():
     print dname, len(the_dim)
@@ -41,7 +41,7 @@ for dname, the_dim in dsin.dimensions.iteritems():
 # Copy variables
 for v_name, varin in dsin.variables.iteritems():
     if v_name == 'sst_clim_amip':
-        outVar = dsout.createVariable('sst_amip_zonalsymm_perpeqnox', varin.datatype, varin.dimensions)
+        outVar = dsout.createVariable('sst_amip_zonsymm_perpeqnoxfive', varin.datatype, varin.dimensions)
         print varin.datatype
     
         # Copy variable attributes
@@ -60,7 +60,7 @@ for v_name, varin in dsin.variables.iteritems():
         for i in range(12):
           out_ssts[i,:,:] = equinoxavg
 
-        outVar[:] = np.asarray(out_ssts)
+        outVar[:] = np.asarray(out_ssts + 5.)
 
         xr.DataArray(out_ssts).mean('dim_0').plot()
         plt.show()
