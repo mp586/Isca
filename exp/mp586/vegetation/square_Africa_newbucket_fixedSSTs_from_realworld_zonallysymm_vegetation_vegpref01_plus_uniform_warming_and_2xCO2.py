@@ -28,7 +28,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 
 # prescribed SSTs with climatology from Isca/two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly
-exp = Experiment('square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_vegetation_vegpref1_olr', codebase=cb)
+exp = Experiment('square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_vegetation_vegpref1', codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
 exp.inputfiles = [os.path.join(GFDL_BASE,'input/square_Africa/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/sst_clim_amip_zonalsymm.nc')]
@@ -396,13 +396,13 @@ exp.namelist = namelist = Namelist({
 
 # just put this in here to see whether the veg_evap_prefactor thing is working at all, but set it to 1 so no veg effect
     'surface_flux_nml': {
-        'veg_evap_prefactor': 0.5 
+        'veg_evap_prefactor': 0.1
     },
 })
 
 
 #Lets do a run!
-exp.run(1, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_vegetation_vegpref1_olr/restarts/res0121.tar.gz'), num_cores=NCORES)
+exp.run(1, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_vegetation_vegpref1/restarts/res0121.tar.gz'), num_cores=NCORES)
 for i in range(2,121):
     exp.run(i, num_cores=NCORES)
 
