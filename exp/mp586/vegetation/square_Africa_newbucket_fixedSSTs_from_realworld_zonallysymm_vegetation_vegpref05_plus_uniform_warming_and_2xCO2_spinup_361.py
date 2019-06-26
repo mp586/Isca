@@ -209,8 +209,8 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(121, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_vegetation_vegpref1/restarts/res0121.tar.gz'), num_cores=NCORES)
-for i in range(122,481):
+exp.run(122, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_vegetation_vegpref1/restarts/res0121.tar.gz'), num_cores=NCORES)
+for i in range(123,481):
    exp.run(i, num_cores=NCORES)
 
 # Do CO2 run with prescribed SSTS from Isca/two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly_2xCO2_spinup_361 starting from spun-up state of the run above
@@ -402,6 +402,6 @@ exp.namelist = namelist = Namelist({
 
 #Lets do a run!
 exp.run(1, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_vegetation_vegpref1/restarts/res0361.tar.gz'), num_cores=NCORES)
-for i in range(2,):
+for i in range(2,481):
     exp.run(i, num_cores=NCORES)
 
