@@ -206,7 +206,7 @@ exp.namelist = namelist = Namelist({
     'surface_flux_nml': {
         'veg_evap_prefactor': 1. # land evap = potential evap*0.7
     },
-# })
+})
 
 # #Lets do a run!
 # exp.run(122, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_vegetation_vegpref1/restarts/res0121.tar.gz'), num_cores=NCORES)
