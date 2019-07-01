@@ -215,10 +215,10 @@ exp.namelist = namelist = Namelist({
 
 })
 
-#Lets do a run!
-exp.run(122, restart_file=os.path.join(GFDL_DATA,'flat_continents_newbucket_fixedSSTs_zonally_symmetric_vegetation_vegpref1/restarts/res0121.tar.gz'), num_cores=NCORES)
-for i in range(123,481):
-    exp.run(i, num_cores=NCORES)
+# #Lets do a run!
+# exp.run(122, restart_file=os.path.join(GFDL_DATA,'flat_continents_newbucket_fixedSSTs_zonally_symmetric_vegetation_vegpref1/restarts/res0121.tar.gz'), num_cores=NCORES)
+# for i in range(123,481):
+#     exp.run(i, num_cores=NCORES)
 
 
 
