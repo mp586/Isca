@@ -8,9 +8,9 @@ NCORES = 16
 base_dir = os.getcwd()
 # a CodeBase can be a directory on the computer,
 # useful for iterative development
-# cb = IscaCodeBase.from_directory(GFDL_BASE)
-
 cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='7bb4387')
+
+#cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='92d1c49') # using a commit doesn't work on ISCA, don't know why! This would be the original commit which was used in /scratch/mp586/Isca_DATA/ISCA_HPC/full_continents_newbucket_fixedSSTs_zonally_symmetric_plus_2pt52K_and_2xCO2_spinup_361/run0200/git_hash_used.txt"
 
 # or it can point to a specific git repo and commit id.
 # This method should ensure future, independent, reproducibility of results.
@@ -27,11 +27,13 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 # and output diagnostics
 
 
-# prescribed SSTs with climatology from Isca/two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly
-exp = Experiment('two_continents_newbucket_fixedSSTs_from_realworld_zonallysymm_vegetation_vegpref1', codebase=cb)
+##### FULL SPINUP RUN 1 - 481 produced by full_continents_newbucket_fixedSSTs_amip_zonalsymm_plus_uniform_warming_veg_fullrun,py
+
+# prescribed SSTs with climatology from Isca/full_continents_newbucket_fullnewbucketqflux
+exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_vegetation_vegpref1_witholr', codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/two_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/sst_clim_amip_zonalsymm.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/sst_clim_amip_zonalsymm.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -63,6 +65,7 @@ diag.add_field('rrtm_radiation', 'flux_sw', time_avg=True) # net SW surface flux
 diag.add_field('rrtm_radiation', 'flux_lw', time_avg=True) # net LW surface flux
 diag.add_field('mixed_layer', 'flux_lhe', time_avg=True) # latent heat flux (up) at surface
 diag.add_field('mixed_layer', 'flux_t', time_avg=True) # sensible heat flux (up) at surface
+
 diag.add_field('dynamics', 'sphum_u', time_avg=True)
 diag.add_field('dynamics', 'sphum_v', time_avg=True)
 diag.add_field('dynamics', 'sphum_w', time_avg=True)
@@ -200,28 +203,38 @@ exp.namelist = namelist = Namelist({
         'scale_heights' : 11.0,
         'exponent':7.0,
         'robert_coeff':0.03
-    },
+    }, 
+
+    'spectral_init_cond_nml': {
+        'topog_file_name': 'land.nc', #Name of land input file, which will also contain topography if generated using Isca's `land_file_generator_fn.py' routine.
+        'topography_option':'input' #Tell model to get topography from input file
+        },
 
 # just put this in here to see whether the veg_evap_prefactor thing is working at all, but set it to 1 so no veg effect
     'surface_flux_nml': {
         'veg_evap_prefactor': 1. # land evap = potential evap*0.7
     },
+
 })
 
-# #Lets do a run!
-# exp.run(122, restart_file=os.path.join(GFDL_DATA,'two_continents_newbucket_fixedSSTs_from_realworld_zonallysymm_vegetation_vegpref1/restarts/res0121.tar.gz'), num_cores=NCORES)
-# for i in range(123,481):
-#    exp.run(i, num_cores=NCORES)
+#Lets do a run!
+exp.run(1, use_restart=False, num_cores=NCORES)
+for i in range(2,481):
+    exp.run(i, num_cores=NCORES)
 
-# Do CO2 run with prescribed SSTS from Isca/two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly_2xCO2_spinup_361 starting from spun-up state of the run above
 
-exp = Experiment('two_continents_newbucket_fixedSSTs_from_realworld_zonallysymm_vegetation_vegpref05_plus_uniform_warming_and_2xCO2_spinup_361', codebase=cb)
+
+
+exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_vegetation_vegpref05_plus_2pt52K_and_2xCO2_spinup_361_witholr', codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/two_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
+# diag.add_file('atmos_15days', 15, 'days', time_units='days')
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
+# diag.add_file('atmos_daily', 1, 'days', time_units='days')
+# diag.add_file('atmos_6_hourly', 6, 'hours', time_units = 'hours')
 
 #Tell model which diagnostics to write
 diag.add_field('dynamics', 'ps', time_avg=True)
@@ -256,6 +269,11 @@ diag.add_field('dynamics', 'sphum_u', time_avg=True)
 diag.add_field('dynamics', 'sphum_v', time_avg=True)
 diag.add_field('dynamics', 'sphum_w', time_avg=True)
 
+# this is not working -- why??
+#diag.add_file('atmos_6_hourly', 6, 'hours', time_units = 'hours')
+#diag.add_field('dynamics', 'temp', time_avg=False)
+#diag.add_field('dynamics', 'ucomp', time_avg=False)
+
 #MP added on 11 october 2017
 exp.diag_table = diag
 
@@ -266,13 +284,13 @@ exp.clear_rundir()
 #Define values for the 'core' namelist
 exp.namelist = namelist = Namelist({
     'main_nml': {
-        'days'   : 30,
+        'days'   : 30,  ### set to 15 for saving 15-day months output
         'hours'  : 0,
         'minutes': 0,
         'seconds': 0,
-        'dt_atmos':720,
+        'dt_atmos': 720, 
         'current_date' : [1,1,1,0,0,0],
-        'calendar' : 'thirty_day'
+        'calendar' : 'thirty_day' ### set to fifteen_day for 15 day months output
     },
 
     'idealized_moist_phys_nml': {
@@ -330,7 +348,7 @@ exp.namelist = namelist = Namelist({
         'do_qflux' : False, #Do not use prescribed qflux formula
         'do_read_sst' : True, #Read in sst values from input file
         'do_sc_sst' : True, #Do specified ssts (need both to be true)
-        'sst_file' : 'amip_zonsymm_uniform_warming', #Set name of sst input file
+        'sst_file' : 'amip_zonsymm_uniform_warming',
         'specify_sst_over_ocean_only' : True, #Make sure sst only specified in regions of ocean.
     },
 
@@ -362,7 +380,7 @@ exp.namelist = namelist = Namelist({
         'do_read_co2': True,
         'co2_file': 'co2_doubling',
         'solr_cnst' : 1360., #s set solar constant to 1360, rather than default of 1368.22
-        'dt_rad': 3600, #Set RRTM radiation timestep to 3600 seconds, meaning it runs every 5 atmospheric timesteps        
+        'dt_rad': 3600,      
     },
 
     # FMS Framework configuration
@@ -384,24 +402,34 @@ exp.namelist = namelist = Namelist({
         'water_correction_limit': 200.e2,
         'reference_sea_level_press':1.0e5,
         'num_levels':40,
-        'valid_range_t':[100.,800.],
+        'valid_range_t':[100.,800.], 
         'initial_sphum':[2.e-6],
         'vert_coord_option':'uneven_sigma',
         'surf_res':0.2, #Parameter that sets the vertical distribution of sigma levels
         'scale_heights' : 11.0,
         'exponent':7.0,
-        'robert_coeff':0.03
+        'robert_coeff':0.03, 
     },
 
-# just put this in here to see whether the veg_evap_prefactor thing is working at all, but set it to 1 so no veg effect
+    'spectral_init_cond_nml': {
+        'topog_file_name': 'land.nc', #Name of land input file, which will also contain topography if generated using Isca's `land_file_generator_fn.py' routine.
+        'topography_option':'input' #Tell model to get topography from input file
+    }, 
+
     'surface_flux_nml': {
-        'veg_evap_prefactor': 0.5 
-    },
+        'veg_evap_prefactor': 0.5 # vegetation at 600 ppm co2 reduces evaporation by 80% -- just a suggestion 
+    }
 })
 
 
 #Lets do a run!
-exp.run(1, restart_file=os.path.join(GFDL_DATA,'two_continents_newbucket_fixedSSTs_from_realworld_zonallysymm_vegetation_vegpref1/restarts/res0361.tar.gz'), num_cores=NCORES)
+exp.run(1, restart_file=os.path.join(GFDL_DATA,'full_continents_newbucket_fixedSSTs_zonally_symmetric_vegetation_vegpref1_witholr/restarts/res0361.tar.gz'), num_cores=NCORES)
 for i in range(2,481):
     exp.run(i, num_cores=NCORES)
+
+
+
+
+
+
 
