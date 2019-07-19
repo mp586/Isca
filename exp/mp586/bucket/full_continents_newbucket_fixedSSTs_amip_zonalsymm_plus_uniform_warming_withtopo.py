@@ -8,9 +8,8 @@ NCORES = 16
 base_dir = os.getcwd()
 # a CodeBase can be a directory on the computer,
 # useful for iterative development
-cb = IscaCodeBase.from_directory(GFDL_BASE)
-#cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='92d1c49') # using a commit doesn't work on ISCA, don't know why! This would be the original commit which was used in /scratch/mp586/Isca_DATA/ISCA_HPC/full_continents_newbucket_fixedSSTs_zonally_symmetric_plus_2pt52K_and_2xCO2_spinup_361/run0200/git_hash_used.txt"
-
+cb = IscaCodeBase.from_directory(GFDL_BASE) #tried using a git commit that doesn't actually exist, so ended up using GFDL_BASE command instead for the withtopo - perturbed run
+#cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='') # The original commit was '32b1502' for the perturbed run and 'b4f6ddf' for the spinup run
 # # or it can point to a specific git repo and commit id.
 # # This method should ensure future, independent, reproducibility of results.
 # # cb = DryCodeBase.from_repo(repo='https://github.com/isca/isca', commit='isca1.1')
