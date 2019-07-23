@@ -2,7 +2,7 @@ import os
 
 import numpy as np
 
-from isca import IscaCodeBase, DiagTable, Experiment, Namelist, GFDL_BASE, GFDL_DATA
+from isca import IscaCodeBase, DiagTable, Experiment, Namelist, GFDL_BASE, GFDL_DATA, GFDL_WORK
 
 NCORES = 16
 base_dir = os.getcwd()
@@ -32,7 +32,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_commit9e0d484', codebase=cb)
 
 
-input_path = '/scratch/mp586/Isca_WORK/codebase/https___github.com_mp586_Isca.git-'+commit_nr+'/code/'
+input_path = os.path.join(GFDL_WORK,'codebase/https___github.com_mp586_Isca.git-'+commit_nr+'/code/')
 
 #Add any input files that are necessary for a particular experiment.
 exp.inputfiles = [os.path.join(input_path,'input/all_continents/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/sst_clim_amip_zonalsymm.nc')]
