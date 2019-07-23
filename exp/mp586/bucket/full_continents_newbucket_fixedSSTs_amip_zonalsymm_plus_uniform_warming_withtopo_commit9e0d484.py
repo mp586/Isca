@@ -9,7 +9,10 @@ base_dir = os.getcwd()
 # a CodeBase can be a directory on the computer,
 # useful for iterative development
 # cb = IscaCodeBase.from_directory(GFDL_BASE)
-cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='9e0d484') 
+
+commit_nr = '9e0d484'
+
+cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit=commit_nr) 
 # or it can point to a specific git repo and commit id.
 # This method should ensure future, independent, reproducibility of results.
 # cb = DryCodeBase.from_repo(repo='https://github.com/isca/isca', commit='isca1.1')
@@ -28,8 +31,11 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 # prescribed SSTs with climatology from Isca/full_continents_newbucket_fullnewbucketqflux
 exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_commit9e0d484', codebase=cb)
 
+
+input_path = '/scratch/mp586/Isca_WORK/codebase/https___github.com_mp586_Isca.git-'+commit_nr+'/code/'
+
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/sst_clim_amip_zonalsymm.nc')]
+exp.inputfiles = [os.path.join(input_path,'input/all_continents/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/sst_clim_amip_zonalsymm.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -220,7 +226,7 @@ for i in range(2,481):
 exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_plus_2pt52K_and_2xCO2_spinup_361_withtopo_commit9e0d484', codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
+exp.inputfiles = [os.path.join(input_path,'input/all_continents/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(input_path,'input/co2_doubling.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 # diag.add_file('atmos_15days', 15, 'days', time_units='days')
