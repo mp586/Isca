@@ -29,7 +29,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_commit9e0d484', codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(cb,'input/all_continents/land.nc'),os.path.join(cb,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(cb,'input/sst_clim_amip_zonalsymm.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/sst_clim_amip_zonalsymm.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -220,7 +220,7 @@ for i in range(2,481):
 exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_plus_2pt52K_and_2xCO2_spinup_361_withtopo_commit9e0d484', codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(cb,'input/all_continents/land.nc'),os.path.join(cb,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(cb,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(cb,'input/co2_doubling.nc')]
+exp.inputfiles = [os.path.join(GFDL_BASE,'input/all_continents/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(GFDL_BASE,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(GFDL_BASE,'input/co2_doubling.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 # diag.add_file('atmos_15days', 15, 'days', time_units='days')
