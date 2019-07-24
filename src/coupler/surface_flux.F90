@@ -530,18 +530,9 @@ subroutine surface_flux_1d (                                           &
 	      ! begin LJJ addition
   		where(land)
 			where (bucket_depth >= max_bucket_depth_land*0.75)
-        if veg_evap_prefactor == 1.0 then 
-                flux_q    =  rho_drag * (q_surf0 - q_atm) !mp586 to make exactly consistent with normal bucket case (machine precision)
-        else 
-            	  flux_q    =  veg_evap_prefactor * rho_drag * (q_surf0 - q_atm) !mp586 added vegetation response to co2
-        end if 
+				flux_q    =  veg_evap_prefactor * rho_drag * (q_surf0 - q_atm) !mp586 added vegetation response to co2
 			elsewhere	
-        if veg_evap_prefactor == 1.0 then 
-                flux_q    = bucket_depth/(max_bucket_depth_land*0.75) * rho_drag * (q_surf0 - q_atm) ! mp586 to make exactly consistent with normal bucket case (machine precision)
-
-        else
-                flux_q    =  veg_evap_prefactor * bucket_depth/(max_bucket_depth_land*0.75) * rho_drag * (q_surf0 - q_atm) ! mp586 added vegetation response to co2 , flux of water vapor  (Kg/(m**2 s))
-        end if 
+                flux_q    =  veg_evap_prefactor * bucket_depth/(max_bucket_depth_land*0.75) * rho_drag * (q_surf0 - q_atm) ! flux of water vapor  (Kg/(m**2 s))
 			end where
 		elsewhere
 	        flux_q    =  rho_drag * (q_surf0 - q_atm) ! flux of water vapor  (Kg/(m**2 s))
@@ -549,13 +540,8 @@ subroutine surface_flux_1d (                                           &
 		
 	    depth_change_lh_1d  = flux_q * dt/dens_h2o 
 	    where (flux_q > 0.0 .and. bucket_depth < depth_change_lh_1d) ! where more evaporation than what's in bucket, empty bucket
-          if veg_evap_prefactor == 1.0 then
-            flux_q = bucket_depth * dens_h2o / dt !mp586  to make exactly consistent with normal bucket case (machine precision)
-          else 
-            flux_q = veg_evap_prefactor * bucket_depth * dens_h2o / dt !mp586 added veg response to co2 forcing 
-          end if
-        depth_change_lh_1d = flux_q * dt / dens_h2o
-
+	        flux_q = veg_evap_prefactor * bucket_depth * dens_h2o / dt !mp586 added veg response to co2 forcing 
+	        depth_change_lh_1d = flux_q * dt / dens_h2o
 	    end where 
     
 	    where (bucket_depth <= 0.0)
@@ -567,18 +553,9 @@ subroutine surface_flux_1d (                                           &
 	      dedq_atm = -rho_drag ! d(latent heat flux)/d(atmospheric mixing ratio)
 		  where(land)
 			  where (bucket_depth >= max_bucket_depth_land*0.75)
-
-          if veg_evap_prefactor == 1.0 then 
-            dedt_surf =  rho_drag * (q_sat1 - q_sat) *del_temp_inv !mp586 added vegetation response to co2 
-          else
-            dedt_surf =  veg_evap_prefactor * rho_drag * (q_sat1 - q_sat) *del_temp_inv !mp586 added vegetation response to co2 
-          end if 
+				  dedt_surf =  veg_evap_prefactor * rho_drag * (q_sat1 - q_sat) *del_temp_inv !mp586 added vegetation response to co2 
 			  elsewhere
-          if veg_evap_prefactor == 1.0 then
-                  dedt_surf =  bucket_depth/(max_bucket_depth_land*0.75) * rho_drag * (q_sat1 - q_sat) *del_temp_inv !mp586 to make exactly consistent with normal bucket case (machine precision)
-          else 
       	          dedt_surf =  veg_evap_prefactor * bucket_depth/(max_bucket_depth_land*0.75) * rho_drag * (q_sat1 - q_sat) *del_temp_inv !mp586 added veg response
-          end if 
 			  end where
 		  elsewhere
  	          dedt_surf =  rho_drag * (q_sat1 - q_sat) *del_temp_inv 
