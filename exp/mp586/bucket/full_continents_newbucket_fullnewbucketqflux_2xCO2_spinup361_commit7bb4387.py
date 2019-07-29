@@ -35,7 +35,7 @@ exp = Experiment('full_continents_newbucket_fullnewbucketqflux_commit'+commit_nr
 
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(input_path,'input/all_continents/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'exp/mp586/bucket/input/full_continents_newbucket/ocean_qflux.nc')]
+exp.inputfiles = [os.path.join(input_path,'input/all_continents/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/all_continents/full_continents_newbucket/ocean_qflux.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -235,7 +235,7 @@ exp = Experiment('full_continents_newbucket_fullnewbucketqflux_2xCO2_spinup361_c
 
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(input_path,'input/all_continents/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'exp/mp586/bucket/input/full_continents_newbucket/ocean_qflux.nc'),os.path.join(input_path,'input/co2_doubling.nc') ]
+exp.inputfiles = [os.path.join(input_path,'input/all_continents/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/all_continents/full_continents_newbucket/ocean_qflux.nc'),os.path.join(input_path,'input/co2_doubling.nc') ]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
