@@ -525,6 +525,9 @@ subroutine surface_flux_1d (                                           &
 
 !RG Add bucket - if bucket is on evaluate fluxes based on moisture availability.
 !RG Note changes to avail statements to allow bucket to be switched on or off	  
+  
+write(6,*) 'VEG_EVAP_PREFACTOR:', veg_evap_prefactor
+
   if (bucket) then
 	  where (avail)
 	      ! begin LJJ addition
