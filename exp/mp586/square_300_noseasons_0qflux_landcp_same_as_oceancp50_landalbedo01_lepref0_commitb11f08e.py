@@ -2,14 +2,15 @@ import os
 
 import numpy as np
 
-from isca import IscaCodeBase, DiagTable, Experiment, Namelist, GFDL_BASE
+from isca import IscaCodeBase, DiagTable, Experiment, Namelist, GFDL_BASE, GFDL_WORK
 
 NCORES = 16
 base_dir = os.getcwd()
 # a CodeBase can be a directory on the computer,
 # useful for iterative development
 #cb = IscaCodeBase.from_directory(GFDL_BASE)
-cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit='7bb4387')
+commit_nr = 'b11f08e'
+cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit=commit_nr)
 # or it can point to a specific git repo and commit id.
 # This method should ensure future, independent, reproducibility of results.
 # cb = DryCodeBase.from_repo(repo='https://github.com/isca/isca', commit='isca1.1')
@@ -23,12 +24,12 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
-exp = Experiment('square_threehundred_noseasons_0qflux_landcp_same_as_oceancp50_landalbedo01_lepref0', codebase=cb)
+exp = Experiment('square_threehundred_noseasons_0qflux_landcp_same_as_oceancp50_landalbedo01_lepref0_commit'+commit_nr, codebase=cb)
 
-
+input_path = os.path.join(GFDL_WORK,'codebase/https___github.com_mp586_Isca.git-'+commit_nr+'/code/')
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(GFDL_BASE,'input/square_threehundred/land.nc'),os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc')]
+exp.inputfiles = [os.path.join(input_path,'input/square_threehundred/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
