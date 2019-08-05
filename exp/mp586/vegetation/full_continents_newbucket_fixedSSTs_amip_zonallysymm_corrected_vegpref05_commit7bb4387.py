@@ -32,7 +32,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 
 # prescribed SSTs with climatology from Isca/two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly
-exp = Experiment('full_continents_newbucket_fixedSSTs_zonallysymm_vegpref05_commit'+commit_nr, codebase=cb)
+exp = Experiment('full_continents_newbucket_fixedSSTs_zonallysymm_corrected_vegpref05_commit'+commit_nr, codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
 exp.inputfiles = [os.path.join(input_path,'input/all_continents/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/sst_clim_amip_zonalsymm.nc')]
