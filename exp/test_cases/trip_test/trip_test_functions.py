@@ -6,7 +6,8 @@ or only change the test cases it expects to (e.g. a bug fix will change the resu
 When you submit a new pull request, please run this test and report the results in the pull request.
 """
 import numpy as np
-from isca import Experiment, IscaCodeBase, SocratesCodeBase, FailedRunError, GFDL_BASE, DiagTable
+from isca import Experiment, IscaCodeBase, FailedRunError, GFDL_BASE, DiagTable
+#from isca import Experiment, IscaCodeBase, SocratesCodeBase, FailedRunError, GFDL_BASE, DiagTable
 from isca.util import exp_progress
 import xarray as xar
 import pdb
