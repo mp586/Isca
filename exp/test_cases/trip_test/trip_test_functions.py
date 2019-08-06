@@ -102,7 +102,8 @@ def get_nml_diag(test_case_name):
 def list_all_test_cases_implemented_in_trip_test():
 
     #List of test cases to check
-    exps_implemented = ['axisymmetric', 'bucket_model', 'frierson', 'giant_planet', 'held_suarez', 'MiMA', 'realistic_continents_fixed_sst', 'realistic_continents_variable_qflux', 'socrates_aquaplanet', 'top_down_test', 'variable_co2_grey', 'variable_co2_rrtm']
+#    exps_implemented = ['axisymmetric', 'bucket_model', 'frierson', 'giant_planet', 'held_suarez', 'MiMA', 'realistic_continents_fixed_sst', 'realistic_continents_variable_qflux', 'socrates_aquaplanet', 'top_down_test', 'variable_co2_grey', 'variable_co2_rrtm']
+    exps_implemented = ['axisymmetric', 'bucket_model', 'frierson', 'giant_planet', 'held_suarez', 'MiMA', 'realistic_continents_fixed_sst', 'realistic_continents_variable_qflux', 'top_down_test', 'variable_co2_grey', 'variable_co2_rrtm']
 
     return exps_implemented
 
