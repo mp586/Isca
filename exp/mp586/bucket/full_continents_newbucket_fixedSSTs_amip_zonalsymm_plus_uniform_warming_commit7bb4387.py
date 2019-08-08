@@ -27,7 +27,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 
 # prescribed SSTs with climatology from Isca/full_continents_newbucket_fullnewbucketqflux
-exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_commmit'+commit_nr, codebase=cb)
+exp = Experiment('full_continents_newbucket_fixedSSTs_zonally_symmetric_commit'+commit_nr, codebase=cb)
 
 input_path = os.path.join(GFDL_WORK,'codebase/https___github.com_mp586_Isca.git-'+commit_nr+'/code/')
 
