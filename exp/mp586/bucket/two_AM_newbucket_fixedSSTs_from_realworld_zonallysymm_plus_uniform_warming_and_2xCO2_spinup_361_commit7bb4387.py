@@ -33,10 +33,10 @@ input_path = os.path.join(GFDL_WORK,'codebase/https___github.com_mp586_Isca.git-
 
 
 # # prescribed SSTs with climatology from Isca/two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly
-# exp = Experiment('narrow_three_newbucket_fixedSSTs_from_realworld_zonallysymm_commit'+commit_nr, codebase=cb)
+# exp = Experiment('two_AM_newbucket_fixedSSTs_from_realworld_zonallysymm_commit'+commit_nr, codebase=cb)
 
 # #Add any input files that are necessary for a particular experiment.
-# exp.inputfiles = [os.path.join(input_path,'input/narrow_three/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/sst_clim_amip_zonalsymm.nc')]
+# exp.inputfiles = [os.path.join(input_path,'input/two_AM/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/sst_clim_amip_zonalsymm.nc')]
 # #Tell model how to write diagnostics
 # diag = DiagTable()
 # diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -217,10 +217,10 @@ input_path = os.path.join(GFDL_WORK,'codebase/https___github.com_mp586_Isca.git-
 
 
 
-exp = Experiment('narrow_three_newbucket_fixedSSTs_from_realworld_zonallysymm_corrected_vegpref0_plus_uniform_warming_and_2xCO2_spinup_361_commit'+commit_nr, codebase=cb)
+exp = Experiment('two_AM_newbucket_fixedSSTs_from_realworld_zonallysymm_plus_uniform_warming_and_2xCO2_spinup_361_commit'+commit_nr, codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(input_path,'input/narrow_three/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(input_path,'input/co2_doubling.nc')]
+exp.inputfiles = [os.path.join(input_path,'input/two_AM/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(input_path,'input/co2_doubling.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -312,8 +312,7 @@ exp.namelist = namelist = Namelist({
     'surface_flux_nml': {
         'use_virtual_temp': False,
         'do_simple': True,
-        'old_dtaudv': True,
-        'veg_evap_prefactor': 0.0    
+        'old_dtaudv': True
     },
 
     'atmosphere_nml': {
@@ -399,7 +398,7 @@ exp.namelist = namelist = Namelist({
 
 
 #Lets do a run!
-exp.run(1, restart_file=os.path.join(GFDL_DATA,'narrow_three_newbucket_fixedSSTs_from_realworld_zonallysymm_commit'+commit_nr+'/restarts/res0361.tar.gz'), num_cores=NCORES)
+exp.run(1, restart_file=os.path.join(GFDL_DATA,'two_AM_newbucket_fixedSSTs_from_realworld_zonallysymm_commit'+commit_nr+'/restarts/res0361.tar.gz'), num_cores=NCORES)
 for i in range(2,481):
     exp.run(i, num_cores=NCORES)
 

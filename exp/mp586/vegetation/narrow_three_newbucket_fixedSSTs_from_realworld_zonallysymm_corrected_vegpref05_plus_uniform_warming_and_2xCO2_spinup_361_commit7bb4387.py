@@ -33,7 +33,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 
 
-exp = Experiment('narrow_three_newbucket_fixedSSTs_from_realworld_zonallysymm_corrected_vegpref05_plus_uniform_warming_and_2xCO2_spinup_361_'+commit_nr, codebase=cb)
+exp = Experiment('narrow_three_newbucket_fixedSSTs_from_realworld_zonallysymm_corrected_vegpref05_plus_uniform_warming_and_2xCO2_spinup_361_commit'+commit_nr, codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
 exp.inputfiles = [os.path.join(input_path,'input/narrow_three/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(input_path,'input/co2_doubling.nc')]

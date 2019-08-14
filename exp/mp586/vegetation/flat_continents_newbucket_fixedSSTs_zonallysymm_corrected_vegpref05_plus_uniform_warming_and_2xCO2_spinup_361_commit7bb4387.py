@@ -218,7 +218,7 @@ input_path = os.path.join(GFDL_WORK,'codebase/https___github.com_mp586_Isca.git-
 
 
 
-exp = Experiment('flat_continents_newbucket_fixedSSTs_zonallysymm_corrected_vegpref05_plus_uniform_warming_and_2xCO2_spinup_361_'+commit_nr, codebase=cb)
+exp = Experiment('flat_continents_newbucket_fixedSSTs_zonallysymm_corrected_vegpref05_plus_uniform_warming_and_2xCO2_spinup_361_commit'+commit_nr, codebase=cb)
 
 #Add any input files that are necessary for a particular experiment.
 exp.inputfiles = [os.path.join(input_path,'input/all_continents/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(input_path,'input/co2_doubling.nc')]
