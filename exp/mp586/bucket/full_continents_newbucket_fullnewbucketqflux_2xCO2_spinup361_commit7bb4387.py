@@ -4,7 +4,7 @@ import numpy as np
 
 from isca import IscaCodeBase, DiagTable, Experiment, Namelist, GFDL_BASE, GFDL_WORK
 
-NCORES = 16
+NCORES = 1
 base_dir = os.getcwd()
 # a CodeBase can be a directory on the computer,
 # useful for iterative development
@@ -42,12 +42,12 @@ diag = DiagTable()
 diag.add_file('atmos_daily', 1, 'days', time_units='days')
 
 # Define diag table entries
-diag.add_field('dynamics', 'ps', time_avg=True, files=['atmos_daily'])
-diag.add_field('dynamics', 'bk', time_avg=True, files=['atmos_daily'])
-diag.add_field('dynamics', 'pk', time_avg=True, files=['atmos_daily'])
-diag.add_field('dynamics', 'ucomp', time_avg=True, files=['atmos_daily'])
-diag.add_field('dynamics', 'vcomp', time_avg=True, files=['atmos_daily'])
-diag.add_field('dynamics', 'temp', time_avg=True, files=['atmos_daily'])
+diag.add_field('dynamics', 'ps', time_avg=True)
+diag.add_field('dynamics', 'bk', time_avg=True)
+diag.add_field('dynamics', 'pk', time_avg=True)
+diag.add_field('dynamics', 'ucomp', time_avg=True)
+diag.add_field('dynamics', 'vcomp', time_avg=True)
+diag.add_field('dynamics', 'temp', time_avg=True)
 
 # #Tell model which diagnostics to write
 # diag.add_field('dynamics', 'ps', time_avg=True)
@@ -93,13 +93,13 @@ exp.clear_rundir()
 #Define values for the 'core' namelist
 exp.namelist = namelist = Namelist({
     'main_nml': {
-        'days'   : 30,
+        'days'   : 26,
         'hours'  : 0,
         'minutes': 0,
         'seconds': 0,
         'dt_atmos':720,
         'current_date' : [1,1,1,0,0,0],
-        'calendar' : 'thirty_day'
+        'calendar' : 'twenty_six_day'
     },
 
     'idealized_moist_phys_nml': {
