@@ -93,13 +93,13 @@ exp.clear_rundir()
 #Define values for the 'core' namelist
 exp.namelist = namelist = Namelist({
     'main_nml': {
-        'days'   : 26,
+        'days'   : 25,
         'hours'  : 0,
         'minutes': 0,
         'seconds': 0,
         'dt_atmos':720,
         'current_date' : [1,1,1,0,0,0],
-        'calendar' : 'twenty_six_day'
+        'calendar' : 'twenty_five_day'
     },
 
     'idealized_moist_phys_nml': {
