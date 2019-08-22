@@ -330,7 +330,6 @@ exp.namelist = namelist = Namelist({
         'do_entrain':False,
         'do_simple': True,
         'use_pog_bug_fix': False
-
     },
 
     'surface_flux_nml': {
