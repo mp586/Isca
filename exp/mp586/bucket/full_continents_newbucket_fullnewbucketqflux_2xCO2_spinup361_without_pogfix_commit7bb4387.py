@@ -235,7 +235,7 @@ for i in range(2,481):
 
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
-exp = Experiment('full_continents_newbucket_fullnewbucketqflux_2xCO2_spinup361_commit'+commit_nr, codebase=cb)
+exp = Experiment('full_continents_newbucket_fullnewbucketqflux_2xCO2_spinup361_without_pogfix_commit'+commit_nr, codebase=cb)
 
 
 
@@ -329,6 +329,8 @@ exp.namelist = namelist = Namelist({
     'diffusivity_nml': {
         'do_entrain':False,
         'do_simple': True,
+        'use_pog_bug_fix': False
+
     },
 
     'surface_flux_nml': {
@@ -425,7 +427,7 @@ exp.namelist = namelist = Namelist({
 })
 
 # #Lets do a run!
-exp.run(1, restart_file=os.path.join(GFDL_DATA,'full_continents_newbucket_fullnewbucketqflux_commit'+commit_nr+'/restarts/res0361.tar.gz'), num_cores=NCORES)
+exp.run(1, restart_file=os.path.join(GFDL_DATA,'full_continents_newbucket_fullnewbucketqflux_without_pogfix_commit'+commit_nr+'/restarts/res0361.tar.gz'), num_cores=NCORES)
 for i in range(2,481):
     exp.run(i, num_cores=NCORES)
 
