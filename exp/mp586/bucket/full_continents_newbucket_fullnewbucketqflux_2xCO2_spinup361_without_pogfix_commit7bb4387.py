@@ -2,7 +2,7 @@ import os
 
 import numpy as np
 
-from isca import IscaCodeBase, DiagTable, Experiment, Namelist, GFDL_BASE, GFDL_WORK
+from isca import IscaCodeBase, DiagTable, Experiment, Namelist, GFDL_BASE, GFDL_WORK, GFDL_DATA
 
 NCORES = 16
 base_dir = os.getcwd()
