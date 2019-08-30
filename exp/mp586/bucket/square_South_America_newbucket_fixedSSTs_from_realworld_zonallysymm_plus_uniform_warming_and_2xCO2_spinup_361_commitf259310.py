@@ -10,8 +10,8 @@ base_dir = os.getcwd()
 # useful for iterative development
 # cb = IscaCodeBase.from_directory(GFDL_BASE)
 
-commit_nr = '7bb4387'
 
+commit_nr = 'f259310'
 cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit=commit_nr)
 
 # or it can point to a specific git repo and commit id.
@@ -30,11 +30,14 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 input_path = os.path.join(GFDL_WORK,'codebase/https___github.com_mp586_Isca.git-'+commit_nr+'/code/')
 
-# prescribed SSTs with climatology from Isca/two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly
-exp = Experiment('two_continents_flipped_newbucket_fixedSSTs_from_realworld_zonallysymm_commit'+commit_nr, codebase=cb)
+#Add any input files that are necessary for a particular experiment.
+# Tell model how to write diagnostics
+
+exp = Experiment('square_South_America_newbucket_fixedSSTs_from_realworld_zonallysymm_commit'+commit_nr, codebase=cb)
+
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(input_path,'input/two_continents_flipped/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/sst_clim_amip_zonalsymm.nc')]
+exp.inputfiles = [os.path.join(input_path,'input/square_South_America/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/sst_clim_amip_zonalsymm.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -208,18 +211,19 @@ exp.namelist = namelist = Namelist({
     }
 })
 
-# Lets do a run!
+#Lets do a run!
 exp.run(1, use_restart=False, num_cores=NCORES)
 for i in range(2,481):
-   exp.run(i, num_cores=NCORES)
+    exp.run(i, num_cores=NCORES)
 
 
-# Do CO2 run with prescribed SSTS from Isca/two_continents_newbucket_finalIscaAPqflux_landqfluxzero_zerointegral_with6hrly_2xCO2_spinup_361 starting from spun-up state of the run above
 
-exp = Experiment('two_continents_flipped_newbucket_fixedSSTs_from_realworld_zonallysymm_plus_uniform_warming_and_2xCO2_spinup_361_commit'+commit_nr, codebase=cb)
+
+exp = Experiment('square_South_America_newbucket_fixedSSTs_from_realworld_zonallysymm_plus_uniform_warming_and_2xCO2_spinup_361_commit'+commit_nr, codebase=cb)
+
 
 #Add any input files that are necessary for a particular experiment.
-exp.inputfiles = [os.path.join(input_path,'input/two_continents_flipped/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(input_path,'input/co2_doubling.nc')]
+exp.inputfiles = [os.path.join(input_path,'input/square_South_America/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/amip_zonsymm_uniform_warming.nc'), os.path.join(input_path,'input/co2_doubling.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
@@ -247,7 +251,6 @@ diag.add_field('dynamics', 'slp', time_avg=True) # sea level pressure
 diag.add_field('dynamics', 'zsurf', time_avg=True) # geopotential height at surface
 diag.add_field('rrtm_radiation', 'toa_sw',time_avg=True)
 diag.add_field('rrtm_radiation', 'olr',time_avg=True)
-
 diag.add_field('rrtm_radiation', 'flux_sw', time_avg=True) # net SW surface flux
 diag.add_field('rrtm_radiation', 'flux_lw', time_avg=True) # net LW surface flux
 diag.add_field('mixed_layer', 'flux_lhe', time_avg=True) # latent heat flux (up) at surface
@@ -397,7 +400,7 @@ exp.namelist = namelist = Namelist({
 })
 
 
-# restarting on ISCA_HPC after I've copied data over to baikonur already
-exp.run(1, restart_file=os.path.join(GFDL_DATA,'two_continents_flipped_newbucket_fixedSSTs_from_realworld_zonallysymm_commit'+commit_nr+'/restarts/res0361.tar.gz'), num_cores=NCORES)
+#Lets do a run!
+exp.run(1, restart_file=os.path.join(GFDL_DATA,'square_South_America_newbucket_fixedSSTs_from_realworld_zonallysymm_commit'+commit_nr+'/restarts/res0361.tar.gz'), num_cores=NCORES)
 for i in range(2,481):
     exp.run(i, num_cores=NCORES)
