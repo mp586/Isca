@@ -33,7 +33,7 @@ input_path = os.path.join(GFDL_WORK,'codebase/https___github.com_mp586_Isca.git-
 #Add any input files that are necessary for a particular experiment.
 # Tell model how to write diagnostics
 
-exp = Experiment('square_South_America_newbucket_0qflux_commit'+commit_nr, codebase=cb)
+exp = Experiment('square_South_America_noseasons_newbucket_0qflux_commit'+commit_nr, codebase=cb)
 
 
 #Add any input files that are necessary for a particular experiment.
@@ -217,7 +217,7 @@ for i in range(2,481):
 
 
 
-exp = Experiment('square_South_America_newbucket_0qflux_plus_2xCO2_spinup_361_commit'+commit_nr, codebase=cb)
+exp = Experiment('square_South_America_noseasons_newbucket_0qflux_plus_2xCO2_spinup_361_commit'+commit_nr, codebase=cb)
 
 
 #Add any input files that are necessary for a particular experiment.
@@ -397,6 +397,6 @@ exp.namelist = namelist = Namelist({
 
 
 #Lets do a run!
-exp.run(1, restart_file=os.path.join(GFDL_DATA,'square_South_America_newbucket_0qflux_commit'+commit_nr+'/restarts/res0361.tar.gz'), num_cores=NCORES)
+exp.run(1, restart_file=os.path.join(GFDL_DATA,'square_South_America_noseasons_newbucket_0qflux_commit'+commit_nr+'/restarts/res0361.tar.gz'), num_cores=NCORES)
 for i in range(2,481):
     exp.run(i, num_cores=NCORES)
