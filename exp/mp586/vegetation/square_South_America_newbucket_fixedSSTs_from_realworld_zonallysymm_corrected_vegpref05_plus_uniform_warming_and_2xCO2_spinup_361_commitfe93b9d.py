@@ -10,7 +10,7 @@ base_dir = os.getcwd()
 # useful for iterative development
 # cb = IscaCodeBase.from_directory(GFDL_BASE)
 
-commit_nr = '7bb4387'
+commit_nr = 'fe93b9d'
 
 cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit=commit_nr)
 
@@ -29,7 +29,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 # and output diagnostics
 
 
-exp = Experiment('square_South_America_newbucket_fixedSSTs_from_realworld_zonallysymm_corrected_vegpref05_plus_uniform_warming_and_2xCO2_spinup_361_withEP_commit'+commit_nr, codebase=cb)
+exp = Experiment('square_South_America_newbucket_fixedSSTs_from_realworld_zonallysymm_corrected_vegpref05_plus_uniform_warming_and_2xCO2_spinup_361_commit'+commit_nr, codebase=cb)
 
 
 input_path = os.path.join(GFDL_WORK,'codebase/https___github.com_mp586_Isca.git-'+commit_nr+'/code/')
@@ -69,8 +69,8 @@ diag.add_field('rrtm_radiation', 'flux_lw', time_avg=True) # net LW surface flux
 diag.add_field('mixed_layer', 'flux_lhe', time_avg=True) # latent heat flux (up) at surface
 diag.add_field('mixed_layer', 'flux_t', time_avg=True) # sensible heat flux (up) at surface
 diag.add_field('rrtm_radiation', 'co2', time_avg=True)
-diag.add_field('atmosphere', 'potential_evap', time_avg=True)
-diag.add_field('atmosphere', 'cape', time_avg=True)
+diag.add_field('atmosphere', 'potential_evap', time_avg=True) 
+diag.add_field('atmosphere', 'cape', time_avg=True) 
 diag.add_field('dynamics', 'sphum_u', time_avg=True)
 diag.add_field('dynamics', 'sphum_v', time_avg=True)
 diag.add_field('dynamics', 'sphum_w', time_avg=True)
@@ -217,7 +217,7 @@ exp.namelist = namelist = Namelist({
 
 
 #Lets do a run!
-exp.run(1, restart_file=os.path.join(GFDL_DATA,'ISCA_HPC/square_South_America_newbucket_fixedSSTs_from_realworld_zonallysymm_commit'+commit_nr+'/restarts/res0361.tar.gz'), num_cores=NCORES)
+exp.run(1, restart_file=os.path.join(GFDL_DATA,'square_South_America_newbucket_fixedSSTs_from_realworld_zonallysymm_commit'+commit_nr+'/restarts/res0361.tar.gz'), num_cores=NCORES)
 for i in range(2,481):
     exp.run(i, num_cores=NCORES)
 
