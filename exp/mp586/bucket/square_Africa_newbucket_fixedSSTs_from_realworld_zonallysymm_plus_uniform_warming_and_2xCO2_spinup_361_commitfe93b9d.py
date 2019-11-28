@@ -258,7 +258,7 @@ diag.add_field('mixed_layer', 'flux_lhe', time_avg=True) # latent heat flux (up)
 diag.add_field('mixed_layer', 'flux_t', time_avg=True) # sensible heat flux (up) at surface
 diag.add_field('rrtm_radiation', 'co2', time_avg=True)
 diag.add_field('atmosphere', 'potential_evap', time_avg=True) 
-diag.add_field('atmosphere', 'cape', time_avg=True) z
+diag.add_field('atmosphere', 'cape', time_avg=True)
 
 diag.add_field('dynamics', 'sphum_u', time_avg=True)
 diag.add_field('dynamics', 'sphum_v', time_avg=True)
