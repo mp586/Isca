@@ -349,6 +349,7 @@ subroutine surface_flux_1d (                                           &
      w_atm,     u_star,     b_star,     q_star,                        &
      dhdt_surf, dedt_surf,  dedq_surf,  drdt_surf,                     &
      dhdt_atm,  dedq_atm,   dtaudu_atm, dtaudv_atm,                    &
+     potential_evap,												   & !mp586 add potential evaporation
      dt,        land,      seawater,     avail  )
 !</PUBLICROUTINE>
 !  slm Mar 28 2002 -- remove agument drag_q since it is just cd_q*wind
@@ -366,6 +367,7 @@ subroutine surface_flux_1d (                                           &
        dhdt_surf, dedt_surf,  dedq_surf, drdt_surf,          &
        dhdt_atm,  dedq_atm,   dtaudu_atm,dtaudv_atm,         &
        w_atm,     u_star,     b_star,    q_star,             &
+       potential_evap,										 & !mp586 add potential evaporation
        cd_m,      cd_t,       cd_q
   real, intent(inout), dimension(:) :: q_surf
   real, intent(inout), dimension(:) :: bucket_depth                              !RG Add bucket
@@ -534,8 +536,10 @@ subroutine surface_flux_1d (                                           &
 			elsewhere	
                 flux_q    =  veg_evap_prefactor * bucket_depth/(max_bucket_depth_land*0.75) * rho_drag * (q_surf0 - q_atm) ! flux of water vapor  (Kg/(m**2 s))
 			end where
+			potential_evap = veg_evap_prefactor * rho_drag * (q_surf0 - q_atm) !mp586 added calculation of potential evaporation 
 		elsewhere
 	        flux_q    =  rho_drag * (q_surf0 - q_atm) ! flux of water vapor  (Kg/(m**2 s))
+	        potential_evap = flux_q !mp586 added calculation of potential evaporation
 		end where
 		
 	    depth_change_lh_1d  = flux_q * dt/dens_h2o 
@@ -650,6 +654,7 @@ subroutine surface_flux_0d (                                                 &
      w_atm_0,     u_star_0,     b_star_0,     q_star_0,                      &
      dhdt_surf_0, dedt_surf_0,  dedq_surf_0,  drdt_surf_0,                   &
      dhdt_atm_0,  dedq_atm_0,   dtaudu_atm_0, dtaudv_atm_0,                  &
+     potential_evap_0,												   		 & !mp586 add potential evaporation
      dt,          land_0,       seawater_0,  avail_0  )
 
   ! ---- arguments -----------------------------------------------------------
@@ -664,6 +669,7 @@ subroutine surface_flux_0d (                                                 &
        dhdt_surf_0, dedt_surf_0,  dedq_surf_0, drdt_surf_0,            &
        dhdt_atm_0,  dedq_atm_0,   dtaudu_atm_0,dtaudv_atm_0,           &
        w_atm_0,     u_star_0,     b_star_0,    q_star_0,               &
+       potential_evap_0,												   & !mp586 add potential evaporation
        cd_m_0,      cd_t_0,       cd_q_0
   real, intent(inout) :: q_surf_0
   real, intent(in)    :: dt
@@ -681,6 +687,7 @@ subroutine surface_flux_0d (                                                 &
        dhdt_surf, dedt_surf,  dedq_surf, drdt_surf,          &
        dhdt_atm,  dedq_atm,   dtaudu_atm,dtaudv_atm,         &
        w_atm,     u_star,     b_star,    q_star,             &
+       potential_evap,										 & !mp586 add potential evaporation
        cd_m,      cd_t,       cd_q
   real, dimension(1) :: q_surf
   real, dimension(1) :: bucket_depth                                 !RG Add bucket 
@@ -709,6 +716,7 @@ subroutine surface_flux_0d (                                                 &
   q_surf(1)      = q_surf_0
   land(1)        = land_0
   seawater(1)    = seawater_0
+
   avail(1)       = avail_0
 
   call surface_flux_1d (                                                 &
@@ -723,6 +731,7 @@ subroutine surface_flux_0d (                                                 &
        w_atm,     u_star,     b_star,     q_star,                        &
        dhdt_surf, dedt_surf,  dedq_surf,  drdt_surf,                     &
        dhdt_atm,  dedq_atm,   dtaudu_atm, dtaudv_atm,                    &
+       potential_evap,												     & !mp586 add potential evaporation
        dt,        land,      seawater, avail  )
 
   flux_t_0     = flux_t(1)
@@ -746,6 +755,7 @@ subroutine surface_flux_0d (                                                 &
   cd_m_0       = cd_m(1)
   cd_t_0       = cd_t(1)
   cd_q_0       = cd_q(1)
+  potential_evap_0 = potential_evap(1)
 
 end subroutine surface_flux_0d
 
@@ -761,6 +771,7 @@ subroutine surface_flux_2d (                                           &
      w_atm,     u_star,     b_star,     q_star,                        &
      dhdt_surf, dedt_surf,  dedq_surf,  drdt_surf,                     &
      dhdt_atm,  dedq_atm,   dtaudu_atm, dtaudv_atm,                    &
+     potential_evap,												   & !mp586 add potential evaporation
      dt,        land,       seawater,  avail  )
 
   ! ---- arguments -----------------------------------------------------------
@@ -775,6 +786,7 @@ subroutine surface_flux_2d (                                           &
        dhdt_surf, dedt_surf,  dedq_surf, drdt_surf,          &
        dhdt_atm,  dedq_atm,   dtaudu_atm,dtaudv_atm,         &
        w_atm,     u_star,     b_star,    q_star,             &
+       potential_evap,										 & !mp586 add potential evaporation
        cd_m,      cd_t,       cd_q
   real, intent(inout), dimension(:,:) :: q_surf
   logical, intent(in) :: bucket !RG Add bucket
@@ -800,6 +812,7 @@ subroutine surface_flux_2d (                                           &
           w_atm(:,j),     u_star(:,j),     b_star(:,j),     q_star(:,j),                                  &
           dhdt_surf(:,j), dedt_surf(:,j),  dedq_surf(:,j),  drdt_surf(:,j),                               &
           dhdt_atm(:,j),  dedq_atm(:,j),   dtaudu_atm(:,j), dtaudv_atm(:,j),                              &
+          potential_evap(:,j),												   							  & !mp586 add potential evaporation
           dt,             land(:,j),       seawater(:,j),  avail(:,j)  )
   end do
 end subroutine surface_flux_2d

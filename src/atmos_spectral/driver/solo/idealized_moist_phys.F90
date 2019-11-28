@@ -187,6 +187,7 @@ real, allocatable, dimension(:,:)   ::                                        &
      rough,                &   ! roughness for vert_turb_driver
      albedo,               &   !s albedo now defined in mixed_layer_init
      coszen,               &   !s make sure this is ready for assignment in run_rrtmg
+     potential_evap,       &   ! mp586 for potential evaporation 
      pbltop                    !s Used as an input to damping_driver, outputted from vert_turb_driver
 
 real, allocatable, dimension(:,:,:) ::                                        &
@@ -248,6 +249,7 @@ integer ::           &
      id_bucket_depth_conv, &   ! bucket depth variation induced by convection  - RG Add bucket
      id_bucket_depth_cond, &   ! bucket depth variation induced by condensation  - RG Add bucket
      id_bucket_depth_lh,   &   ! bucket depth variation induced by LH  - RG Add bucket
+     id_potential_evap,    &   ! mp586 potential evap 
      id_rh,          & 	 ! Relative humidity
      id_diss_heat_ray,&  ! Heat dissipated by rayleigh bottom drag if gp_surface=.True.
      id_z_tg,        &   ! Relative humidity
@@ -439,6 +441,7 @@ allocate(land_ones   (is:ie, js:je)); land_ones = 0.0
 allocate(avail       (is:ie, js:je)); avail = .true.
 allocate(fracland    (is:ie, js:je)); fracland = 0.0
 allocate(rough       (is:ie, js:je))
+allocate(potential_evap       (is:ie, js:je)) ! mp586 for potential evap
 allocate(diff_t      (is:ie, js:je, num_levels))
 allocate(diff_m      (is:ie, js:je, num_levels))
 allocate(diss_heat   (is:ie, js:je, num_levels))
@@ -608,6 +611,8 @@ if(bucket) then
        axes(1:2), Time, 'Tendency of bucket depth induced by Condensation', 'm/s')
   id_bucket_depth_lh = register_diag_field(mod_name, 'bucket_depth_lh',      &         ! RG Add bucket
        axes(1:2), Time, 'Tendency of bucket depth induced by LH', 'm/s')
+  id_potential_evap = register_diag_field(mod_name, 'potential_evap',        &         !mp586 add potential evaporation
+       axes(1:2), Time, 'Potential Evaporation', 'kg/m/m/s')
 endif
 
 select case(r_conv_scheme)
@@ -961,11 +966,13 @@ call surface_flux(                                                          &
                                 dedq_atm(:,:),                              & ! is intent(out)
                               dtaudu_atm(:,:),                              & ! is intent(out)
                               dtaudv_atm(:,:),                              & ! is intent(out)
+                          potential_evap(:,:),                              & ! mp586 potential evap 
                                       delta_t,                              &
                                     land(:,:),                              &
                                .not.land(:,:),                              &
                                    avail(:,:)  )
 endif
+
 
 ! Now complete the radiation calculation by computing the upward and net fluxes.
 
@@ -1183,6 +1190,8 @@ if(bucket) then
    if(id_bucket_depth_conv > 0) used = send_data(id_bucket_depth_conv, depth_change_conv(:,:), Time)
    if(id_bucket_depth_cond > 0) used = send_data(id_bucket_depth_cond, depth_change_cond(:,:), Time)
    if(id_bucket_depth_lh > 0) used = send_data(id_bucket_depth_lh, depth_change_lh(:,:), Time)
+   if(id_potential_evap > 0) used = send_data(id_potential_evap, potential_evap(:,:), Time)    ! mp586 add potential evap
+
 
 endif
 ! end Add bucket section
