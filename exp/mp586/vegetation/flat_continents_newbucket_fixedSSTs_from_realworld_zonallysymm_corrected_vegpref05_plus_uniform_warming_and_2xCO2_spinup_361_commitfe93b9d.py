@@ -29,7 +29,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 # and output diagnostics
 
 
-exp = Experiment('full_continents_newbucket_fixedSSTs_from_realworld_zonallysymm_corrected_vegpref05_plus_uniform_warming_and_2xCO2_spinup_361_commit'+commit_nr, codebase=cb)
+exp = Experiment('flat_continents_newbucket_fixedSSTs_from_realworld_zonallysymm_corrected_vegpref05_plus_uniform_warming_and_2xCO2_spinup_361_commit'+commit_nr, codebase=cb)
 
 
 input_path = os.path.join(GFDL_WORK,'codebase/https___github.com_mp586_Isca.git-'+commit_nr+'/code/')
@@ -213,16 +213,11 @@ exp.namelist = namelist = Namelist({
         'exponent':7.0,
         'robert_coeff':0.03
     }
-
-    'spectral_init_cond_nml': {
-        'topog_file_name': 'land.nc', #Name of land input file, which will also contain topography if generated using Isca's `land_file_generator_fn.py' routine.
-        'topography_option':'input' #Tell model to get topography from input file
-    }
 })
 
 
 #Lets do a run!
-exp.run(1, restart_file=os.path.join(GFDL_DATA,'full_continents_newbucket_fixedSSTs_from_realworld_zonallysymm_commit'+commit_nr+'/restarts/res0361.tar.gz'), num_cores=NCORES)
+exp.run(1, restart_file=os.path.join(GFDL_DATA,'flat_continents_newbucket_fixedSSTs_from_realworld_zonallysymm_commit'+commit_nr+'/restarts/res0361.tar.gz'), num_cores=NCORES)
 for i in range(2,481):
     exp.run(i, num_cores=NCORES)
 
