@@ -26,7 +26,7 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
-exp = Experiment('textISCA_lepref0_noseasons_0qflux', codebase=cb)
+exp = Experiment('textISCA_lepref0_noseasons_0qflux_commit'+commit_nr, codebase=cb)
 
 input_path = os.path.join(GFDL_WORK,'codebase/https___github.com_mp586_Isca.git-'+commit_nr+'/code/')
 
