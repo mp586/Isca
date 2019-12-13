@@ -209,7 +209,7 @@ exp.namelist = namelist = Namelist({
         'scale_heights' : 11.0,
         'exponent':7.0,
         'robert_coeff':0.03
-    }
+    },
 
     'spectral_init_cond_nml': {
         'topog_file_name': 'land.nc', #Name of land input file, which will also contain topography if generated using Isca's `land_file_generator_fn.py' routine.
@@ -404,7 +404,7 @@ exp.namelist = namelist = Namelist({
         'scale_heights' : 11.0,
         'exponent':7.0,
         'robert_coeff':0.03
-    }
+    },
 
     'spectral_init_cond_nml': {
         'topog_file_name': 'land.nc', #Name of land input file, which will also contain topography if generated using Isca's `land_file_generator_fn.py' routine.
