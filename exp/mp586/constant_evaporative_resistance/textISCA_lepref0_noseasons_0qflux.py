@@ -9,7 +9,7 @@ base_dir = os.getcwd()
 # a CodeBase can be a directory on the computer,
 # useful for iterative development
 
-commit_nr = '544ab14' 
+commit_nr = '7ad4e50'
 
 cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit=commit_nr)
 
