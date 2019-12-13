@@ -28,6 +28,41 @@ from netCDF4 import Dataset
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 import os
+from matplotlib.backends.backend_agg import FigureCanvasAgg
+
+
+
+def mask_from_text(txt, nlat, nlon, fig_dpi=20, **text_kwargs):
+    """Create a mask from text."""
+    # Create an empty 2D array for mask
+    #### Created by Denis Sergev ###
+    mask = np.zeros((nlat, nlon))
+    # Create a matplotlib figure with the given text in the middle
+    fig, ax = plt.subplots(figsize=(5, 2), dpi=fig_dpi)
+    # A canvas must be manually attached to the figure
+    # (pyplot would automatically do it).
+    # This is done by instantiating the canvas with the figure as argument.
+    canvas = FigureCanvasAgg(fig)
+    ax.text(0.5, 0.5, txt, **text_kwargs)
+    ax.axis("off")
+    # Extract figure contents as RGBA array
+    canvas.draw()
+    s, (width, height) = canvas.print_to_buffer()
+    arr = np.frombuffer(s, np.uint8).reshape((height, width, 4))
+    # Invert and normalize the array
+    arr = 1 - arr[..., 0] / 255
+    arr[arr >= 0.5] = 1.0
+    arr[arr < 0.5] = 0.0
+    # Position the text array in the middle of 2D array of shape (nlat, nlon)
+    lat_idx_0 = nlat // 2 - height // 2
+    lat_idx_1 = lat_idx_0 + height
+    lon_idx_0 = nlon // 2 - width // 2
+    lon_idx_1 = lon_idx_0 + width
+    try:
+        mask[lat_idx_0:lat_idx_1, lon_idx_0:lon_idx_1] = arr
+    except ValueError:
+        raise Exception("The text is likely too long, try reducing its size.")
+    return mask
 
 def write_land(exp,land_mode='square',boundaries=[20.,60.,20.,60.],continents=['all'],topo_mode='none',mountains=['all'],topo_gauss=[40.,40.,20.,10.,3500.],waterworld=False):
 
@@ -36,7 +71,7 @@ def write_land(exp,land_mode='square',boundaries=[20.,60.,20.,60.],continents=['
     t_res = 42
     #read in grid from approriate file
     GFDL_BASE = os.environ['GFDL_BASE']
-    resolution_file = Dataset(GFDL_BASE + 'src/extra/python/scripts/gfdl_grid_files/t'+str(t_res)+'.nc', 'r', format='NETCDF3_CLASSIC')
+    resolution_file = Dataset(GFDL_BASE + '/src/extra/python/scripts/gfdl_grid_files/t'+str(t_res)+'.nc', 'r', format='NETCDF3_CLASSIC')
     lons = resolution_file.variables['lon'][:]
     lats = resolution_file.variables['lat'][:]
     lonb = resolution_file.variables['lonb'][:]
@@ -102,6 +137,10 @@ def write_land(exp,land_mode='square',boundaries=[20.,60.,20.,60.],continents=['
             for cont in continents:
                 idx = idx + idx_c[cont_dic[cont],:,:]
                 land_array[idx] = 1.
+
+    elif land_mode=='text_ISCA':
+    	land_array = np.flipud(mask_from_text("ISCA", nlat, nlon, va='center', ha='center', fontweight='bold', size=120))
+
                 
     elif land_mode=='none':  
         land_array = np.zeros((nlat,nlon))
@@ -177,7 +216,7 @@ def write_land(exp,land_mode='square',boundaries=[20.,60.,20.,60.],continents=['
 
 
     #Write land and topography arrays to file
-    topo_filename = GFDL_BASE + 'exp/' + exp + '/input/land.nc'
+    topo_filename = GFDL_BASE + '/input/'+exp+'/land.nc'
     topo_file = Dataset(topo_filename, 'w', format='NETCDF3_CLASSIC')
     lat = topo_file.createDimension('lat', nlat)
     lon = topo_file.createDimension('lon', nlon)
@@ -212,5 +251,5 @@ def write_land(exp,land_mode='square',boundaries=[20.,60.,20.,60.],continents=['
 
 if __name__ == "__main__":
 
-    write_land('test',land_mode='continents')
+    write_land('text_ISCA',land_mode='text_ISCA')
 
