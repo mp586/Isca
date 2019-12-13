@@ -29,6 +29,32 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 import os
 
+
+def mask_from_text(txt, nlat, nlon, fig_dpi=25, **text_kwargs):
+    """Create a mask from text."""
+    # Create an empty 2D array for mask
+    mask = np.zeros((nlat, nlon))
+    # Create a matplotlib figure with the given text in the middle
+    fig, ax = plt.subplots(dpi=fig_dpi)
+    ax.text(0.5, 0.5, txt, **text_kwargs)
+    ax.axis('off')
+    fig.canvas.draw()
+    # Extract figure contents as RGBA array
+    arr, _ = fig.canvas.renderer.tostring_rgba_minimized()
+    ny, nx, _ = arr.shape
+    # Position the text array in the middle of 2D array of shape (nlat, nlon)
+    lat_idx_0 = nlat // 2 - ny // 2
+    lat_idx_1 = lat_idx_0 + ny
+    lon_idx_0 = nlon // 2 - nx // 2
+    lon_idx_1 = lon_idx_0 + nx
+    mask[lat_idx_0:lat_idx_1, lon_idx_0:lon_idx_1] = arr[..., -1]
+    # And normalise the array
+    mask /= mask.max()
+    mask[mask>=0.5] = 1.0
+    mask[mask<0.5] = 0.0
+    return mask
+
+
 def write_land(exp,land_mode='square',boundaries=[20.,60.,20.,60.],continents=['all'],topo_mode='none',mountains=['all'],topo_gauss=[40.,40.,20.,10.,3500.],waterworld=False):
 
 # Common features of set-ups
@@ -36,7 +62,7 @@ def write_land(exp,land_mode='square',boundaries=[20.,60.,20.,60.],continents=['
     t_res = 42
     #read in grid from approriate file
     GFDL_BASE = os.environ['GFDL_BASE']
-    resolution_file = Dataset(GFDL_BASE + 'src/extra/python/scripts/gfdl_grid_files/t'+str(t_res)+'.nc', 'r', format='NETCDF3_CLASSIC')
+    resolution_file = Dataset(GFDL_BASE + '/src/extra/python/scripts/gfdl_grid_files/t'+str(t_res)+'.nc', 'r', format='NETCDF3_CLASSIC')
     lons = resolution_file.variables['lon'][:]
     lats = resolution_file.variables['lat'][:]
     lonb = resolution_file.variables['lonb'][:]
@@ -102,6 +128,10 @@ def write_land(exp,land_mode='square',boundaries=[20.,60.,20.,60.],continents=['
             for cont in continents:
                 idx = idx + idx_c[cont_dic[cont],:,:]
                 land_array[idx] = 1.
+
+    elif land_mode=='text_ISCA':
+    	land_array = mask_from_text("ISCA", nlat, nlon, va='center', ha='center', fontweight='bold', size=120)
+
                 
     elif land_mode=='none':  
         land_array = np.zeros((nlat,nlon))
@@ -212,5 +242,5 @@ def write_land(exp,land_mode='square',boundaries=[20.,60.,20.,60.],continents=['
 
 if __name__ == "__main__":
 
-    write_land('test',land_mode='continents')
+    write_land('text_ISCA',land_mode='text_ISCA')
 
