@@ -11,7 +11,7 @@ base_dir = os.getcwd()
 # cb = IscaCodeBase.from_directory(GFDL_BASE)
 
 
-commit_nr = 'd15c267'
+commit_nr = 'cffc120'
 cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit=commit_nr)
 
 # or it can point to a specific git repo and commit id.
@@ -178,7 +178,9 @@ exp.namelist = namelist = Namelist({
         'ozone_file':'ozone_1990',
         'solr_cnst' : 1360., #s set solar constant to 1360, rather than default of 1368.22
         'dt_rad': 3600,
-        'frierson_solar_rad': True #
+        'frierson_solar_rad': True #,
+        'del_sol': 0.95,
+        'del_sw' : 0.0
     },
 
     # FMS Framework configuration
