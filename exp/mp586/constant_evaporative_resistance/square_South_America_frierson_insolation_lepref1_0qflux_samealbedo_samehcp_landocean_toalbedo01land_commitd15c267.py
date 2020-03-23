@@ -132,7 +132,7 @@ exp.namelist = namelist = Namelist({
         'do_simple': True,
         'old_dtaudv': True,
         'land_humidity_prefactor': 1., # no pre-factor inside brackets
-        'land_evap_prefactor': 1.. # land evap = 0     
+        'land_evap_prefactor': 1. # land evap = 0     
     },
 
     'atmosphere_nml': {
