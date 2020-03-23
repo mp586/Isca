@@ -11,7 +11,7 @@ base_dir = os.getcwd()
 # cb = IscaCodeBase.from_directory(GFDL_BASE)
 
 
-commit_nr = 'd15c267'
+commit_nr = '4d86f2c'
 cb = IscaCodeBase.from_repo(repo='https://github.com/mp586/Isca.git', commit=commit_nr)
 
 # or it can point to a specific git repo and commit id.
@@ -213,7 +213,7 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(1, restart_file=os.path.join(GFDL_DATA,'aquaplanet_frierson_insolation_0qflux_mld20_commit'+commit_nr+'/restarts/res0361.tar.gz'), num_cores=NCORES)
+exp.run(1, restart_file=os.path.join(GFDL_DATA,'aquaplanet_frierson_insolation_0qflux_mld20_commitd15c267/restarts/res0361.tar.gz'), num_cores=NCORES)
 for i in range(2,481):
     exp.run(i, num_cores=NCORES)
 
