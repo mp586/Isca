@@ -65,6 +65,9 @@ diag.add_field('atmosphere', 'cape', time_avg=True)
 diag.add_field('dynamics', 'sphum_u', time_avg=True)
 diag.add_field('dynamics', 'sphum_v', time_avg=True)
 diag.add_field('dynamics', 'sphum_w', time_avg=True)
+diag.add_field('dynamics', 'ucomp_temp', time_avg=True)
+diag.add_field('dynamics', 'vcomp_temp', time_avg=True)
+diag.add_field('dynamics', 'omega_temp', time_avg=True)
 #MP added on 11 october 2017
 exp.diag_table = diag
 
