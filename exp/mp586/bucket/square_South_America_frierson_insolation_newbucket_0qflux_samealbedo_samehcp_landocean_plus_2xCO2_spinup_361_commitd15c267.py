@@ -71,7 +71,9 @@ diag.add_field('rrtm_radiation', 'flux_sw', time_avg=True) # net SW surface flux
 diag.add_field('rrtm_radiation', 'flux_lw', time_avg=True) # net LW surface flux
 diag.add_field('mixed_layer', 'flux_lhe', time_avg=True) # latent heat flux (up) at surface
 diag.add_field('mixed_layer', 'flux_t', time_avg=True) # sensible heat flux (up) at surface
-
+diag.add_field('dynamics', 'ucomp_temp', time_avg=True)
+diag.add_field('dynamics', 'vcomp_temp', time_avg=True)
+diag.add_field('dynamics', 'omega_temp', time_avg=True)
 diag.add_field('dynamics', 'sphum_u', time_avg=True)
 diag.add_field('dynamics', 'sphum_v', time_avg=True)
 diag.add_field('dynamics', 'sphum_w', time_avg=True)
@@ -260,6 +262,9 @@ diag.add_field('atmosphere', 'cape', time_avg=True)
 diag.add_field('dynamics', 'sphum_u', time_avg=True)
 diag.add_field('dynamics', 'sphum_v', time_avg=True)
 diag.add_field('dynamics', 'sphum_w', time_avg=True)
+diag.add_field('dynamics', 'ucomp_temp', time_avg=True)
+diag.add_field('dynamics', 'vcomp_temp', time_avg=True)
+diag.add_field('dynamics', 'omega_temp', time_avg=True)
 
 #MP added on 11 october 2017
 exp.diag_table = diag
