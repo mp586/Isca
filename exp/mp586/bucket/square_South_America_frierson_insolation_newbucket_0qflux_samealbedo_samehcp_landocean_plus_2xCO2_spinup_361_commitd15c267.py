@@ -216,9 +216,9 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(1, use_restart=False, num_cores=NCORES)
-for i in range(2,481):
-    exp.run(i, num_cores=NCORES)
+#exp.run(1, use_restart=False, num_cores=NCORES)
+#for i in range(2,481):
+#    exp.run(i, num_cores=NCORES)
 
 
 
@@ -271,7 +271,8 @@ diag.add_field('dynamics', 'omega_temp', time_avg=True)
 diag.add_field('dynamics', 'ucomp_height', time_avg=True)
 diag.add_field('dynamics', 'vcomp_height', time_avg=True)
 diag.add_field('dynamics', 'omega_height', time_avg=True)
-
+diag.add_field('dynamics', 'ucomp_sq', time_avg=True)
+diag.add_field('dynamics', 'vcomp_sq', time_avg=True)
 #MP added on 11 october 2017
 exp.diag_table = diag
 
