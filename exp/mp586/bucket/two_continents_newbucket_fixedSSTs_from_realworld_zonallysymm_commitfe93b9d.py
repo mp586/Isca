@@ -28,6 +28,8 @@ cb.compile()  # compile the source code to working directory $GFDL_WORK/codebase
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
 
+input_path = os.path.join(GFDL_WORK,'codebase/https___github.com_mp586_Isca.git-'+commit_nr+'/code/')
+
 
 exp = Experiment('two_continents_newbucket_fixedSSTs_from_realworld_zonallysymm_commit'+commit_nr, codebase=cb)
 
