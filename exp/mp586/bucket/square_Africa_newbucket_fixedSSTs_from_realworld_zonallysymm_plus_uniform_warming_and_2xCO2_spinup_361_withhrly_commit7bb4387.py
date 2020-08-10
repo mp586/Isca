@@ -217,7 +217,7 @@ exp.namelist = namelist = Namelist({
 #     exp.run(i, num_cores=NCORES)
 
 exp.run(481, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_commit'+commit_nr+'/restarts/res0480.tar.gz'), num_cores=NCORES)
-for i in range(482,486):
+for i in range(482,541):
     exp.run(i, num_cores=NCORES)
 
 
@@ -408,5 +408,5 @@ exp.namelist = namelist = Namelist({
 #     exp.run(i, num_cores=NCORES)
 
 exp.run(481, restart_file=os.path.join(GFDL_DATA,'square_Africa_newbucket_fixedSSTs_from_realworld_zonallysymm_plus_uniform_warming_and_2xCO2_spinup_361_commit'+commit_nr+'/restarts/res0480.tar.gz'), num_cores=NCORES)
-for i in range(482,486):
+for i in range(482,541):
     exp.run(i, num_cores=NCORES)
