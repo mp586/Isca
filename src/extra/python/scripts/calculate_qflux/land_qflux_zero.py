@@ -12,8 +12,8 @@ from netCDF4 import Dataset
 GFDL_BASE = os.environ['GFDL_BASE']
 
 
-landfile=Dataset(os.path.join(GFDL_BASE,'input/two_continents/land.nc'),mode='r')
-# landfile=Dataset(os.path.join(GFDL_BASE,'input/squareland/land.nc'),mode='r')
+# landfile=Dataset(os.path.join(GFDL_BASE,'input/two_continents/land.nc'),mode='r')
+landfile=Dataset(os.path.join(GFDL_BASE,'input/squareland/land.nc'),mode='r')
 # landfile=Dataset(os.path.join(GFDL_BASE,'input/sqland_plus_antarctica/land.nc'),mode='r')
 # landfile=Dataset(os.path.join(GFDL_BASE,'input/aquaplanet/land.nc'),mode='r')
 # landfile=Dataset(os.path.join(GFDL_BASE,'input/square_South_America/land.nc'))
@@ -25,7 +25,7 @@ landmask=landfile.variables['land_mask'][:]
 dsin = Dataset(os.path.join(GFDL_BASE,'input/aquaplanet/ocean_qflux.nc'))
 
 #output file
-dsout = Dataset(os.path.join(GFDL_BASE,'input/two_continents/ocean_qflux.nc'), "w", format="NETCDF3_CLASSIC")
+dsout = Dataset(os.path.join(GFDL_BASE,'input/squareland/ocean_qflux.nc'), "w", format="NETCDF3_CLASSIC")
 
 #Copy dimensions
 for dname, the_dim in dsin.dimensions.iteritems():
@@ -66,10 +66,3 @@ for v_name, varin in dsin.variables.iteritems():
 
 # close the output file
 dsout.close()
-
-
-
-
-
-
-
