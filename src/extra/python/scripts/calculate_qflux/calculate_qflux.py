@@ -234,18 +234,37 @@ def regrid_in_time(dataset, groupby_name):
         dataset['masked_ocean_transport'] = (('months_ax','lat','lon'), dataset_to_output)
 
 def check_surface_flux_dims(dataset):
+    ''' This surface flux checker is designed to decide if we're using grey rad or not. If we're using grey rad then the definition
+    of flux_sw and flux_lw are different to RRTM. The script was written to use RRTM output, so it changes variable names etc to be 
+    equivalent to RRTM definitions.
+    '''
 
-    fluxes_to_check = ['flux_sw', 'flux_lw']
+    flux_dims = dataset['flux_sw'].dims
 
-    for flux_name in fluxes_to_check:
-        flux_dims = dataset[flux_name].dims
+    if 'phalf' in flux_dims:
+        dataset.rename({'flux_sw':'flux_sw'+'_3d'}, inplace=True)
+        max_pressure = dataset.phalf.max()
+        flux_at_bottom_phalf_level = dataset['flux_sw_3d'].sel(phalf=max_pressure)
+        new_dims = ('time','lat','lon')
+        dataset['flux_sw'] = (new_dims, flux_at_bottom_phalf_level)
 
-        if 'phalf' in flux_dims:
-            dataset.rename({flux_name:flux_name+'_3d'}, inplace=True)
+    flux_dims_lw = dataset['flux_lw'].dims
+
+    if 'phalf' in flux_dims_lw:
+        dataset.rename({'flux_lw':'flux_lw'+'_3d'}, inplace=True)
+        try:
+            # Script assumes flux_lw is the surface lw down (i.e. not a net flux). This is the case with RRTM, but with
+            # grey radiation 'flux_lw' is the net lw flux in 3D. So we take the lwdn_sfc output from grey rad and rename it
+            # flux_lw. 
+            dataset['lwdn_sfc']
+            dataset.rename({'lwdn_sfc':'flux_lw'}, inplace=True)
+        except:
+            #If lwdn_sfc is not available, then we re-calculate it from flux_lw by adding back sigma*t_surf**4, then call it flux_lw
+            print('lwdn_sfc not present when using grey radiation, so re-calculating it from flux_lw.')
             max_pressure = dataset.phalf.max()
-            flux_at_bottom_phalf_level = dataset[flux_name+'_3d'].sel(phalf=max_pressure)
+            lwdn_sfc = dataset.flux_lw_3d.sel(phalf=max_pressure) + sigma_sb*dataset.t_surf**4.
             new_dims = ('time','lat','lon')
-            dataset[flux_name] = (new_dims, flux_at_bottom_phalf_level)
+            dataset['flux_lw'] = (new_dims, lwdn_sfc)
 
 if __name__ == "__main__":
 
@@ -270,8 +289,8 @@ if __name__ == "__main__":
     ice_file_name = '/scratch/sit204/data_isca/realistic_continents_fixed_sst_test_experiment_albedo/run0001/atmos_daily.nc'
     output_file_name='ami_test_interp' #Proposed name of your output qflux file. Will also be qflux field name in q-flux netcdf file as the fortran assumes file-name = field name. No need to add '.nc' or any file paths in this variable as otherwise they will end up in the field name too. Output file will be stored in the same directory as this script.
 
-    start_file=240
-    end_file=360
+    start_file=241
+    end_file=264
     land_present=True
     use_interpolated_pressure_level_data = False #Conditions the script on whether to expect data on sigma levels (if False) or pressure levels (if True). Script should be insensitive to this choice if both sets of files exist. 
 
@@ -286,6 +305,7 @@ if __name__ == "__main__":
     dataset, time_arr, size_list = io.read_data( base_dir,exp_name,start_file,end_file,avg_or_daily,use_interpolated_pressure_level_data)
 
     land_array, topo_array = io.read_land(input_dir,base_exp_name,land_present,use_interpolated_pressure_level_data,size_list,land_file)
+
     dataset['land'] = (('lat','lon'),land_array)
 
     check_surface_flux_dims(dataset)

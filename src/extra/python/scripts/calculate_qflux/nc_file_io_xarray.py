@@ -19,6 +19,7 @@ def read_data( base_dir, exp_name, start_file, end_file, avg_or_daily, use_inter
                                 [base_dir+'/'+exp_name+'/run%d'   % m for m in range(start_file, end_file+1)]]
 
         if(use_interpolated_pressure_level_data):
+
             if avg_or_daily == 'monthly':
 #                 extra='_interp.nc'
                 extra='_interp_new_height.nc'
@@ -209,8 +210,10 @@ def read_land( base_dir,exp_name,land_present, use_interpolated_pressure_level_d
     topo_array=np.zeros((size_list['nlats'],size_list['nlons']))
     
     if land_file is not None:
+
         if(land_present or use_interpolated_pressure_level_data):
-            nc_file = base_dir+'/'+land_file
+            nc_file = base_dir+'exp/'+exp_name+land_file
+
             print(nc_file)
             try:
                 fh = Dataset(nc_file, mode='r')
@@ -232,6 +235,7 @@ def read_land( base_dir,exp_name,land_present, use_interpolated_pressure_level_d
                     if lats_in[0]!=lat_land[0]:
                         land_array=land_array[::-1,:]
                     
+
             if use_interpolated_pressure_level_data:
                 topo_array=fh.variables['zsurf'][:]
             fh.close()
