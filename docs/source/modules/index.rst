@@ -11,4 +11,5 @@ Components of Isca
    physics
    output
    convection_simple_betts_miller
-   socrates 
+   socrates
+   diag_manager_mod 
