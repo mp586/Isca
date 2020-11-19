@@ -41,6 +41,7 @@ exp.inputfiles = [os.path.join(input_path,'input/all_continents/land.nc'),os.pat
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
+diag.add_file('atmos_daily', 1, 'days', time_units='days')
 
 #Tell model which diagnostics to write
 diag.add_field('dynamics', 'ps', time_avg=True)
@@ -219,8 +220,8 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(1, use_restart=False, num_cores=NCORES)
-for i in range(2,481):
+exp.run(481, restart_file=os.path.join(GFDL_DATA,'full_continents_vp05_fixedSSTs_AMIP_commit'+commit_nr+'/restarts/res0480.tar.gz'), num_cores=NCORES)
+for i in range(482,601):
     exp.run(i, num_cores=NCORES)
 
 
