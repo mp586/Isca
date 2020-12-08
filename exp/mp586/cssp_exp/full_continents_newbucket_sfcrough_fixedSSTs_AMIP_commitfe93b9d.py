@@ -33,7 +33,7 @@ input_path = os.path.join(GFDL_WORK,'codebase/https___github.com_mp586_Isca.git-
 #Add any input files that are necessary for a particular experiment.
 # Tell model how to write diagnostics
 
-exp = Experiment('full_continents_vp05_fixedSSTs_AMIP_commit'+commit_nr, codebase=cb)
+exp = Experiment('full_continents_newbucket_sfcrough_fixedSSTs_AMIP_commit'+commit_nr, codebase=cb)
 
 
 #Add any input files that are necessary for a particular experiment.
@@ -101,6 +101,7 @@ exp.namelist = namelist = Namelist({
         'mixed_layer_bc':True,
         'do_virtual' :False,
         'do_simple': True,
+        'land_roughness_prefactor' : 100., #How much rougher to make land than ocean
         'roughness_mom':2.e-4, #Ocean roughness lengths
         'roughness_heat':2.e-4,
         'roughness_moist':2.e-4,      
@@ -130,8 +131,7 @@ exp.namelist = namelist = Namelist({
     'surface_flux_nml': {
         'use_virtual_temp': False,
         'do_simple': True,
-        'old_dtaudv': True,
-        'veg_evap_prefactor': 0.5    
+        'old_dtaudv': True    
     },
 
     'atmosphere_nml': {
@@ -223,15 +223,13 @@ exp.run(1, use_restart=False, num_cores=NCORES)
 for i in range(2,241):
     exp.run(i, num_cores=NCORES)
 
-
-exp = Experiment('full_continents_vp05_fixedSSTs_AMIP_commit'+commit_nr, codebase=cb)
+exp = Experiment('full_continents_newbucket_sfcrough_fixedSSTs_AMIP_commit'+commit_nr, codebase=cb)
 
 
 #Add any input files that are necessary for a particular experiment.
 exp.inputfiles = [os.path.join(input_path,'input/all_continents/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/sst_clim_amip.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
-diag.add_file('atmos_monthly', 30, 'days', time_units='days')
 diag.add_file('atmos_pentad', 5, 'days', time_units='days')
 
 #Tell model which diagnostics to write
@@ -293,6 +291,7 @@ exp.namelist = namelist = Namelist({
         'mixed_layer_bc':True,
         'do_virtual' :False,
         'do_simple': True,
+        'land_roughness_prefactor' : 100., #How much rougher to make land than ocean
         'roughness_mom':2.e-4, #Ocean roughness lengths
         'roughness_heat':2.e-4,
         'roughness_moist':2.e-4,      
@@ -322,8 +321,7 @@ exp.namelist = namelist = Namelist({
     'surface_flux_nml': {
         'use_virtual_temp': False,
         'do_simple': True,
-        'old_dtaudv': True,
-        'veg_evap_prefactor': 0.5    
+        'old_dtaudv': True    
     },
 
     'atmosphere_nml': {
@@ -411,7 +409,7 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(241, restart_file=os.path.join(GFDL_DATA,'full_continents_vp05_fixedSSTs_AMIP_commit'+commit_nr+'/restarts/res0240.tar.gz'), num_cores=NCORES)
+exp.run(241, restart_file=os.path.join(GFDL_DATA,'full_continents_newbucket_sfcrough_fixedSSTs_AMIP_commit'+commit_nr+'/restarts/res0240.tar.gz'), num_cores=NCORES)
 for i in range(242,601):
     exp.run(i, num_cores=NCORES)
 

@@ -33,7 +33,7 @@ input_path = os.path.join(GFDL_WORK,'codebase/https___github.com_mp586_Isca.git-
 #Add any input files that are necessary for a particular experiment.
 # Tell model how to write diagnostics
 
-exp = Experiment('full_continents_vp05_fixedSSTs_AMIP_commit'+commit_nr, codebase=cb)
+exp = Experiment('full_continents_oceanevap_fixedSSTs_AMIP_commit'+commit_nr, codebase=cb)
 
 
 #Add any input files that are necessary for a particular experiment.
@@ -47,10 +47,6 @@ diag.add_field('dynamics', 'ps', time_avg=True)
 diag.add_field('dynamics', 'bk')
 diag.add_field('dynamics', 'pk')
 diag.add_field('atmosphere', 'precipitation', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_cond', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_conv', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_lh', time_avg=True)
 diag.add_field('mixed_layer', 't_surf', time_avg=True)
 diag.add_field('dynamics', 'sphum', time_avg=True)
 diag.add_field('dynamics', 'ucomp', time_avg=True)
@@ -109,9 +105,7 @@ exp.namelist = namelist = Namelist({
         'convection_scheme':'SIMPLE_BETTS_MILLER', #Use the simple betts-miller convection scheme
         'land_option':'input', #Use land mask from input file
         'land_file_name': 'INPUT/land.nc', #Tell model where to find input file
-        'bucket':True, #Run with the bucket model
-        'init_bucket_depth_land':0.15, #Set initial bucket depth over land, default = 20
-#        'max_bucket_depth_land':0.5, #Set max bucket depth over land default = 0.15
+        'bucket':False #Run with the bucket model
     },
 
     'vert_turb_driver_nml': {
@@ -131,7 +125,8 @@ exp.namelist = namelist = Namelist({
         'use_virtual_temp': False,
         'do_simple': True,
         'old_dtaudv': True,
-        'veg_evap_prefactor': 0.5    
+        'land_humidity_prefactor': 1., # no pre-factor inside brackets
+        'land_evap_prefactor': 1. # no evap prefactor  
     },
 
     'atmosphere_nml': {
@@ -219,19 +214,21 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(1, use_restart=False, num_cores=NCORES)
+exp.run(1, use_restart=False num_cores=NCORES)
 for i in range(2,241):
     exp.run(i, num_cores=NCORES)
 
 
-exp = Experiment('full_continents_vp05_fixedSSTs_AMIP_commit'+commit_nr, codebase=cb)
+
+
+
+exp = Experiment('full_continents_oceanevap_fixedSSTs_AMIP_commit'+commit_nr, codebase=cb)
 
 
 #Add any input files that are necessary for a particular experiment.
 exp.inputfiles = [os.path.join(input_path,'input/all_continents/land.nc'),os.path.join(input_path,'input/rrtm_input_files/ozone_1990.nc'),os.path.join(input_path,'input/sst_clim_amip.nc')]
 #Tell model how to write diagnostics
 diag = DiagTable()
-diag.add_file('atmos_monthly', 30, 'days', time_units='days')
 diag.add_file('atmos_pentad', 5, 'days', time_units='days')
 
 #Tell model which diagnostics to write
@@ -239,10 +236,6 @@ diag.add_field('dynamics', 'ps', time_avg=True)
 diag.add_field('dynamics', 'bk')
 diag.add_field('dynamics', 'pk')
 diag.add_field('atmosphere', 'precipitation', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_cond', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_conv', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_lh', time_avg=True)
 diag.add_field('mixed_layer', 't_surf', time_avg=True)
 diag.add_field('dynamics', 'sphum', time_avg=True)
 diag.add_field('dynamics', 'ucomp', time_avg=True)
@@ -301,9 +294,7 @@ exp.namelist = namelist = Namelist({
         'convection_scheme':'SIMPLE_BETTS_MILLER', #Use the simple betts-miller convection scheme
         'land_option':'input', #Use land mask from input file
         'land_file_name': 'INPUT/land.nc', #Tell model where to find input file
-        'bucket':True, #Run with the bucket model
-        'init_bucket_depth_land':0.15, #Set initial bucket depth over land, default = 20
-#        'max_bucket_depth_land':0.5, #Set max bucket depth over land default = 0.15
+        'bucket':False
     },
 
     'vert_turb_driver_nml': {
@@ -323,7 +314,8 @@ exp.namelist = namelist = Namelist({
         'use_virtual_temp': False,
         'do_simple': True,
         'old_dtaudv': True,
-        'veg_evap_prefactor': 0.5    
+        'land_humidity_prefactor': 1., # no pre-factor inside brackets
+        'land_evap_prefactor': 1. # no evap prefactor   
     },
 
     'atmosphere_nml': {
@@ -411,9 +403,7 @@ exp.namelist = namelist = Namelist({
 })
 
 #Lets do a run!
-exp.run(241, restart_file=os.path.join(GFDL_DATA,'full_continents_vp05_fixedSSTs_AMIP_commit'+commit_nr+'/restarts/res0240.tar.gz'), num_cores=NCORES)
+exp.run(241, restart_file=os.path.join(GFDL_DATA,'full_continents_oceanevap_fixedSSTs_AMIP_commit'+commit_nr+'/restarts/res0240.tar.gz'), num_cores=NCORES)
 for i in range(242,601):
     exp.run(i, num_cores=NCORES)
-
-
 
