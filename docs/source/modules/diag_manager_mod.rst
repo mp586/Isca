@@ -76,10 +76,17 @@ The default for ``time_avg`` = False, the default for ``files`` = None.
 
 ``time_avg`` is usually set to True for most variables when an output field is defined.
 
-If ``files`` = None, then the diagnostics will be saved to all of the given output files (in our example monthly, daily and 6h). An output file can be specified via e.g. ``files=['atmos_6_hourly']`` in 
-``diag.add_field('dynamics', 'ucomp', time_avg=True, files=['atmos_6_hourly'])`` if 6h zonal winds shall be saved, but not monthly/daily
-or
-``diag.add_field('atmosphere', 'precipitation', time_avg=True, files=['atmos_monthly'])`` if  only monthly-mean precipitation shall be saved, but not 6h/daily
+If ``files`` = None, then the diagnostics will be saved to all of the given output files (in our example monthly, daily and 6h). 
+
+An output file can be specified via e.g. ``files=['atmos_6_hourly']`` in 
+
+``diag.add_field('dynamics', 'ucomp', time_avg=True, files=['atmos_6_hourly'])`` 
+
+if 6h zonal winds shall be saved, but not monthly/daily or
+
+``diag.add_field('atmosphere', 'precipitation', time_avg=True, files=['atmos_monthly'])`` 
+
+if only monthly-mean precipitation shall be saved, but not 6h/daily
 
 
 
@@ -88,53 +95,53 @@ Below is a list of commonly saved diagnostics. See the relevant modules for an e
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
 | Module                   | Name                 | Dimensions              | Description                                                     |
 +==========================+======================+===========================================================================================+
-| ``dynamics`` 			   | ``ps``  	 	      | (time, lat, lon) 		| surface pressure (:math:Pa)									  |
+| ``dynamics`` 			   | ``ps``  	 	      | (time, lat, lon) 		| surface pressure (:math:`Pa`)									  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
 | ``dynamics`` 			   | ``bk`` 	          | (phalf) 				| vertical coordinate sigma values           					  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``pk`` 	          | (phalf) 				| vertical coordinate pressure values (:math:Pa)				  |
+| ``dynamics`` 			   | ``pk`` 	          | (phalf) 				| vertical coordinate pressure values (:math:`Pa`)				  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``slp`` 	          | (time, lat, lon) 		| sea level pressure (:math:Pa)									  |
+| ``dynamics`` 			   | ``slp`` 	          | (time, lat, lon) 		| sea level pressure (:math:`Pa`)								  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``height`` 	      | (time, pfull, lat, lon) | geopotential height at full model levels (:math:m)			  |
+| ``dynamics`` 			   | ``height`` 	      | (time, pfull, lat, lon) | geopotential height at full model levels (:math:`m`)			  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``zsurf`` 	          | (lat, lon) 				| geopotential height at the surface (:math:m)					  |
+| ``dynamics`` 			   | ``zsurf`` 	          | (lat, lon) 				| geopotential height at the surface (:math:`m`)				  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``u_comp`` 	      | (time, pfull, lat, lon) | zonal component of the horizontal winds (:math:m/s)			  |
+| ``dynamics`` 			   | ``u_comp`` 	      | (time, pfull, lat, lon) | zonal component of the horizontal winds (:math:`m/s`)			  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``v_comp`` 	      | (time, pfull, lat, lon) | meridional component of the horizontal winds (:math:m/s)		  |
+| ``dynamics`` 			   | ``v_comp`` 	      | (time, pfull, lat, lon) | meridional component of the horizontal winds (:math:`m/s`)      |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``omega`` 	          | (time, pfull, lat, lon) | vertical velocity (:math:Pa/s)								  |
+| ``dynamics`` 			   | ``omega`` 	          | (time, pfull, lat, lon) | vertical velocity (:math:`Pa/s`)								  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``sphum`` 	          | (time, pfull, lat, lon) | specific humidity (:math:kg/kg)								  |
+| ``dynamics`` 			   | ``sphum`` 	          | (time, pfull, lat, lon) | specific humidity (:math:`kg/kg`)								  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``temp``	          | (time, pfull, lat, lon) | temperature (:math:K)											  |
+| ``dynamics`` 			   | ``temp``	          | (time, pfull, lat, lon) | temperature (:math:`K`)										  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``vor`` 	          | (time, pfull, lat, lon) | vorticity (:math:s^{-1})										  |
+| ``dynamics`` 			   | ``vor`` 	          | (time, pfull, lat, lon) | vorticity (:math:`1/s`)										  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``div``	          | (time, pfull, lat, lon) | divergence (:math:s^{-1})										  |
+| ``dynamics`` 			   | ``div``	          | (time, pfull, lat, lon) | divergence (:math:`1/s`)										  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``sphum_u`` 	      | (time, pfull, lat, lon) | specific humidity * u (:math:kg/kg * m/s)				  		  |
+| ``dynamics`` 			   | ``sphum_u`` 	      | (time, pfull, lat, lon) | specific humidity * u (:math:`kg/kg * m/s`)				  	  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``sphum_v`` 	      | (time, pfull, lat, lon) | specific humidity * v (:math:kg/kg * m/s)				  		  |+--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``sphum_w`` 	      | (time, pfull, lat, lon) | specific humidity * w (:math:kg/kg * m/s)				  		  |+--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
+| ``dynamics`` 			   | ``sphum_v`` 	      | (time, pfull, lat, lon) | specific humidity * v (:math:`kg/kg * m/s`)				  	  |+--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
+| ``dynamics`` 			   | ``sphum_w`` 	      | (time, pfull, lat, lon) | specific humidity * w (:math:`kg/kg * m/s`)				  	  |+--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
 
 
-diag.add_field('atmosphere', 'precipitation', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_cond', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_conv', time_avg=True)
-diag.add_field('atmosphere', 'bucket_depth_lh', time_avg=True)
-diag.add_field('mixed_layer', 't_surf', time_avg=True)
-diag.add_field('atmosphere', 'rh', time_avg=True) 
-diag.add_field('rrtm_radiation', 'toa_sw',time_avg=True)
-diag.add_field('rrtm_radiation', 'olr',time_avg=True)
-diag.add_field('atmosphere', 'potential_evap', time_avg=True) 
-diag.add_field('atmosphere', 'cape', time_avg=True) 
-diag.add_field('rrtm_radiation', 'flux_sw', time_avg=True)
-diag.add_field('rrtm_radiation', 'flux_lw', time_avg=True) 
-diag.add_field('mixed_layer', 'flux_lhe', time_avg=True) 
-diag.add_field('mixed_layer', 'flux_t', time_avg=True) 
+.. diag.add_field('atmosphere', 'precipitation', time_avg=True)
+.. diag.add_field('atmosphere', 'bucket_depth', time_avg=True)
+.. diag.add_field('atmosphere', 'bucket_depth_cond', time_avg=True)
+.. diag.add_field('atmosphere', 'bucket_depth_conv', time_avg=True)
+.. diag.add_field('atmosphere', 'bucket_depth_lh', time_avg=True)
+.. diag.add_field('mixed_layer', 't_surf', time_avg=True)
+.. diag.add_field('atmosphere', 'rh', time_avg=True) 
+.. diag.add_field('rrtm_radiation', 'toa_sw',time_avg=True)
+.. diag.add_field('rrtm_radiation', 'olr',time_avg=True)
+.. diag.add_field('atmosphere', 'potential_evap', time_avg=True) 
+.. diag.add_field('atmosphere', 'cape', time_avg=True) 
+.. diag.add_field('rrtm_radiation', 'flux_sw', time_avg=True)
+.. diag.add_field('rrtm_radiation', 'flux_lw', time_avg=True) 
+.. diag.add_field('mixed_layer', 'flux_lhe', time_avg=True) 
+.. diag.add_field('mixed_layer', 'flux_t', time_avg=True) 
 
 
 Relevant modules and subroutines
@@ -143,10 +150,15 @@ Relevant modules and subroutines
 The ``diag_manager_mod`` uses several modules and subroutines, including 
 
 ``diag_axis``
+
 ``diag_grid``
+
 ``diag_output``
+
 ``diag_util``
+
 ``diag_data``
+
 ``diag_table``
 
 
