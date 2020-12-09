@@ -70,9 +70,7 @@ And/or e.g. 6-hourly data with
 Output fields
 ^^^^^^^^^^^^^
 
-An output field is created via ``diag.add_field(module, name, time_avg, files)``
-
-The default for ``time_avg`` = False, the default for ``files`` = None. 
+An output field is created via ``diag.add_field(module, name, time_avg, files)``. The default for ``time_avg`` = False, the default for ``files`` = None. 
 
 ``time_avg`` is usually set to True for most variables when an output field is defined.
 
@@ -80,13 +78,9 @@ If ``files`` = None, then the diagnostics will be saved to all of the given outp
 
 An output file can be specified via e.g. ``files=['atmos_6_hourly']`` in 
 
-``diag.add_field('dynamics', 'ucomp', time_avg=True, files=['atmos_6_hourly'])`` 
+``diag.add_field('dynamics', 'ucomp', time_avg=True, files=['atmos_6_hourly'])`` if 6h zonal winds shall be saved, but not monthly/daily or
 
-if 6h zonal winds shall be saved, but not monthly/daily or
-
-``diag.add_field('atmosphere', 'precipitation', time_avg=True, files=['atmos_monthly'])`` 
-
-if only monthly-mean precipitation shall be saved, but not 6h/daily
+``diag.add_field('atmosphere', 'precipitation', time_avg=True, files=['atmos_monthly'])`` if only monthly-mean precipitation shall be saved, but not 6h/daily
 
 
 
@@ -95,11 +89,11 @@ Below is a list of commonly saved diagnostics. See the relevant modules for an e
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
 | Module                   | Name                 | Dimensions              | Description                                                     |
 +==========================+======================+===========================================================================================+
-| ``dynamics`` 			   | ``ps``  	 	      | (time, lat, lon) 		| surface pressure (:math:`Pa`)									  |
+| ``dynamics`` 			   | ps  	 	   	      | (time, lat, lon) 		| surface pressure (:math:`Pa`)									  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``bk`` 	          | (phalf) 				| vertical coordinate sigma values           					  |
+| ``dynamics`` 			   | bk 		          | (phalf) 				| vertical coordinate sigma values           					  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``pk`` 	          | (phalf) 				| vertical coordinate pressure values (:math:`Pa`)				  |
+| ``dynamics`` 			   | pk 	      	      | (phalf) 				| vertical coordinate pressure values (:math:`Pa`)				  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
 | ``dynamics`` 			   | ``slp`` 	          | (time, lat, lon) 		| sea level pressure (:math:`Pa`)								  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
