@@ -89,36 +89,36 @@ Below is a list of commonly saved diagnostics. See the relevant modules for an e
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
 | Module                   | Name                 | Dimensions              | Description                                                     |
 +==========================+======================+===========================================================================================+
-| ``dynamics`` 			   | ps  	 	   	      | (time, lat, lon) 		| surface pressure (:math:`Pa`)									  |
+| ``dynamics``             | ``ps``               | (time, lat, lon)        | surface pressure (:math:`Pa`)                                   |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | bk 		          | (phalf) 				| vertical coordinate sigma values           					  |
+| ``dynamics``             | ``bk``               | (phalf)                 | vertical coordinate sigma values                                |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | pk 	      	      | (phalf) 				| vertical coordinate pressure values (:math:`Pa`)				  |
+| ``dynamics``             | ``pk``               | (phalf)                 | vertical coordinate pressure values (:math:`Pa`)                |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``slp`` 	          | (time, lat, lon) 		| sea level pressure (:math:`Pa`)								  |
+| ``dynamics``             | ``slp``              | (time, lat, lon)        | sea level pressure (:math:`Pa`)                                 |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``height`` 	      | (time, pfull, lat, lon) | geopotential height at full model levels (:math:`m`)			  |
+| ``dynamics``             | ``height``           | (time, pfull, lat, lon) | geopotential height at full model levels (:math:`m`)            |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``zsurf`` 	          | (lat, lon) 				| geopotential height at the surface (:math:`m`)				  |
+| ``dynamics``             | ``zsurf``            | (lat, lon)              | geopotential height at the surface (:math:`m`)                  |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``u_comp`` 	      | (time, pfull, lat, lon) | zonal component of the horizontal winds (:math:`m/s`)			  |
+| ``dynamics``             | ``u_comp``           | (time, pfull, lat, lon) | zonal component of the horizontal winds (:math:`m/s`)           |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``v_comp`` 	      | (time, pfull, lat, lon) | meridional component of the horizontal winds (:math:`m/s`)      |
+| ``dynamics`              | ``v_comp``           | (time, pfull, lat, lon) | meridional component of the horizontal winds (:math:`m/s`)      |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``omega`` 	          | (time, pfull, lat, lon) | vertical velocity (:math:`Pa/s`)								  |
+| ``dynamics``             | ``omega``            | (time, pfull, lat, lon) | vertical velocity (:math:`Pa/s`)                                |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``sphum`` 	          | (time, pfull, lat, lon) | specific humidity (:math:`kg/kg`)								  |
+| ``dynamics``             | ``sphum``            | (time, pfull, lat, lon) | specific humidity (:math:`kg/kg`)                               |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``temp``	          | (time, pfull, lat, lon) | temperature (:math:`K`)										  |
+| ``dynamics``             | ``temp``             | (time, pfull, lat, lon) | temperature (:math:`K`)                                         |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``vor`` 	          | (time, pfull, lat, lon) | vorticity (:math:`1/s`)										  |
+| ``dynamics``             | ``vor``              | (time, pfull, lat, lon) | vorticity (:math:`1/s`)                                         |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``div``	          | (time, pfull, lat, lon) | divergence (:math:`1/s`)										  |
+| ``dynamics``             | ``div``              | (time, pfull, lat, lon) | divergence (:math:`1/s`)                                        |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``sphum_u`` 	      | (time, pfull, lat, lon) | specific humidity * u (:math:`kg/kg * m/s`)				  	  |
+| ``dynamics``             | ``sphum_u``          | (time, pfull, lat, lon) | specific humidity * u (:math:`kg/kg * m/s`)                     |
 +--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``sphum_v`` 	      | (time, pfull, lat, lon) | specific humidity * v (:math:`kg/kg * m/s`)				  	  |+--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
-| ``dynamics`` 			   | ``sphum_w`` 	      | (time, pfull, lat, lon) | specific humidity * w (:math:`kg/kg * m/s`)				  	  |+--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
+| ``dynamics``             | ``sphum_v``          | (time, pfull, lat, lon) | specific humidity * v (:math:`kg/kg * m/s`)                     |+--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
+| ``dynamics``             | ``sphum_w``          | (time, pfull, lat, lon) | specific humidity * w (:math:`kg/kg * m/s`)                     |+--------------------------+----------------------+-------------------------+-----------------------------------------------------------------+
 
 
 .. diag.add_field('atmosphere', 'precipitation', time_avg=True)
